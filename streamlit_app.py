@@ -17,14 +17,15 @@ def format_data(pokemon_family, shadow_only):
     leagues = ['Little', 'Great', 'Ultra', 'Master']
     attributes = ['Rank', 'CP', 'IVs', 'Level', 'MoveSet']
     for _, row in family_data.iterrows():
-        for league in leagues:
-            for attr in attributes:
-                formatted_data.append({
-                    'Pokemon': row['Pokemon'],
-                    'League': league,
-                    'Attribute': attr,
-                    'Value': row[f'{league}_{attr}'] if pd.notna(row[f'{league}_{attr}']) else 'NA'
-                })
+        for attr in attributes:
+            formatted_data.append({
+                'Pokemon': row['Pokemon'],
+                'Attribute': attr,
+                'Little': row[f'Little_{attr}'] if pd.notna(row[f'Little_{attr}']) else 'NA',
+                'Great': row[f'Great_{attr}'] if pd.notna(row[f'Great_{attr}']) else 'NA',
+                'Ultra': row[f'Ultra_{attr}'] if pd.notna(row[f'Ultra_{attr}']) else 'NA',
+                'Master': row[f'Master_{attr}'] if pd.notna(row[f'Master_{attr}']) else 'NA',
+            })
     return formatted_data
 
 # Set up UI elements
@@ -46,8 +47,8 @@ pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
 family_data = format_data(pokemon_family, show_shadow)
 if family_data:
     df_display = pd.DataFrame(family_data)
-    # Pivot table to swap columns and rows as required
-    df_pivot = df_display.pivot_table(index=['Attribute'], columns=['Pokemon', 'League'], values='Value', aggfunc='first').fillna('NA')
+    # Pivot table to display data with Pokémon names as the first column
+    df_pivot = df_display.pivot(index='Pokemon', columns='Attribute').fillna('NA')
     st.dataframe(df_pivot)
 else:
     st.write("No data available for the selected options.")
