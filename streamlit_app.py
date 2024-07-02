@@ -18,7 +18,8 @@ def format_data(pokemon_family, shadow_only):
     attributes = ['Rank', 'CP', 'IVs', 'Level', 'MoveSet']
     for _, row in family_data.iterrows():
         for league in leagues:
-            entry = {'Pokemon': row['Pokemon'], 'Attribute': f'{league}_{attr}' for attr in attributes}
+            # Create a dictionary for each league and attribute combination
+            entry = {'Pokemon': row['Pokemon']}
             for attr in attributes:
                 entry[f'{league}_{attr}'] = row[f'{league}_{attr}'] if pd.notna(row[f'{league}_{attr}']) else 'NA'
             formatted_data.append(entry)
@@ -43,11 +44,7 @@ pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
 family_data = format_data(pokemon_family, show_shadow)
 if family_data:
     df_display = pd.DataFrame(family_data)
-    # Create a multi-index pivot table
-    df_pivot = df_display.set_index(['Pokemon', 'Attribute']).unstack('Attribute')
-    # Rearrange the columns to ensure the leagues are in order
-    order = [f'{league}_{attr}' for league in ['Little', 'Great', 'Ultra', 'Master'] for attr in attributes]
-    df_pivot = df_pivot.reindex(order, axis=1)
-    st.dataframe(df_pivot.transpose())
+    df_pivot = df_display.set_index('Pokemon').T
+    st.dataframe(df_pivot)
 else:
     st.write("No data available for the selected options.")
