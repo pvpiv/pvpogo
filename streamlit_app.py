@@ -44,6 +44,7 @@ family_data = format_data(pokemon_family, show_shadow)
 if family_data:
     df_display = pd.DataFrame(family_data)
     # Set up DataFrame for proper display
+    df_display.columns.values[0:1] =["Pokemon", "Attribute" ]
     # df_display.set_index(['Pokemon', 'Attribute'], inplace=True)
     st.table(df_display)
 else:
