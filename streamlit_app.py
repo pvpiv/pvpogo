@@ -1,66 +1,47 @@
-import altair as alt
-import pandas as pd
 import streamlit as st
+import pandas as pd
 
-# Show the page title and description.
-st.set_page_config(page_title="Movies dataset", page_icon="🎬")
-st.title("🎬 Movies dataset")
-st.write(
-    """
-    This app visualizes data from [The Movie Database (TMDB)](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata).
-    It shows which movie genre performed best at the box office over the years. Just 
-    click on the widgets below to explore!
-    """
-)
+# Load your dataset
+df = pd.read_csv('pokemon_data.csv')
 
+# Define a function to format the data as required
+def format_data(pokemon_family):
+    # Filter data for the family
+    family_data = df[df['Family'] == pokemon_family]
+    
+    # Prepare the data for display
+    columns = ['League', 'Rank', 'CP', 'IVs', 'Level', 'MoveSet']
+    leagues = ['Little', 'Great', 'Ultra', 'Master']
+    
+    formatted_data = {}
+    for _, row in family_data.iterrows():
+        pokemon_name = row['Pokemon']
+        formatted_data[pokemon_name] = {col: [] for col in columns}
+        formatted_data[pokemon_name]['League'] = leagues
+        
+        for league in leagues:
+            formatted_data[pokemon_name]['Rank'].append(row[f'{league}_Rank'] if pd.notna(row[f'{league}_Rank']) else 'NA')
+            formatted_data[pokemon_name]['CP'].append(row[f'{league}_CP'] if pd.notna(row[f'{league}_CP']) else 'NA')
+            formatted_data[pokemon_name]['IVs'].append(row[f'{league}_IVs'] if pd.notna(row[f'{league}_IVs']) else 'NA')
+            formatted_data[pokemon_name]['Level'].append(row[f'{league}_Level'] if pd.notna(row[f'{league}_Level']) else 'NA')
+            formatted_data[pokemon_name]['MoveSet'].append(row[f'{league}_MoveSet'] if pd.notna(row[f'{league}_MoveSet']) else 'NA')
 
-# Load the data from a CSV. We're caching this so it doesn't reload every time the app
-# reruns (e.g. if the user interacts with the widgets).
-@st.cache_data
-def load_data():
-    df = pd.read_csv("data/movies_genres_summary.csv")
-    return df
+    return formatted_data
 
+# User selects a Pokémon
+pokemon_choice = st.selectbox('Select a Pokémon:', df['Pokemon'].unique())
 
-df = load_data()
+# Find the family of the selected Pokémon
+pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
 
-# Show a multiselect widget with the genres using `st.multiselect`.
-genres = st.multiselect(
-    "Genres",
-    df.genre.unique(),
-    ["Action", "Adventure", "Biography", "Comedy", "Drama", "Horror"],
-)
-
-# Show a slider widget with the years using `st.slider`.
-years = st.slider("Years", 1986, 2006, (2000, 2016))
-
-# Filter the dataframe based on the widget input and reshape it.
-df_filtered = df[(df["genre"].isin(genres)) & (df["year"].between(years[0], years[1]))]
-df_reshaped = df_filtered.pivot_table(
-    index="year", columns="genre", values="gross", aggfunc="sum", fill_value=0
-)
-df_reshaped = df_reshaped.sort_values(by="year", ascending=False)
-
-
-# Display the data as a table using `st.dataframe`.
-st.dataframe(
-    df_reshaped,
-    use_container_width=True,
-    column_config={"year": st.column_config.TextColumn("Year")},
-)
-
-# Display the data as an Altair chart using `st.altair_chart`.
-df_chart = pd.melt(
-    df_reshaped.reset_index(), id_vars="year", var_name="genre", value_name="gross"
-)
-chart = (
-    alt.Chart(df_chart)
-    .mark_line()
-    .encode(
-        x=alt.X("year:N", title="Year"),
-        y=alt.Y("gross:Q", title="Gross earnings ($)"),
-        color="genre:N",
-    )
-    .properties(height=320)
-)
-st.altair_chart(chart, use_container_width=True)
+# Display formatted data for the selected Pokémon's family
+family_data = format_data(pokemon_family)
+for pokemon, data in family_data.items():
+    st.write(f"### {pokemon}")
+    for i, league in enumerate(data['League']):
+        st.write(f"#### {league} League")
+        st.write(f"Rank: {data['Rank'][i]}")
+        st.write(f"CP: {data['CP'][i]}")
+        st.write(f"IVs: {data['IVs'][i]}")
+        st.write(f"Level: {data['Level'][i]}")
+        st.write(f"MoveSet: {data['MoveSet'][i]}")
