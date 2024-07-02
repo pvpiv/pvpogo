@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 
 # Load your dataset
 df = pd.read_csv('pokemon_data.csv')
@@ -16,12 +17,23 @@ def format_data(pokemon_family, shadow_only):
     formatted_data = []
     attributes = ['Rank', 'CP', 'IVs', 'Level', 'MoveSet']
     leagues = ['Little', 'Great', 'Ultra', 'Master']
+    previous_pokemon = None
     for _, row in family_data.iterrows():
+        if previous_pokemon and previous_pokemon != row['Pokemon']:
+            # Insert an empty row for separation
+            formatted_data.append({ 'Pokemon': '', 'Attribute': '' })
         for attr in attributes:
             entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
             for league in leagues:
-                entry[league] = row[f'{league}_{attr}'] if pd.notna(row[f'{league}_{attr}']) else 'NA'
+                val = row[f'{league}_{attr}']
+                if pd.notna(val):
+                    if isinstance(val, float) and val.is_integer():
+                        val = int(val)  # Convert float to int if it's an integer
+                    entry[league] = val
+                else:
+                    entry[league] = 'NA'
             formatted_data.append(entry)
+        previous_pokemon = row['Pokemon']
     return formatted_data
 
 # Set up UI elements
@@ -45,6 +57,10 @@ if family_data:
     df_display = pd.DataFrame(family_data)
     # Set up DataFrame for proper display
     df_display.set_index(['Pokemon', 'Attribute'], inplace=True)
-    st.table(df_display)
+    # Styling the DataFrame
+    st.dataframe(df_display.style.set_table_styles([
+        {'selector': 'th', 'props': [('text-align', 'center')]},  # Header alignment
+        {'selector': 'td', 'props': [('text-align', 'center')]},  # Cell alignment
+    ]).set_properties(**{'background-color': 'white'}), height=600)
 else:
     st.write("No data available for the selected options.")
