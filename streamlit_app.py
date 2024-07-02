@@ -47,8 +47,9 @@ pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
 family_data = format_data(pokemon_family, show_shadow)
 if family_data:
     df_display = pd.DataFrame(family_data)
-    # Pivot table to display data with Pokémon names as the first column
-    df_pivot = df_display.pivot(index='Pokemon', columns='Attribute').fillna('NA')
-    st.dataframe(df_pivot)
+    # Rearrange the DataFrame for display
+    df_display = df_display.set_index(['Pokemon', 'Attribute'])
+    df_display = df_display.unstack('Attribute').swaplevel(axis=1).sort_index(axis=1)
+    st.write(df_display)
 else:
     st.write("No data available for the selected options.")
