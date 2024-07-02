@@ -15,14 +15,17 @@ def format_data(pokemon_family, shadow_only):
     # Prepare the data for display
     formatted_data = []
     leagues = ['Little', 'Great', 'Ultra', 'Master']
-    attributes = ['Rank', 'CP', 'IVs', 'Level', 'MoveSet']
     for _, row in family_data.iterrows():
         for league in leagues:
-            # Create a dictionary for each league and attribute combination
-            entry = {'Pokemon': row['Pokemon']}
-            for attr in attributes:
-                entry[f'{league}_{attr}'] = row[f'{league}_{attr}'] if pd.notna(row[f'{league}_{attr}']) else 'NA'
-            formatted_data.append(entry)
+            formatted_data.append({
+                'Pokemon': row['Pokemon'],
+                'League': league,
+                'Rank': int(row[f'{league}_Rank']) if pd.notna(row[f'{league}_Rank']) else 'NA',
+                'CP': int(row[f'{league}_CP']) if pd.notna(row[f'{league}_CP']) else 'NA',
+                'IVs': row[f'{league}_IVs'] if pd.notna(row[f'{league}_IVs']) else 'NA',
+                'Level': int(row[f'{league}_Level']) if pd.notna(row[f'{league}_Level']) else 'NA',
+                'MoveSet': row[f'{league}_MoveSet'] if pd.notna(row[f'{league}_MoveSet']) else 'NA'
+            })
     return formatted_data
 
 # Set up UI elements
@@ -44,7 +47,7 @@ pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
 family_data = format_data(pokemon_family, show_shadow)
 if family_data:
     df_display = pd.DataFrame(family_data)
-    df_pivot = df_display.set_index('Pokemon').T
-    st.dataframe(df_pivot)
+    df_display = df_display.pivot_table(index=['Pokemon', 'League'], values=['Rank', 'CP', 'IVs', 'Level', 'MoveSet'], aggfunc=lambda x: x)
+    st.table(df_display)
 else:
     st.write("No data available for the selected options.")
