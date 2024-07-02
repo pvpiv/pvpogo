@@ -10,7 +10,7 @@ def format_data(pokemon_family, shadow_only):
     if shadow_only:
         family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == True)]
     else:
-        family_data = df[(df['Family'] == pokemon_family) & (~df['Pokemon'].str.contains("Shadow"))]
+        family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == False)]
     
     # Prepare the data for display
     formatted_data = []
@@ -28,22 +28,23 @@ def format_data(pokemon_family, shadow_only):
             })
     return formatted_data
 
-# User controls grouped next to each other
+# Set up UI elements
 st.write("### Pokémon Selection")
-col1, col2 = st.columns([4, 1])
-with col1:
-    if st.checkbox('Show only Shadow Pokémon', False):
-        pokemon_choice = st.selectbox('Select a Pokémon:', df[df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique())
-    else:
-        pokemon_choice = st.selectbox('Select a Pokémon:', df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique())
-with col2:
-    pass
+show_shadow = st.checkbox('Show only Shadow Pokémon', False)
+
+# Filter the dropdown list based on the checkbox
+if show_shadow:
+    pokemon_list = df[df['Shadow']]['Pokemon'].unique()
+else:
+    pokemon_list = df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique()
+
+pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list)
 
 # Find the family of the selected Pokémon
 pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
 
 # Display formatted data for the selected Pokémon's family
-family_data = format_data(pokemon_family, 'Shadow' in pokemon_choice)
+family_data = format_data(pokemon_family, show_shadow)
 if family_data:
     df_display = pd.DataFrame(family_data)
     df_display = df_display.pivot_table(index=['Pokemon', 'League'], values=['Rank', 'CP', 'IVs', 'Level', 'MoveSet'], aggfunc=lambda x: x)
