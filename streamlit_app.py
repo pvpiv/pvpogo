@@ -21,7 +21,7 @@ def format_data(pokemon_family, shadow_only):
     for _, row in family_data.iterrows():
         if previous_pokemon and previous_pokemon != row['Pokemon']:
             # Insert an empty row for separation
-            formatted_data.extend([{ 'Pokemon': '', 'Attribute': '', 'League': league } for league in leagues])
+            formatted_data.append({ 'Pokemon': '', 'Attribute': '' })
         for attr in attributes:
             entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
             for league in leagues:
@@ -55,13 +55,12 @@ pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
 family_data = format_data(pokemon_family, show_shadow)
 if family_data:
     df_display = pd.DataFrame(family_data)
-    # Reshape the data for proper display
-    df_pivot = df_display.pivot_table(index=['Pokemon', 'Attribute'], columns='League', aggfunc=lambda x: x).fillna('NA')
-    # Properly set the column headers
-    df_pivot.columns = df_pivot.columns.droplevel(0)  # Drop the top level to clean up the headers
-    df_pivot.reset_index(inplace=True)
-    
-    # Display the DataFrame with formatting
-    st.dataframe(df_pivot.style.format("{:.0f}", na_rep='NA', subset=pd.IndexSlice[:, ['Little', 'Great', 'Ultra', 'Master']]).set_properties(**{'text-align': 'center'}), height=600)
+    # Set up DataFrame for proper display
+    df_display.set_index(['Pokemon', 'Attribute'], inplace=True)
+    # Styling the DataFrame
+    st.dataframe(df_display.style.set_table_styles([
+        {'selector': 'th', 'props': [('text-align', 'center')]},  # Header alignment
+        {'selector': 'td', 'props': [('text-align', 'center')]},  # Cell alignment
+    ]).set_properties(**{'background-color': 'white'}), height=600)
 else:
     st.write("No data available for the selected options.")
