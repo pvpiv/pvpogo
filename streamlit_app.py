@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 
 # Load your dataset
 df = pd.read_csv('pokemon_data.csv')
@@ -55,13 +54,12 @@ pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
 family_data = format_data(pokemon_family, show_shadow)
 if family_data:
     df_display = pd.DataFrame(family_data)
-    # Reshape the data for proper display
+    # Convert all numerical columns to integers if applicable
+    df_display[['Little', 'Great', 'Ultra', 'Master']] = df_display[['Little', 'Great', 'Ultra', 'Master']].applymap(lambda x: int(x) if isinstance(x, float) and x.is_integer() else x)
     df_pivot = df_display.pivot_table(index=['Pokemon', 'Attribute'], columns='League', aggfunc=lambda x: x).fillna('NA')
-    # Properly set the column headers
-    df_pivot.columns = df_pivot.columns.droplevel(0)  # Drop the top level to clean up the headers
+    df_pivot.columns = df_pivot.columns.droplevel(0)  # Simplify the multi-index
     df_pivot.reset_index(inplace=True)
-    
-    # Display the DataFrame with formatting
-    st.dataframe(df_pivot.style.format("{:.0f}", na_rep='NA', subset=pd.IndexSlice[:, ['Little', 'Great', 'Ultra', 'Master']]).set_properties(**{'text-align': 'center'}), height=600)
+    # Display the DataFrame
+    st.write(df_pivot)  # Using st.write to handle DataFrame directly
 else:
     st.write("No data available for the selected options.")
