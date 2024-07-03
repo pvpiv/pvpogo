@@ -24,7 +24,7 @@ def format_data(pokemon_family, shadow_only):
                 if pd.notna(value) and isinstance(value, (int, float)):
                     entry[league] = f'{int(value):,}'  # Remove decimals and format as integer
                 else:
-                    entry[league] = value if pd.notna(value) else 'NA'
+                    entry[league] = value if pd.notna(value) else ''
             formatted_data.append(entry)
     return formatted_data
 
@@ -52,12 +52,14 @@ if family_data:
     df_display.rename(columns={df.columns[1]: 'Attribute'})
     df_display.set_index(['Pokemon'], inplace=True)
     
-    # Apply styles to center the text and make the table auto-fit
+    # Apply styles to center the text
     styled_df = df_display.style.set_properties(**{'text-align': 'center'}).set_table_styles([
         dict(selector="th", props=[("text-align", "center")]),
         dict(selector="td", props=[("max-width", "100px"), ("white-space", "nowrap"), ("overflow", "hidden"), ("text-overflow", "ellipsis")])
     ])
-    st.dataframe(styled_df, use_container_width=True)
+    
+    # Display the styled dataframe using st.table
+    st.table(styled_df)
 else:
     st.write("No data available for the selected options.")
 
