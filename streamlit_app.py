@@ -20,7 +20,7 @@ def format_data(pokemon_family, shadow_only):
         for attr in attributes:
             entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
             for league in leagues:
-                entry[league] = row[f'{league}_{attr}'] if pd.notna(row[f'{league}_{attr}']) else ''
+                entry[league] = row[f'{league}_{attr}'] if pd.notna(row[f'{league}_{attr}']) else 'NA'
             formatted_data.append(entry)
     return formatted_data
 
