@@ -50,3 +50,25 @@ if family_data:
     st.table(df_display)
 else:
     st.write("No data available for the selected options.")
+
+# Custom CSS to improve mobile view
+st.markdown(
+    """
+    <style>
+    @media (max-width: 600px) {
+        .css-18e3th9 {
+            padding: 0.5rem 1rem;
+        }
+        .css-1d391kg {
+            font-size: 1rem;
+        }
+        .css-1i0h2kc {
+            width: 100% !important;
+            display: block;
+            overflow-x: auto;
+        }
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
