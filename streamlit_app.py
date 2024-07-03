@@ -20,7 +20,11 @@ def format_data(pokemon_family, shadow_only):
         for attr in attributes:
             entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
             for league in leagues:
-                entry[league] = row[f'{league}_{attr}'] if pd.notna(row[f'{league}_{attr}']) else 'NA'
+                value = row[f'{league}_{attr}']
+                if pd.notna(value) and isinstance(value, (int, float)):
+                    entry[league] = f'{int(value):,}'  # Remove decimals and format as integer
+                else:
+                    entry[league] = value if pd.notna(value) else 'NA'
             formatted_data.append(entry)
     return formatted_data
 
@@ -51,7 +55,7 @@ if family_data:
 else:
     st.write("No data available for the selected options.")
 
-# Custom CSS to improve mobile view
+# Custom CSS to improve mobile view and table fit
 st.markdown(
     """
     <style>
@@ -66,6 +70,14 @@ st.markdown(
             width: 100% !important;
             display: block;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
+        }
+        .css-1i0h2kc table {
+            width: 100%;
+        }
+        .css-1i0h2kc table th,
+        .css-1i0h2kc table td {
+            padding: 0.25rem;
         }
     }
     </style>
