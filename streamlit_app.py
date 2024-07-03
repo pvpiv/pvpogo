@@ -47,20 +47,15 @@ pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
 family_data = format_data(pokemon_family, show_shadow)
 if family_data:
     df_display = pd.DataFrame(family_data)
-    # Set up DataFrame for proper display
-    df_display.rename(columns={df.columns[0]: 'Pokemon'})
-    df_display.rename(columns={df.columns[1]: 'Attribute'})
-    #df_display.set_index(['Pokemon'], inplace=True)
+    # Ensure index is unique by resetting it
+    df_display.reset_index(drop=True, inplace=True)
 
-    # Apply styles to center the text and ensure the table fits the container width
-    styled_df = df_display.style.set_properties(**{'text-align': 'center'})
-
-    # Display the styled dataframe using st.dataframe with container width usage
-    st.dataframe(styled_df, use_container_width=True)
+    # Display the DataFrame using st.dataframe
+    st.dataframe(df_display, use_container_width=True)
 else:
     st.write("No data available for the selected options.")
 
-# Custom CSS to improve the layout
+# Custom CSS to improve the layout and enable text wrapping
 st.markdown(
     """
     <style>
@@ -78,10 +73,13 @@ st.markdown(
     }
     .css-1i0h2kc table {
         width: 100%;
+        table-layout: fixed; /* Ensure the table layout is fixed */
     }
     .css-1i0h2kc table th,
     .css-1i0h2kc table td {
         padding: 0.25rem;
+        word-wrap: break-word; /* Enable word wrapping */
+        white-space: normal; /* Ensure white-space is normal for wrapping */
     }
     </style>
     """,
