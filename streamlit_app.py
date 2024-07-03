@@ -55,7 +55,7 @@ if family_data:
 else:
     st.write("No data available for the selected options.")
 
-# Custom CSS to improve the layout and enable text wrapping
+# Custom CSS to improve the layout, enable text wrapping, auto-fit cell height, and center text
 st.markdown(
     """
     <style>
@@ -77,9 +77,17 @@ st.markdown(
     }
     .css-1i0h2kc table th,
     .css-1i0h2kc table td {
-        padding: 0.25rem;
+        padding: 0.5rem; /* Increase padding for better spacing */
         word-wrap: break-word; /* Enable word wrapping */
         white-space: normal; /* Ensure white-space is normal for wrapping */
+        text-align: center; /* Center-align the text */
+        vertical-align: middle; /* Vertically center the text */
+    }
+    .css-1i0h2kc table th {
+        width: 150px; /* Set a minimum width for table headers */
+    }
+    .css-1i0h2kc table td {
+        min-width: 150px; /* Set a minimum width for table cells */
     }
     </style>
     """,
