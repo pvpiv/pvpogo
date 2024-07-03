@@ -20,11 +20,7 @@ def format_data(pokemon_family, shadow_only):
         for attr in attributes:
             entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
             for league in leagues:
-                value = row[f'{league}_{attr}']
-                if pd.notna(value) and isinstance(value, (int, float)):
-                    entry[league] = f'{int(value):,}'  # Remove decimals and format as integer
-                else:
-                    entry[league] = value if pd.notna(value) else 'NA'
+                entry[league] = row[f'{league}_{attr}'] if pd.notna(row[f'{league}_{attr}']) else ''
             formatted_data.append(entry)
     return formatted_data
 
@@ -47,47 +43,30 @@ pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
 family_data = format_data(pokemon_family, show_shadow)
 if family_data:
     df_display = pd.DataFrame(family_data)
-    # Ensure index is unique by resetting it
-    df_display.reset_index(drop=True, inplace=True)
-
-    # Display the DataFrame using st.dataframe
-    st.dataframe(df_display, use_container_width=True)
+    # Set up DataFrame for proper display
+    df_display.rename(columns={df.columns[0]: 'Pokemon'})
+    df_display.rename(columns={df.columns[1]: 'Attribute'})
+    df_display.set_index(['Pokemon'], inplace=True)
+    st.table(df_display)
 else:
     st.write("No data available for the selected options.")
 
-# Custom CSS to improve the layout, enable text wrapping, auto-fit cell height, and center text
+# Custom CSS to improve mobile view
 st.markdown(
     """
     <style>
-    .css-18e3th9 {
-        padding: 0.5rem 1rem;
-    }
-    .css-1d391kg {
-        font-size: 1rem;
-    }
-    .css-1i0h2kc {
-        width: 100% !important;
-        display: block;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
-    }
-    .css-1i0h2kc table {
-        width: 100%;
-        table-layout: fixed; /* Ensure the table layout is fixed */
-    }
-    .css-1i0h2kc table th,
-    .css-1i0h2kc table td {
-        padding: 0.5rem; /* Increase padding for better spacing */
-        word-wrap: break-word; /* Enable word wrapping */
-        white-space: normal; /* Ensure white-space is normal for wrapping */
-        text-align: center; /* Center-align the text */
-        vertical-align: middle; /* Vertically center the text */
-    }
-    .css-1i0h2kc table th {
-        width: 150px; /* Set a minimum width for table headers */
-    }
-    .css-1i0h2kc table td {
-        min-width: 150px; /* Set a minimum width for table cells */
+    @media (max-width: 600px) {
+        .css-18e3th9 {
+            padding: 0.5rem 1rem;
+        }
+        .css-1d391kg {
+            font-size: 1rem;
+        }
+        .css-1i0h2kc {
+            width: 100% !important;
+            display: block;
+            overflow-x: auto;
+        }
     }
     </style>
     """,
