@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 # Load your dataset
-df = pd.read_csv('pokemon_data.csv')
+df = pd.read_csv('pvp_data.csv')
 
 # Define a function to format the data as required
 def format_data(pokemon_family, shadow_only):
