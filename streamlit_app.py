@@ -24,7 +24,7 @@ def format_data(pokemon_family, shadow_only):
                 if pd.notna(value) and isinstance(value, (int, float)):
                     entry[league] = f'{int(value):,}'  # Remove decimals and format as integer
                 else:
-                    entry[league] = value if pd.notna(value) else 'NA'
+                    entry[league] = value if pd.notna(value) else ''
             formatted_data.append(entry)
     return formatted_data
 
