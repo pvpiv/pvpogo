@@ -24,7 +24,7 @@ def format_data(pokemon_family, shadow_only):
                 if pd.notna(value) and isinstance(value, (int, float)):
                     entry[league] = f'{int(value):,}'  # Remove decimals and format as integer
                 else:
-                    entry[league] = value if pd.notna(value) else ''
+                    entry[league] = value if pd.notna(value) else 'NA'
             formatted_data.append(entry)
     return formatted_data
 
@@ -92,6 +92,53 @@ if family_data:
             .css-1i0h2kc table th,
             .css-1i0h2kc table td {{
                 padding: 0.25rem;
+            }}
+        }}
+        @media only screen and (max-device-width: 600px) and (-webkit-min-device-pixel-ratio: 2) {{
+            .css-18e3th9 {{
+                padding: 0.25rem 0.5rem;
+            }}
+            .css-1d391kg {{
+                font-size: 0.875rem;
+            }}
+            .styled-table th, .styled-table td {{
+                padding: 6px;
+            }}
+        }}
+        @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-min-device-pixel-ratio: 3) {{
+            /* iPhone 13 */
+            .css-18e3th9 {{
+                padding: 0.25rem 0.5rem;
+            }}
+            .css-1d391kg {{
+                font-size: 0.875rem;
+            }}
+            .styled-table th, .styled-table td {{
+                padding: 6px;
+            }}
+        }}
+        @media only screen and (device-width: 393px) and (device-height: 852px) and (-webkit-min-device-pixel-ratio: 3) {{
+            /* iPhone 14 */
+            .css-18e3th9 {{
+                padding: 0.25rem 0.5rem;
+            }}
+            .css-1d391kg {{
+                font-size: 0.875rem;
+            }}
+            .styled-table th, .styled-table td {{
+                padding: 6px;
+            }}
+        }}
+        @media only screen and (device-width: 360px) and (device-height: 800px) and (-webkit-min-device-pixel-ratio: 3) {{
+            /* Samsung Galaxy S22 */
+            .css-18e3th9 {{
+                padding: 0.25rem 0.5rem;
+            }}
+            .css-1d391kg {{
+                font-size: 0.875rem;
+            }}
+            .styled-table th, .styled-table td {{
+                padding: 6px;
             }}
         }}
         </style>
