@@ -51,7 +51,13 @@ if family_data:
     df_display.rename(columns={df.columns[0]: 'Pokemon'})
     df_display.rename(columns={df.columns[1]: 'Attribute'})
     df_display.set_index(['Pokemon'], inplace=True)
-    st.table(df_display)
+    
+    # Apply styles to center the text and make the table auto-fit
+    styled_df = df_display.style.set_properties(**{'text-align': 'center'}).set_table_styles([
+        dict(selector="th", props=[("text-align", "center")]),
+        dict(selector="td", props=[("max-width", "100px"), ("white-space", "nowrap"), ("overflow", "hidden"), ("text-overflow", "ellipsis")])
+    ])
+    st.dataframe(styled_df, use_container_width=True)
 else:
     st.write("No data available for the selected options.")
 
