@@ -51,44 +51,53 @@ if family_data:
     df_display.rename(columns={df.columns[0]: 'Pokemon'})
     df_display.rename(columns={df.columns[1]: 'Attribute'})
     df_display.set_index(['Pokemon'], inplace=True)
+
+    # Convert DataFrame to HTML
+    table_html = df_display.to_html(classes='styled-table', border=0)
     
-    # Apply styles to center the text
-    styled_df = df_display.style.set_properties(**{'text-align': 'center'}).set_table_styles([
-        dict(selector="th", props=[("text-align", "center")]),
-        dict(selector="td", props=[("max-width", "100px"), ("white-space", "nowrap"), ("overflow", "hidden"), ("text-overflow", "ellipsis")])
-    ])
-    
-    # Display the styled dataframe using st.table
-    st.table(styled_df)
+    # Display the HTML with custom CSS
+    st.markdown(
+        f"""
+        <style>
+        .styled-table {{
+            width: 100%;
+            border-collapse: collapse;
+        }}
+        .styled-table th, .styled-table td {{
+            text-align: center;
+            padding: 8px;
+        }}
+        .styled-table thead th {{
+            background-color: #f2f2f2;
+        }}
+        .styled-table tbody tr:nth-child(even) {{
+            background-color: #f9f9f9;
+        }}
+        @media (max-width: 600px) {{
+            .css-18e3th9 {{
+                padding: 0.5rem 1rem;
+            }}
+            .css-1d391kg {{
+                font-size: 1rem;
+            }}
+            .css-1i0h2kc {{
+                width: 100% !important;
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
+            }}
+            .css-1i0h2kc table {{
+                width: 100%;
+            }}
+            .css-1i0h2kc table th,
+            .css-1i0h2kc table td {{
+                padding: 0.25rem;
+            }}
+        }}
+        </style>
+        {table_html}
+        """,
+        unsafe_allow_html=True
+    )
 else:
     st.write("No data available for the selected options.")
-
-# Custom CSS to improve mobile view and table fit
-st.markdown(
-    """
-    <style>
-    @media (max-width: 600px) {
-        .css-18e3th9 {
-            padding: 0.5rem 1rem;
-        }
-        .css-1d391kg {
-            font-size: 1rem;
-        }
-        .css-1i0h2kc {
-            width: 100% !important;
-            display: block;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
-        }
-        .css-1i0h2kc table {
-            width: 100%;
-        }
-        .css-1i0h2kc table th,
-        .css-1i0h2kc table td {
-            padding: 0.25rem;
-        }
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
