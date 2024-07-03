@@ -46,7 +46,7 @@ if family_data:
     # Set up DataFrame for proper display
     df_display.rename(columns={df.columns[0]: 'Pokemon'})
     df_display.rename(columns={df.columns[1]: 'Attribute'})
-    df_display.set_index(['Attribute'], inplace=True)
+    df_display.set_index(['Pokemon'], inplace=True)
     st.table(df_display)
 else:
     st.write("No data available for the selected options.")
