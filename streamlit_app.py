@@ -4,7 +4,7 @@ import streamlit_analytics
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
 url = "https://www.pvpcalc.streamlit.app"
-st.write("Hundo check for all Pokemon here- [link](%s)" % url)
+st.write("[Check CP for all IVs here](%s)" % url)
 # Define a function to format the data as required
 def format_data(pokemon_family, shadow_only):
     # Filter data for the family and shadow condition
