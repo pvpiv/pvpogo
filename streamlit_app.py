@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-
+import streamlit_analytics
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
 
@@ -29,9 +29,10 @@ def format_data(pokemon_family, shadow_only):
     return formatted_data
 
 # Set up UI elements
+streamlit_analytics.start_tracking()
 st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', False)
-
+streamlit_analytics.stop_tracking()
 # Filter the dropdown list based on the checkbox
 if show_shadow:
     pokemon_list = df[df['Shadow']]['Pokemon'].unique()
@@ -46,12 +47,14 @@ pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
 # Display formatted data for the selected Pokémon's family
 family_data = format_data(pokemon_family, show_shadow)
 if family_data:
+    streamlit_analytics.start_tracking()
     df_display = pd.DataFrame(family_data)
     # Set up DataFrame for proper display
     df_display.rename(columns={df.columns[0]: 'Pokemon'})
     df_display.rename(columns={df.columns[1]: 'Attribute'})
     df_display.set_index(['Pokemon'], inplace=True)
     st.table(df_display)
+    streamlit_analytics.stop_tracking()
 else:
     st.write("No data available for the selected options.")
 
