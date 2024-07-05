@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit_analytics
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
-url = "pvpcalc.streamlit.app/"
+url = "https://pvpcalc.streamlit.app/"
 st.write("[Check CP for all IVs here](%s)" % url)
 # Define a function to format the data as required
 def format_data(pokemon_family, shadow_only):
