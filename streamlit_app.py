@@ -57,7 +57,7 @@ if family_data:
     st.table(df_display)
 else:
     st.write("No data available for the selected options.")
-
+streamlit_analytics.track(save_to_json="analytics.json")
 # Custom CSS to improve mobile view and table fit
 st.markdown(
     """
