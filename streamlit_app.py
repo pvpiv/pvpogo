@@ -59,7 +59,7 @@ if family_data:
 else:
     st.write("No data available for the selected options.")
 streamlit_analytics.track(save_to_json="analytics.json")
-#streamlit_analytics.stop_tracking()
+streamlit_analytics.stop_tracking()
 # Custom CSS to improve mobile view and table fit
 st.markdown(
     """
