@@ -34,7 +34,7 @@ streamlit_analytics.start_tracking()
 st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', False)
 streamlit_analytics.track(save_to_json="analytics.json")
-streamlit_analytics.stop_tracking()
+
 # Filter the dropdown list based on the checkbox
 if show_shadow:
     pokemon_list = df[df['Shadow']]['Pokemon'].unique()
@@ -58,7 +58,7 @@ if family_data:
     st.table(df_display)
 else:
     st.write("No data available for the selected options.")
-
+streamlit_analytics.stop_tracking()
 # Custom CSS to improve mobile view and table fit
 st.markdown(
     """
