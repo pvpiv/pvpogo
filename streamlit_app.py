@@ -30,7 +30,7 @@ def format_data(pokemon_family, shadow_only):
     return formatted_data
 
 # Set up UI elements
-streamlit_analytics.start_tracking()
+streamlit_analytics.start_tracking('data/analytics.json')
 st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', False)
 #streamlit_analytics.track(save_to_json="analytics.json")
@@ -59,7 +59,7 @@ if family_data:
 else:
     st.write("No data available for the selected options.")
 #streamlit_analytics.track(save_to_json="analytics.json")
-streamlit_analytics.stop_tracking(save_to_json='analytics.json')
+streamlit_analytics.stop_tracking(save_to_json='data/analytics.json')
 # Custom CSS to improve mobile view and table fit
 st.markdown(
     """
