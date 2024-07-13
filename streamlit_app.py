@@ -10,6 +10,29 @@ url = "https://pvpcalc.streamlit.app/"
 st.write("[Check CP for all IVs here](%s)" % url)
 # Define a function to format the data as required
 # Function to check if the file exists on Synology
+def format_data(pokemon_family, shadow_only):
+    # Filter data for the family and shadow condition
+    if shadow_only:
+        family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == True)]
+    else:
+        family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == False)]
+    
+    # Prepare the data for display
+    formatted_data = []
+    attributes = ['Rank', 'CP', 'IVs', 'Level', 'MoveSet']
+    leagues = ['Little', 'Great', 'Ultra', 'Master']
+    for _, row in family_data.iterrows():
+        for attr in attributes:
+            entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
+            for league in leagues:
+                value = row[f'{league}_{attr}']
+                if pd.notna(value) and isinstance(value, (int, float)):
+                    entry[league] = f'{int(value):,}'  # Remove decimals and format as integer
+                else:
+                    entry[league] = value if pd.notna(value) else ''
+            formatted_data.append(entry)
+    return formatted_data
+    
 def check_file_exists_on_synology(file_url):
     response = requests.head(file_url)
     return response.status_code == 200
