@@ -41,7 +41,7 @@ if check_file_exists_on_synology(data_file_url):
     if os.path.getsize(local_data_path) == 0:
         streamlit_analytics.start_tracking()
     else:
-        #streamlit_analytics.start_tracking(load_from_json=local_data_path)
+        st.success('nope')#streamlit_analytics.start_tracking(load_from_json=local_data_path)
 else:
     with open(local_data_path, "w") as file:
         json.dump({}, file)
