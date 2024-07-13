@@ -26,7 +26,7 @@ def load_new(counts, collection_name):
     """Load count data from firestore into `counts`."""
 
     # Retrieve data from firestore.
-    key_dict = json.loads(st.secrets["fbase"])
+    key_dict = json.loads(st.secrets["fbase"].to_dict())
     creds = service_account.Credentials.from_service_account_info(key_dict)
     db = firestore.Client(credentials=creds, project="Pvpogo")
    
@@ -42,7 +42,7 @@ def load_new(counts, collection_name):
 
 def save_new(counts, collection_name):
     """Save count data from `counts` to firestore."""
-    key_dict = json.loads(st.secrets["fbase"])
+    key_dict = json.loads(st.secrets["fbase"].to_dict())
     creds = service_account.Credentials.from_service_account_info(key_dict)
     db = firestore.Client(credentials=creds, project="Pvpogo")
     col = db.collection(collection_name)
