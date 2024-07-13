@@ -52,6 +52,7 @@ else:
         if file.read().strip() == "":
             streamlit_analytics.start_tracking()
         else:
+            st.success("data.json loaded successfully")
             streamlit_analytics.start_tracking(load_from_json='data.json')
     #streamlit_analytics.start_tracking(load_from_json='data.json')
     
