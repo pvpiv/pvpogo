@@ -60,7 +60,8 @@ if not os.path.exists("data.json"):
 if os.path.exists("data.json") and os.path.getsize("data.json") == 0:
     streamlit_analytics.start_tracking()
 else:
-    streamlit_analytics.start_tracking(load_from_json='data.json')
+    streamlit_analytics.start_tracking()
+    #streamlit_analytics.start_tracking(load_from_json='data.json')
     
 st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', False)
@@ -90,7 +91,7 @@ if family_data:
 else:
     st.write("No data available for the selected options.")
 #streamlit_analytics.track(save_to_json="analytics.json")
-streamlit_analytics.stop_tracking(save_to_json='data/data.json')
+streamlit_analytics.stop_tracking(save_to_json='data.json')
 upload_data_file()
 # Custom CSS to improve mobile view and table fit
 st.markdown(
