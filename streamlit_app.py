@@ -4,6 +4,8 @@ import streamlit_analytics
 import json
 import base64
 import tempfile
+import firebase_admin
+ 
 
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
@@ -11,11 +13,45 @@ url = "https://pvpcalc.streamlit.app/"
 st.write("[Check CP for all IVs here](%s)" % url)
 # Define a function to format the data as required
 
-fbase = st.secrets["fbase"]
-fbase = json.dumps(fbase.to_dict())
+#fbase = st.secrets["fbase"]
+#fbase = json.dumps(fbase.to_dict())
 
-with open("/mount/src/pvpogo/cred.json", "w") as json_file:
-    json_file.write(fbase)
+
+#key_dict = json.loads(st.secrets["textkey"])
+#creds = service_account.Credentials.from_service_account_info(key_dict)
+#db = firestore.Client(credentials=creds, project="Pvpogo")
+
+
+def load_new(counts, collection_name):
+    """Load count data from firestore into `counts`."""
+
+    # Retrieve data from firestore.
+    key_dict = json.loads(st.secrets["fbase"])
+    creds = service_account.Credentials.from_service_account_info(key_dict)
+    db = firestore.Client(credentials=creds, project="Pvpogo")
+   
+    col = db.collection(collection_name)
+    firestore_counts = col.document("counts").get().to_dict()
+
+    # Update all fields in counts that appear in both counts and firestore_counts.
+    if firestore_counts is not None:
+        for key in firestore_counts:
+            if key in counts:
+                counts[key] = firestore_counts[key]
+
+
+def save_new(counts, collection_name):
+    """Save count data from `counts` to firestore."""
+    key_dict = json.loads(st.secrets["textkey"])
+    creds = service_account.Credentials.from_service_account_info(key_dict)
+    db = firestore.Client(credentials=creds, project="Pvpogo")
+    col = db.collection(collection_name)
+    doc = col.document("counts")
+    doc.set(counts)  # creates if doesn't exist
+    
+
+#with open("/mount/src/pvpogo/cred.json", "w") as json_file:
+    #json_file.write(fbase)
     
 def format_data(pokemon_family, shadow_only):
     # Filter data for the family and shadow condition
@@ -74,6 +110,7 @@ else:
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
 streamlit_analytics.stop_tracking()
+save_new(counts,"counts")
 #streamlit_analytics.stop_tracking(firestore_key_file="/mount/src/pvpogo/cred.json", firestore_collection_name="counts")
 #streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="pvpogo")
 # Custom CSS to improve mobile view and table fit
