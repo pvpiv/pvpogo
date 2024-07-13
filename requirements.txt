@@ -1,2 +1,4 @@
 streamlit
 streamlit_analytics
+os
+requests
