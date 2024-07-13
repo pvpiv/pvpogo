@@ -1,11 +1,15 @@
 import streamlit as st
 import pandas as pd
 import streamlit_analytics
+import json
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
 url = "https://pvpcalc.streamlit.app/"
 st.write("[Check CP for all IVs here](%s)" % url)
 # Define a function to format the data as required
+
+fbase = json.dumps(st.secrets["fbase"])
+
 def format_data(pokemon_family, shadow_only):
     # Filter data for the family and shadow condition
     if shadow_only:
@@ -60,7 +64,8 @@ if family_data:
 else:
     st.write("No data available for the selected options.")
 #streamlit_analytics.track(save_to_json="analytics.json")
-streamlit_analytics.stop_tracking(save_to_json='data/data.json')
+#streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
+streamlit_analytics.stop_tracking(firestore_key_file=fbase, firestore_collection_name="counts")
 # Custom CSS to improve mobile view and table fit
 st.markdown(
     """
