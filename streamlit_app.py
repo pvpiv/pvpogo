@@ -4,7 +4,7 @@ import streamlit_analytics
 import json
 import base64
 import tempfile
-import firebase_admin
+from google.cloud import firestore
  
 
 # Load your dataset
