@@ -69,8 +69,8 @@ else:
     with open(local_data_path, "w") as file:
         json.dump({}, file)
     streamlit_analytics.start_tracking()
-
-streamlit_analytics.start_tracking(load_from_json='data.json')
+streamlit_analytics.start_tracking()
+#streamlit_analytics.start_tracking(load_from_json='data.json')
 
 st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', False)
