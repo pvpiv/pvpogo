@@ -10,6 +10,9 @@ st.write("[Check CP for all IVs here](%s)" % url)
 
 fbase = st.secrets["fbase"]
 fbase = json.dumps(fbase.to_dict())
+with open("cred.json", "w") as json_file:
+    json_file.write(fbase)
+    
 def load_new(counts, service_account_json, collection_name):
     """Load count data from firestore into `counts`."""
 
@@ -88,7 +91,8 @@ else:
 #streamlit_analytics.track(save_to_json="analytics.json")
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
-streamlit_analytics.stop_tracking(firestore_key_file=fbase, firestore_collection_name="counts")
+    
+streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="counts")
 # Custom CSS to improve mobile view and table fit
 st.markdown(
     """
