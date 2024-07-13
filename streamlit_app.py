@@ -6,7 +6,7 @@ import base64
 import tempfile
 from google.cloud import firestore
  
-
+counts = {"loaded_from_firestore": False}
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
 url = "https://pvpcalc.streamlit.app/"
