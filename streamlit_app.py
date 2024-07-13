@@ -16,15 +16,6 @@ fbase = json.dumps(fbase.to_dict())
 
 with open("/mount/src/pvpogo/cred.json", "w") as json_file:
     json_file.write(fbase)
-
-firebase_key_str = base64.b64decode(fbase)
-
-          
-f = tempfile.NamedTemporaryFile()  
-
-with open("cred.json", "wb") as f:
-    f.write(firebase_key_str)    
-
     
 def format_data(pokemon_family, shadow_only):
     # Filter data for the family and shadow condition
@@ -84,6 +75,7 @@ else:
 
     
 streamlit_analytics.stop_tracking(firestore_key_file="/mount/src/pvpogo/cred.json", firestore_collection_name="pvpogo")
+#streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="pvpogo")
 # Custom CSS to improve mobile view and table fit
 st.markdown(
     """
