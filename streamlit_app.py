@@ -92,7 +92,7 @@ else:
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
     
-streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="counts")
+streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="pvpogo")
 # Custom CSS to improve mobile view and table fit
 st.markdown(
     """
