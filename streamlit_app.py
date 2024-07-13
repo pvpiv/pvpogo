@@ -30,7 +30,7 @@ def format_data(pokemon_family, shadow_only):
     return formatted_data
 
 # Set up UI elements
-streamlit_analytics.start_tracking('data/analytics.json')
+streamlit_analytics.start_tracking(load_from_json='data/analytics.json')
 st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', False)
 #streamlit_analytics.track(save_to_json="analytics.json")
