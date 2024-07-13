@@ -70,7 +70,8 @@ else:
         json.dump({}, file)
     streamlit_analytics.start_tracking()
 
-streamlit_analytics.start_tracking()
+streamlit_analytics.start_tracking(load_from_json='data.json')
+
 st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', False)
 #streamlit_analytics.track(save_to_json="analytics.json")
@@ -99,7 +100,7 @@ if family_data:
 else:
     st.write("No data available for the selected options.")
 #streamlit_analytics.track(save_to_json="analytics.json")
-streamlit_analytics.stop_tracking(save_to_json=local_data_path)
+streamlit_analytics.stop_tracking(save_to_json= 'data.json')
 
 # Upload the data.json file back to Synology
 upload_status = upload_data_file(local_data_path, data_file_url)
