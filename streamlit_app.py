@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit_analytics
 import os
 import requests
-
+from urllib.parse import urljoin
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
 url = "https://pvpcalc.streamlit.app/"
