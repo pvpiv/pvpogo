@@ -26,7 +26,8 @@ def load_new(counts, collection_name):
     """Load count data from firestore into `counts`."""
 
     # Retrieve data from firestore.
-    key_dict = json.loads(st.secrets["fbase"].to_dict())
+    fbase = st.secrets["fbase"].to_dict()
+    key_dict = json.loads(fbase)
     creds = service_account.Credentials.from_service_account_info(key_dict)
     db = firestore.Client(credentials=creds, project="Pvpogo")
    
@@ -110,7 +111,7 @@ else:
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
 streamlit_analytics.stop_tracking()
-#save_new(counts,"counts")
+save_new(counts,"counts")
 #streamlit_analytics.stop_tracking(firestore_key_file="/mount/src/pvpogo/cred.json", firestore_collection_name="counts")
 #streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="pvpogo")
 # Custom CSS to improve mobile view and table fit
