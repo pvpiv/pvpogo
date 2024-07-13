@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import streamlit_analytics
 import json
+import base64
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
 url = "https://pvpcalc.streamlit.app/"
@@ -9,31 +10,19 @@ st.write("[Check CP for all IVs here](%s)" % url)
 # Define a function to format the data as required
 
 fbase = st.secrets["fbase"]
-fbase = json.dumps(fbase.to_dict())
-with open("cred.json", "w") as json_file:
-    json_file.write(fbase)
-    
-def load_new(counts, service_account_json, collection_name):
-    """Load count data from firestore into `counts`."""
+fbase = json.dumps(fbase.to_dict()).encode('utf-8')
 
-    # Retrieve data from firestore.
-    db = firestore.Client.from_service_account_json(service_account_json)
-    col = db.collection(collection_name)
-    firestore_counts = col.document("counts").get().to_dict()
+#with open("cred.json", "w") as json_file:
+    #json_file.write(fbase)
 
-    # Update all fields in counts that appear in both counts and firestore_counts.
-    if firestore_counts is not None:
-        for key in firestore_counts:
-            if key in counts:
-                counts[key] = firestore_counts[key]
+firebase_key_str = base64.b64decode(fbase)
 
+          
+f = NamedTemporaryFile(delete=False)
 
-def save_new(counts, service_account_json, collection_name):
-    """Save count data from `counts` to firestore."""
-    db = firestore.Client.from_service_account_json(service_account_json)
-    col = db.collection(collection_name)
-    doc = col.document("counts")
-    doc.set(counts)  # creates if doesn't exist
+with open("cred.json", "wb") as f:
+    f.write(firebase_key_str)    
+
     
 def format_data(pokemon_family, shadow_only):
     # Filter data for the family and shadow condition
