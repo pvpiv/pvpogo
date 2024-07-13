@@ -8,7 +8,8 @@ url = "https://pvpcalc.streamlit.app/"
 st.write("[Check CP for all IVs here](%s)" % url)
 # Define a function to format the data as required
 
-fbase = json.dumps(st.secrets["fbase"])
+fbase = st.secrets["fbase"]
+fbase = json.dumps(fbase.to_dict())
 
 def format_data(pokemon_family, shadow_only):
     # Filter data for the family and shadow condition
