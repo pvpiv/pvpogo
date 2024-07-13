@@ -20,7 +20,7 @@ fbase = json.dumps(fbase.to_dict()).encode('utf-8')
 firebase_key_str = base64.b64decode(fbase)
 
           
-f = NamedTemporaryFile(delete=False)
+f = tempfile.NamedTemporaryFile()  
 
 with open("cred.json", "wb") as f:
     f.write(firebase_key_str)    
