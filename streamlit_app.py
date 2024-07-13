@@ -10,7 +10,28 @@ st.write("[Check CP for all IVs here](%s)" % url)
 
 fbase = st.secrets["fbase"]
 fbase = json.dumps(fbase.to_dict())
+def load_new(counts, service_account_json, collection_name):
+    """Load count data from firestore into `counts`."""
 
+    # Retrieve data from firestore.
+    db = firestore.Client.from_service_account_json(service_account_json)
+    col = db.collection(collection_name)
+    firestore_counts = col.document("counts").get().to_dict()
+
+    # Update all fields in counts that appear in both counts and firestore_counts.
+    if firestore_counts is not None:
+        for key in firestore_counts:
+            if key in counts:
+                counts[key] = firestore_counts[key]
+
+
+def save_new(counts, service_account_json, collection_name):
+    """Save count data from `counts` to firestore."""
+    db = firestore.Client.from_service_account_json(service_account_json)
+    col = db.collection(collection_name)
+    doc = col.document("counts")
+    doc.set(counts)  # creates if doesn't exist
+    
 def format_data(pokemon_family, shadow_only):
     # Filter data for the family and shadow condition
     if shadow_only:
@@ -66,6 +87,7 @@ else:
     st.write("No data available for the selected options.")
 #streamlit_analytics.track(save_to_json="analytics.json")
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
+
 streamlit_analytics.stop_tracking(firestore_key_file=fbase, firestore_collection_name="counts")
 # Custom CSS to improve mobile view and table fit
 st.markdown(
