@@ -12,10 +12,10 @@ st.write("[Check CP for all IVs here](%s)" % url)
 # Define a function to format the data as required
 
 fbase = st.secrets["fbase"]
-fbase = json.dumps(fbase.to_dict()).encode('utf-8')
+fbase = json.dumps(fbase.to_dict())
 
-#with open("cred.json", "w") as json_file:
-    #json_file.write(fbase)
+with open("/mount/src/pvpogo/cred.json", "w") as json_file:
+    json_file.write(fbase)
 
 firebase_key_str = base64.b64decode(fbase)
 
@@ -83,7 +83,7 @@ else:
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
     
-streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="pvpogo")
+streamlit_analytics.stop_tracking(firestore_key_file="/mount/src/pvpogo/cred.json", firestore_collection_name="pvpogo")
 # Custom CSS to improve mobile view and table fit
 st.markdown(
     """
