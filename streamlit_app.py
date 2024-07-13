@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import streamlit_analytics
+import os
+import requests
+
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
 url = "https://pvpcalc.streamlit.app/"
@@ -28,10 +31,37 @@ def format_data(pokemon_family, shadow_only):
                     entry[league] = value if pd.notna(value) else ''
             formatted_data.append(entry)
     return formatted_data
+    
+def download_data_file():
+    link = st.secrets["link"]
+    response = requests.get(link)
+    if response.status_code == 200:
+        with open("data.json", "wb") as file:
+            file.write(response.content)
+    else:
+        st.error("Failed to download data.json")
+        
+def upload_data_file():
+    link = st.secrets["link"]
+    with open("data.json", "rb") as file:
+        response = requests.put(link, files={"file": file})
+    if response.status_code == 200:
+        st.success("data.json uploaded successfully")
+    else:
+        st.error("Failed to upload data.json")
 
 # Set up UI elements
 #streamlit_analytics.start_tracking(load_from_json='data/data.json')
-streamlit_analytics.start_tracking()
+
+if not os.path.exists("data.json"):
+    download_data_file()
+
+# If data.json exists and is empty, start tracking without loading
+if os.path.exists("data.json") and os.path.getsize("data.json") == 0:
+    streamlit_analytics.start_tracking()
+else:
+    streamlit_analytics.start_tracking(load_from_json='data.json')
+    
 st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', False)
 #streamlit_analytics.track(save_to_json="analytics.json")
@@ -61,6 +91,7 @@ else:
     st.write("No data available for the selected options.")
 #streamlit_analytics.track(save_to_json="analytics.json")
 streamlit_analytics.stop_tracking(save_to_json='data/data.json')
+upload_data_file()
 # Custom CSS to improve mobile view and table fit
 st.markdown(
     """
