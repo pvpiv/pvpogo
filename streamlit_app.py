@@ -32,35 +32,27 @@ def format_data(pokemon_family, shadow_only):
             formatted_data.append(entry)
     return formatted_data
     
-def download_data_file():
-    link = st.secrets["link"]
-    response = requests.get(link)
-    if response.status_code == 200:
-        with open("data.json", "wb") as file:
-            file.write(response.content)
-    else:
-        st.error("Failed to download data.json")
-        
-def upload_data_file():
-    link = st.secrets["link"]
-    with open("data.json", "rb") as file:
-        response = requests.put(link, files={"file": file})
-    if response.status_code == 200:
-        st.success("data.json uploaded successfully")
-    else:
-        st.error("Failed to upload data.json")
+def upload_data_file(file_path, upload_link):
+    with open(file_path, "rb") as file:
+        response = requests.put(upload_link, files={"file": file})
+    return response.status_code
 
-# Set up UI elements
-#streamlit_analytics.start_tracking(load_from_json='data/data.json')
-
-if not os.path.exists("data.json"):
-    download_data_file()
+# Synology link from Streamlit secrets
+synology_link = st.secrets["link"]
 
 # If data.json exists and is empty, start tracking without loading
-if os.path.exists("data.json") and os.path.getsize("data.json") == 0:
+if not os.path.exists("data.json"):
+    # Create an empty data.json file
+    with open("data.json", "w") as file:
+        json.dump({}, file)
     streamlit_analytics.start_tracking()
 else:
-    streamlit_analytics.start_tracking()
+    # If the file exists but is empty, start tracking without loading
+    with open("data.json", "r") as file:
+        if file.read().strip() == "":
+            streamlit_analytics.start_tracking()
+        else:
+            streamlit_analytics.start_tracking(load_from_json='data.json')
     #streamlit_analytics.start_tracking(load_from_json='data.json')
     
 st.write("### Pokémon Selection")
@@ -92,7 +84,13 @@ else:
     st.write("No data available for the selected options.")
 #streamlit_analytics.track(save_to_json="analytics.json")
 streamlit_analytics.stop_tracking(save_to_json='data.json')
-upload_data_file()
+
+# Upload the data.json file back to Synology
+upload_status = upload_data_file("data.json", synology_link)
+if upload_status == 200:
+    st.success("data.json uploaded successfully")
+else:
+    st.error("Failed to upload data.json")
 # Custom CSS to improve mobile view and table fit
 st.markdown(
     """
