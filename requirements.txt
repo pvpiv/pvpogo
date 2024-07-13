@@ -1,5 +1,4 @@
 streamlit
 streamlit_analytics
 requests
-base64
 tempfile
