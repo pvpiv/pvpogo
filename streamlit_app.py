@@ -27,7 +27,8 @@ def load_new(counts, collection_name):
 
     # Retrieve data from firestore.
     key_dict = json.loads(st.secrets["textkey"])
-    creds = service_account.Credentials.from_service_account_info(key_dict)
+    creds = firestore.Client.from_service_account_json(key_dict)
+    #creds = service_account.Credentials.from_service_account_info(key_dict)
     db = firestore.Client(credentials=creds, project="pvpogo")
    
     col = db.collection(collection_name)
@@ -43,7 +44,8 @@ def load_new(counts, collection_name):
 def save_new(counts, collection_name):
     """Save count data from `counts` to firestore."""
     key_dict = json.loads(st.secrets["textkey"])
-    creds = service_account.Credentials.from_service_account_info(key_dict)
+    #creds = service_account.Credentials.from_service_account_info(key_dict)
+    creds = firestore.Client.from_service_account_json(key_dict)
     db = firestore.Client(credentials=creds, project="pvpogo")
     col = db.collection(collection_name)
     doc = col.document("counts")
