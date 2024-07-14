@@ -5,7 +5,7 @@ import json
 import base64
 import tempfile
 from google.cloud import firestore
- 
+from google.oauth2 import service_account
 counts = {"loaded_from_firestore": False}
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
