@@ -6,7 +6,7 @@ import base64
 import tempfile
 from google.cloud import firestore
 from google.oauth2 import service_account
-counts = {"loaded_from_firestore": False}
+#counts = {"loaded_from_firestore": False}
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
 url = "https://pvpcalc.streamlit.app/"
@@ -80,6 +80,7 @@ def format_data(pokemon_family, shadow_only):
 
 # Set up UI elements
 #streamlit_analytics.start_tracking(load_from_json='data/data.json')
+load_new(streamlit_analytics.counts,"counts")
 streamlit_analytics.start_tracking()
 
 st.write("### Pokémon Selection")
