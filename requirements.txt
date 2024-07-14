@@ -1,4 +1,4 @@
 streamlit
 streamlit_analytics
 firebase_admin
-firestore
+google.cloud
