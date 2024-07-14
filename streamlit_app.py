@@ -4,7 +4,7 @@ import streamlit_analytics
 import json
 import base64
 import tempfile
-from google.cloud import firestore
+import firestore
  
 counts = {"loaded_from_firestore": False}
 # Load your dataset
