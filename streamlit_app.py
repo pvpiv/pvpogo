@@ -26,10 +26,9 @@ def load_new(counts, collection_name):
     """Load count data from firestore into `counts`."""
 
     # Retrieve data from firestore.
-    fbase = st.secrets["fbase"].to_dict()
-    key_dict = json.loads(fbase)
+    key_dict = json.loads(st.secrets["textkey"])
     creds = service_account.Credentials.from_service_account_info(key_dict)
-    db = firestore.Client(credentials=creds, project="Pvpogo")
+    db = firestore.Client(credentials=creds, project="pvpogo")
    
     col = db.collection(collection_name)
     firestore_counts = col.document("counts").get().to_dict()
@@ -43,9 +42,9 @@ def load_new(counts, collection_name):
 
 def save_new(counts, collection_name):
     """Save count data from `counts` to firestore."""
-    key_dict = json.dumps(st.secrets["fbase"].to_dict())
+    key_dict = json.loads(st.secrets["textkey"])
     creds = service_account.Credentials.from_service_account_info(key_dict)
-    db = firestore.Client(credentials=creds, project="Pvpogo")
+    db = firestore.Client(credentials=creds, project="pvpogo")
     col = db.collection(collection_name)
     doc = col.document("counts")
     doc.set(counts)  # creates if doesn't exist
@@ -80,6 +79,7 @@ def format_data(pokemon_family, shadow_only):
 # Set up UI elements
 #streamlit_analytics.start_tracking(load_from_json='data/data.json')
 streamlit_analytics.start_tracking()
+
 st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', False)
 #streamlit_analytics.track(save_to_json="analytics.json")
@@ -111,7 +111,7 @@ else:
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
 streamlit_analytics.stop_tracking()
-#save_new(counts,"counts")
+save_new(counts,"counts")
 #streamlit_analytics.stop_tracking(firestore_key_file="/mount/src/pvpogo/cred.json", firestore_collection_name="counts")
 #streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="pvpogo")
 # Custom CSS to improve mobile view and table fit
