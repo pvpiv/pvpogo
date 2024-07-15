@@ -86,12 +86,10 @@ def format_data(pokemon_family, shadow_only):
 
 if 'show_shadow' not in st.session_state:
     st.session_state.show_shadow = False
-    
-if 'pokemon_choice' in st.session_state or 'pokemon_choice_new' in st.session_state:
-    if (pokemon_choice != 'Select a pokemon' or pokemon_choice != "Select a Shadow pokemon") or (pokemon_choice_new != 'Select a pokemon' or pokemon_choice_new != "Select a Shadow pokemon"):
+        
         pokemon_choice_new = ""
-        load_new(streamlit_analytics.counts,"counts")
-        streamlit_analytics.start_tracking()
+load_new(streamlit_analytics.counts,"counts")
+streamlit_analytics.start_tracking()
 
 #st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow)
@@ -115,8 +113,8 @@ if pokemon_list:
     pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
     
     if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
-        sel_pok = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(pokemon_choice), label_visibility = 'hidden',key="pcn")
-        pokemon_choice = sel_pok
+        #sel_pok = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(pokemon_choice), label_visibility = 'hidden',key="pcn")
+        #pokemon_choice = sel_pok
         
         
         #pokemon_choice = pokemon_choice
