@@ -94,8 +94,8 @@ if show_shadow:
 else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique()
 
-pokemon_list = list(pokemon_list,None)
-pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = len(pokemon_list) -1)
+#pokemon_list = list(pokemon_list,None)
+pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = None)
 
 if pokemon_choice is not None:
 # Display formatted data for the selected Pokémon's family
