@@ -52,8 +52,7 @@ def format_data(pokemon_family, shadow_only):
     return formatted_data
 
 # Set up UI elements
-
-load_new(streamlit_analytics.counts,"counts")
+load_new(streamlit_analytics.counts, "counts")
 streamlit_analytics.start_tracking()
 
 st.write("### Pokémon Selection")
@@ -64,7 +63,8 @@ if 'show_shadow' not in st.session_state:
     st.session_state.show_shadow_user_interaction = False
 
 if 'pokemon_choice' not in st.session_state:
-    st.session_state.pokemon_choice = "None"
+    st.session_state.pokemon_choice = ""
+    st.session_state.pokemon_choice_user_interaction = False
 
 # Checkbox for shadow Pokémon
 show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow)
@@ -81,10 +81,10 @@ else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique()
 
 # Add an empty option for the selectbox
-pokemon_list = list(pokemon_list) + ["None"]
+pokemon_list = [""] + list(pokemon_list)
 
 # Selectbox for Pokémon selection
-pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list, index=pokemon_list.index(st.session_state.pokemon_choice))
+pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list, index=pokemon_list.index(st.session_state.pokemon_choice) if st.session_state.pokemon_choice in pokemon_list else 0)
 
 # Update session state and log interaction only if user interaction
 if pokemon_choice and pokemon_choice != st.session_state.pokemon_choice:
@@ -106,7 +106,7 @@ if st.session_state.pokemon_choice_user_interaction:
 
 # Save and stop tracking analytics only if user interaction
 if st.session_state.show_shadow_user_interaction or st.session_state.pokemon_choice_user_interaction:
-    save_new(streamlit_analytics.counts,"counts")
+    save_new(streamlit_analytics.counts, "counts")
     st.session_state.show_shadow_user_interaction = False
     st.session_state.pokemon_choice_user_interaction = False
 
