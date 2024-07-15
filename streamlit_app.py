@@ -78,15 +78,15 @@ else:
 pokemon_list = [""] + list(pokemon_list)
 
 # Selectbox for Pokémon selection
-pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list, index=pokemon_list.index(st.session_state.pokemon_choice) if st.session_state.pokemon_choice in pokemon_list else 0)
+pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list, index=0 if st.session_state.pokemon_choice == "" else pokemon_list.index(st.session_state.pokemon_choice))
 
-# Check if the selection is different and update session state
+# Check if the selection is different and update user interaction flag
 if pokemon_choice != st.session_state.pokemon_choice:
-    st.session_state.pokemon_choice = pokemon_choice
     st.session_state.user_interacted = True
 
-# Process data only if a valid Pokémon is selected
-if st.session_state.user_interacted and st.session_state.pokemon_choice:
+# Process data only if a valid Pokémon is selected and user has interacted
+if pokemon_choice and st.session_state.user_interacted:
+    st.session_state.pokemon_choice = pokemon_choice  # Now update the session state after confirming interaction
     pokemon_family = df[df['Pokemon'] == st.session_state.pokemon_choice]['Family'].iloc[0]
     family_data = format_data(pokemon_family, show_shadow)
     if family_data:
