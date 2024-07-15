@@ -96,7 +96,7 @@ else:
 pokemon_list = list(pokemon_list) + ["None"]
 pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = len(pokemon_list)-1)
 
-if pokemon_choice != "None:
+if pokemon_choice != "None":
     # Find the family of the selected Pokémon
     pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
     
