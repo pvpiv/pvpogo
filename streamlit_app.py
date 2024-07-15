@@ -93,17 +93,17 @@ if show_shadow:
 else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique()
 
-pokemon_list = list(pokemon_list) + [""]
-pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = len(pokemon_list)-1)
+#pokemon_list = list(pokemon_list) + [""]
+pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list)
 
-if pokemon_choice != "" :
-    sel_pok = pokemon_choice
+if pokemon_choice != "None" :
+    #sel_pok = pokemon_choice
     load_new(streamlit_analytics.counts,"counts")
     streamlit_analytics.start_tracking()
 
     #pokemon_choice = pokemon_choice
     #with streamlit_analytics.track():
-    track = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(sel_pok), label_visibility="hidden")
+    #track = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(sel_pok), label_visibility="hidden")
 
     # Find the family of the selected Pokémon
     pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
