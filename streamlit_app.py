@@ -87,7 +87,7 @@ def format_data(pokemon_family, shadow_only):
 if 'show_shadow' not in st.session_state:
     st.session_state.show_shadow = False
         
-        pokemon_choice_new = ""
+        #pokemon_choice_new = ""
 load_new(streamlit_analytics.counts,"counts")
 streamlit_analytics.start_tracking()
 
