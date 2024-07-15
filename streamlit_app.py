@@ -6,11 +6,20 @@ import base64
 import tempfile
 from google.cloud import firestore
 from google.oauth2 import service_account
-
+#counts = {"loaded_from_firestore": False}
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
 url = "https://pvpcalc.streamlit.app/"
 st.write("[Check CP for all IVs here](%s)" % url)
+# Define a function to format the data as required
+
+#fbase = st.secrets["fbase"]
+#fbase = json.dumps(fbase.to_dict())
+
+
+#key_dict = json.loads(st.secrets["textkey"])
+#creds = service_account.Credentials.from_service_account_info(key_dict)
+#db = firestore.Client(credentials=creds, project="Pvpogo")
 
 
 def load_new(counts, collection_name):
@@ -43,6 +52,9 @@ def save_new(counts, collection_name):
     doc.set(counts)  # creates if doesn't exist
     
 
+#with open("/mount/src/pvpogo/cred.json", "w") as json_file:
+    #json_file.write(fbase)
+    
 def format_data(pokemon_family, shadow_only):
     # Filter data for the family and shadow condition
     if shadow_only:
@@ -68,8 +80,8 @@ def format_data(pokemon_family, shadow_only):
 
 # Set up UI elements
 #streamlit_analytics.start_tracking(load_from_json='data/data.json')
-#load_new(streamlit_analytics.counts,"counts")
-#streamlit_analytics.start_tracking()
+load_new(streamlit_analytics.counts,"counts")
+streamlit_analytics.start_tracking()
 
 st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', False)
@@ -101,8 +113,8 @@ else:
 #streamlit_analytics.track(save_to_json="analytics.json")
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
-#streamlit_analytics.stop_tracking(unsafe_password=st.secrets["pass"])
-#save_new(streamlit_analytics.counts,"counts")
+streamlit_analytics.stop_tracking(unsafe_password=st.secrets["pass"])
+save_new(streamlit_analytics.counts,"counts")
 #streamlit_analytics.stop_tracking(firestore_key_file="/mount/src/pvpogo/cred.json", firestore_collection_name="counts")
 #streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="pvpogo")
 # Custom CSS to improve mobile view and table fit
