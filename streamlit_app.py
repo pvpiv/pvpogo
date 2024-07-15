@@ -105,7 +105,7 @@ if show_shadow != st.session_state.show_shadow:
 if show_shadow:
     pokemon_list = df[df['Shadow']]['Pokemon'].unique()
 else:
-    pokemon_list = df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
+    pokemon_list = df[~df['Pokemon'].str.contains("Shadow", na="None")]['Pokemon'].unique()
 
 pokemon_list = MyList(pokemon_list)            
 #pokemon_list = list(pokemon_list) + [""]
