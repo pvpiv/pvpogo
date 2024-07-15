@@ -99,8 +99,10 @@ pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = len(pok
 if pokemon_choice != "":
     load_new(streamlit_analytics.counts,"counts")
     streamlit_analytics.start_tracking()
+    sel_pok = pokemon_choice
+    del session.state.pokemon_choice
     #pokemon_choice = pokemon_choice
-    pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = pokemon_list.index(pokemon_choice))
+    pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = pokemon_list.index(sel_pok))
     # Find the family of the selected Pokémon
     pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
     
