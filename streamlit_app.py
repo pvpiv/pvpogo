@@ -105,13 +105,13 @@ if show_shadow != st.session_state.show_shadow:
 if show_shadow:
     pokemon_list = df[df['Shadow']]['Pokemon'].unique()
 else:
-    pokemon_list = df[~df['Pokemon'].str.contains("Shadow", na="None")]['Pokemon'].unique()
+    pokemon_list = df[~df['Pokemon'].str.contains("Shadow", na= False)]['Pokemon'].unique()
 
 pokemon_list = MyList(pokemon_list)            
 #pokemon_list = list(pokemon_list) + [""]
 
 if pokemon_list:
-    pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = pokemon_list.last_index())
+    pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index =0 )#= pokemon_list.last_index())
     
     if pokemon_choice != "None" or pokemon_choice != "None (Shadow)":
         #sel_pok = pokemon_choice
