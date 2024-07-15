@@ -68,8 +68,8 @@ def format_data(pokemon_family, shadow_only):
 
 # Set up UI elements
 #streamlit_analytics.start_tracking(load_from_json='data/data.json')
-load_new(streamlit_analytics.counts,"counts")
-streamlit_analytics.start_tracking()
+#load_new(streamlit_analytics.counts,"counts")
+#streamlit_analytics.start_tracking()
 
 st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', False)
@@ -101,8 +101,8 @@ else:
 #streamlit_analytics.track(save_to_json="analytics.json")
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
-streamlit_analytics.stop_tracking(unsafe_password=st.secrets["pass"])
-save_new(streamlit_analytics.counts,"counts")
+#streamlit_analytics.stop_tracking(unsafe_password=st.secrets["pass"])
+#save_new(streamlit_analytics.counts,"counts")
 #streamlit_analytics.stop_tracking(firestore_key_file="/mount/src/pvpogo/cred.json", firestore_collection_name="counts")
 #streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="pvpogo")
 # Custom CSS to improve mobile view and table fit
