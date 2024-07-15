@@ -93,8 +93,6 @@ if show_shadow:
     pokemon_list = df[df['Shadow']]['Pokemon'].unique()
 else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique()
-    
-pokemon_list = list(pokemon_list)
 
 pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = None)
 
