@@ -81,6 +81,8 @@ def format_data(pokemon_family, shadow_only):
 # Set up UI elements
 #streamlit_analytics.start_tracking(load_from_json='data/data.json')
 
+load_new(streamlit_analytics.counts,"counts")
+streamlit_analytics.start_tracking()
 
 st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', False)
@@ -98,8 +100,7 @@ pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = None)
 
 if pokemon_choice is not None:
     
-    load_new(streamlit_analytics.counts,"counts")
-    streamlit_analytics.start_tracking()
+
 # Display formatted data for the selected Pokémon's family
 
     pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
@@ -111,12 +112,14 @@ if pokemon_choice is not None:
         df_display.set_index(['Pokemon'], inplace=True)
         st.table(df_display)
         save_new(streamlit_analytics.counts,"counts")
+        streamlit_analytics.stop_tracking(unsafe_password=st.secrets["pass"])
     else:
         st.write("No data available for the selected options.")
+        streamlit_analytics.stop_tracking(unsafe_password=st.secrets["pass"])
     #streamlit_analytics.track(save_to_json="analytics.json")
     #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
-streamlit_analytics.stop_tracking(unsafe_password=st.secrets["pass"])
+
 
 #streamlit_analytics.stop_tracking(firestore_key_file="/mount/src/pvpogo/cred.json", firestore_collection_name="counts")
 #streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="pvpogo")
