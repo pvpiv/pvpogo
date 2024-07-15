@@ -114,7 +114,10 @@ if pokemon_list:
     pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden')
     
     if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
-        #sel_pok = pokemon_choice
+        sel_pok = pokemon_choice
+        pokemon_choice = st.empty()
+        pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(sel_pok), label_visibility = 'hidden')
+        
         #pokemon_choice = pokemon_choice
         #with streamlit_analytics.track():
         #track = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(sel_pok), label_visibility="hidden")
