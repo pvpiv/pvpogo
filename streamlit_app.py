@@ -100,9 +100,11 @@ if pokemon_choice != "" :
     sel_pok = pokemon_choice
     load_new(streamlit_analytics.counts,"counts")
     streamlit_analytics.start_tracking()
-    pokemon_choice = st.empty()
+
     #pokemon_choice = pokemon_choice
-    pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = pokemon_list.index(sel_pok))
+    #with streamlit_analytics.track():
+    track = st.selectbox('Select a Pokémon:', label_visibility = 'hidden',pokemon_list,index = pokemon_list.index(sel_pok))
+
     # Find the family of the selected Pokémon
     pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
     
