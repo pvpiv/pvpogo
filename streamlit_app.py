@@ -110,7 +110,7 @@ else:
 #pokemon_list = list(pokemon_list) + [""]
 pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = len(pokemon_list) - 1)
 
-if pokemon_choice != "None" :
+if pokemon_choice != "None" or pokemon_choice != "None (Shadow)":
     #sel_pok = pokemon_choice
     #pokemon_choice = pokemon_choice
     #with streamlit_analytics.track():
