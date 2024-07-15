@@ -81,7 +81,7 @@ def format_data(pokemon_family, shadow_only):
 # Set up UI elements
 #streamlit_analytics.start_tracking(load_from_json='data/data.json')
 load_new(streamlit_analytics.counts,"counts")
-streamlit_analytics.start_tracking()
+
 
 st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', False)
@@ -97,6 +97,7 @@ pokemon_list = list(pokemon_list) + [""]
 pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = len(pokemon_list)-1)
 
 if pokemon_choice != "":
+    streamlit_analytics.start_tracking()
     # Find the family of the selected Pokémon
     pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
     
@@ -111,10 +112,11 @@ if pokemon_choice != "":
         df_display.set_index(['Pokemon'], inplace=True)
         st.table(df_display)
         save_new(streamlit_analytics.counts,"counts")
+        streamlit_analytics.stop_tracking()
     else:
         st.write("No data available for the selected options.")
-        
-streamlit_analytics.stop_tracking()
+        streamlit_analytics.stop_tracking()
+
 #streamlit_analytics.track(save_to_json="analytics.json")
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
