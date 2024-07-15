@@ -96,9 +96,8 @@ else:
 #pokemon_list = list(pokemon_list,None)
 
 load_new(streamlit_analytics.counts,"counts")
-#streamlit_analytics.start_tracking()
-with streamlit_analytics.track():
-    pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = None)
+
+pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = None,on_change = streamlit_analytics.start_tracking() )
 
 if pokemon_choice is not None:
     
