@@ -108,7 +108,7 @@ if pokemon_choice is not None:
         df_display.rename(columns={df.columns[1]: 'Attribute'})
         df_display.set_index(['Pokemon'], inplace=True)
         st.table(df_display)
-        save_new(streamlit_analytics.counts,"counts")
+        #save_new(streamlit_analytics.counts,"counts")
     else:
         st.write("No data available for the selected options.")
     #streamlit_analytics.track(save_to_json="analytics.json")
