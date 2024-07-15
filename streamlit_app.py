@@ -21,7 +21,10 @@ st.write("[Check CP for all IVs here](%s)" % url)
 #creds = service_account.Credentials.from_service_account_info(key_dict)
 #db = firestore.Client(credentials=creds, project="Pvpogo")
 
-
+class MyList(list):
+    def last_index(self):
+        return len(self)-1
+        
 def load_new(counts, collection_name):
     """Load count data from firestore into `counts`."""
 
@@ -104,9 +107,9 @@ if show_shadow:
 else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
 
-            
+pokemon_list = MyList(pokemon_list)            
 #pokemon_list = list(pokemon_list) + [""]
-pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = len(pokemon_list) - 1)
+pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = pokemon_list.last_index())
 
 if pokemon_choice != "None" or pokemon_choice != "None (Shadow)":
     #sel_pok = pokemon_choice
