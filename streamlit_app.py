@@ -111,7 +111,7 @@ pokemon_list = MyList(pokemon_list)
 #pokemon_list = list(pokemon_list) + [""]
 
 if pokemon_list:
-    pokemon_choice = st.selectbox('Select a Pokémon:', label_visibility = 'hidden',pokemon_list,index = pokemon_list.last_index())
+    pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden')
     
     if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
         #sel_pok = pokemon_choice
