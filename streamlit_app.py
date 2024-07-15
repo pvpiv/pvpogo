@@ -88,7 +88,7 @@ if 'show_shadow' not in st.session_state:
     st.session_state.show_shadow = False
     
 if 'pokemon_choice' in st.session_state:
-    if pokemon_choice != 'None' and pokemon_choice != "None (Shadow)":
+    if pokemon_choice != 'Select a pokemon' and pokemon_choice != "Select a Shadow pokemon":
         load_new(streamlit_analytics.counts,"counts")
         streamlit_analytics.start_tracking()
 
@@ -113,7 +113,7 @@ pokemon_list = MyList(pokemon_list)
 if pokemon_list:
     pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index =0 )#= pokemon_list.last_index())
     
-    if pokemon_choice != "None" or pokemon_choice != "None (Shadow)":
+    if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
         #sel_pok = pokemon_choice
         #pokemon_choice = pokemon_choice
         #with streamlit_analytics.track():
