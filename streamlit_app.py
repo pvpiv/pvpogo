@@ -108,13 +108,14 @@ if family_data:
     df_display.rename(columns={df.columns[1]: 'Attribute'})
     df_display.set_index(['Pokemon'], inplace=True)
     st.table(df_display)
+    save_new(streamlit_analytics.counts,"counts")
 else:
     st.write("No data available for the selected options.")
 #streamlit_analytics.track(save_to_json="analytics.json")
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
 streamlit_analytics.stop_tracking(unsafe_password=st.secrets["pass"])
-save_new(streamlit_analytics.counts,"counts")
+
 #streamlit_analytics.stop_tracking(firestore_key_file="/mount/src/pvpogo/cred.json", firestore_collection_name="counts")
 #streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="pvpogo")
 # Custom CSS to improve mobile view and table fit
