@@ -95,13 +95,12 @@ else:
 
 pokemon_list = list(pokemon_list) + [""]
 pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = len(pokemon_list)-1)
-sel_pok = pokemon_choice
-if pokemon_choice != "" or sel_pok != "":
-    
+
+if pokemon_choice != "" :
+    sel_pok = pokemon_choice
     load_new(streamlit_analytics.counts,"counts")
     streamlit_analytics.start_tracking()
-    
-    del pokemon_choice
+    session.widgets["pokemon_choice"]
     #pokemon_choice = pokemon_choice
     pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = pokemon_list.index(sel_pok))
     # Find the family of the selected Pokémon
