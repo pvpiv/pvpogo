@@ -139,7 +139,11 @@ if pokemon_list:
         else:
             st.write("No data available for the selected options.")
             streamlit_analytics.stop_tracking()
-
+    else:
+        streamlit_analytics.counts["total_script_runs"] -= 1
+        streamlit_analytics.counts["per_day"]["script_runs"][-1] -= 1
+        save_new(streamlit_analytics.counts,"counts")
+        streamlit_analytics.stop_tracking()
 #streamlit_analytics.track(save_to_json="analytics.json")
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
