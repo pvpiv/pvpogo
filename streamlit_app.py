@@ -75,6 +75,8 @@ show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.sh
 if show_shadow != st.session_state.show_shadow:
     st.session_state.show_shadow = show_shadow
     st.session_state.show_shadow_user_interaction = True
+else:
+    st.session_state.show_shadow_user_interaction = False
 
 # Filter the dropdown list based on the checkbox
 if show_shadow:
@@ -89,12 +91,14 @@ pokemon_list = [""] + list(pokemon_list)
 pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list, index=pokemon_list.index(st.session_state.pokemon_choice) if st.session_state.pokemon_choice in pokemon_list else 0)
 
 # Update session state and log interaction only if user interaction
-if pokemon_choice and pokemon_choice != st.session_state.pokemon_choice:
+if pokemon_choice != st.session_state.pokemon_choice:
     st.session_state.pokemon_choice = pokemon_choice
     st.session_state.pokemon_choice_user_interaction = True
+else:
+    st.session_state.pokemon_choice_user_interaction = False
 
 # Process data only if a valid Pokémon is selected
-if st.session_state.pokemon_choice_user_interaction:
+if st.session_state.pokemon_choice_user_interaction and st.session_state.pokemon_choice:
     pokemon_family = df[df['Pokemon'] == st.session_state.pokemon_choice]['Family'].iloc[0]
     family_data = format_data(pokemon_family, show_shadow)
     if family_data:
@@ -109,8 +113,6 @@ if st.session_state.pokemon_choice_user_interaction:
 # Save and stop tracking analytics only if user interaction
 if st.session_state.show_shadow_user_interaction or st.session_state.pokemon_choice_user_interaction:
     save_new(streamlit_analytics.counts, "counts")
-    st.session_state.show_shadow_user_interaction = False
-    st.session_state.pokemon_choice_user_interaction = False
 
 streamlit_analytics.stop_tracking(unsafe_password=st.secrets["pass"])
 
