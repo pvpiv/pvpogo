@@ -80,7 +80,7 @@ def format_data(pokemon_family, shadow_only):
 
 # Set up UI elements
 #streamlit_analytics.start_tracking(load_from_json='data/data.json')
-load_new(streamlit_analytics.counts,"counts")
+
 
 
 st.write("### Pokémon Selection")
@@ -97,8 +97,10 @@ pokemon_list = list(pokemon_list) + [""]
 pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = len(pokemon_list)-1)
 
 if pokemon_choice != "":
+    load_new(streamlit_analytics.counts,"counts")
     streamlit_analytics.start_tracking()
-    pokemon_choice = pokemon_choice
+    #pokemon_choice = pokemon_choice
+    pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = pokemon_list.index(pokemon_choice))
     # Find the family of the selected Pokémon
     pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
     
