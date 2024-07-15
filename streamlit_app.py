@@ -51,12 +51,6 @@ def format_data(pokemon_family, shadow_only):
             formatted_data.append(entry)
     return formatted_data
 
-# Set up UI elements
-load_new(streamlit_analytics.counts, "counts")
-streamlit_analytics.start_tracking()
-
-st.write("### Pokémon Selection")
-
 # Initialize session state for checkbox and selectbox
 if 'show_shadow' not in st.session_state:
     st.session_state.show_shadow = False
