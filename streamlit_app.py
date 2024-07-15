@@ -95,11 +95,12 @@ else:
 
 pokemon_list = list(pokemon_list) + [""]
 pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = len(pokemon_list)-1)
-
-if pokemon_choice != "":
+sel_pok = pokemon_choice
+if pokemon_choice != "" or sel_pok <> "":
+    
     load_new(streamlit_analytics.counts,"counts")
     streamlit_analytics.start_tracking()
-    sel_pok = pokemon_choice
+    
     del pokemon_choice
     #pokemon_choice = pokemon_choice
     pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = pokemon_list.index(sel_pok))
