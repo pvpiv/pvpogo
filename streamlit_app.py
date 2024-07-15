@@ -64,7 +64,7 @@ if 'show_shadow' not in st.session_state:
     st.session_state.show_shadow_user_interaction = False
 
 if 'pokemon_choice' not in st.session_state:
-    st.session_state.pokemon_choice = ""
+    st.session_state.pokemon_choice = "None"
 
 # Checkbox for shadow Pokémon
 show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow)
@@ -81,7 +81,7 @@ else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique()
 
 # Add an empty option for the selectbox
-pokemon_list = list(pokemon_list) + [""]
+pokemon_list = list(pokemon_list) + ["None"]
 
 # Selectbox for Pokémon selection
 pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list, index=pokemon_list.index(st.session_state.pokemon_choice))
