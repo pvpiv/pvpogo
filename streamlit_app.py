@@ -81,7 +81,7 @@ else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique()
 
 # Add an empty option for the selectbox
-pokemon_list = list(pokemon_list) + [""]
+pokemon_list = list(pokemon_list + [""]) 
 
 # Selectbox for Pokémon selection
 pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list, index=pokemon_list.index(st.session_state.pokemon_choice))
