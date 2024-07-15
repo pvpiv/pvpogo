@@ -60,6 +60,7 @@ def format_data(pokemon_family, shadow_only):
     if shadow_only:
         family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == True)]
     else:
+        st.write(pokemon_family)
         family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == False)]
     
     # Prepare the data for display
