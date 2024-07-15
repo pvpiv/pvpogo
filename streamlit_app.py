@@ -81,10 +81,23 @@ def format_data(pokemon_family, shadow_only):
 # Set up UI elements
 #streamlit_analytics.start_tracking(load_from_json='data/data.json')
 
-
+if 'show_shadow' not in st.session_state:
+    st.session_state.show_shadow = False
+    
+if 'pokemon_choice' in st.session_state:
+    if pokemon_choice != 'None':
+        load_new(streamlit_analytics.counts,"counts")
+        streamlit_analytics.start_tracking()
 
 st.write("### Pokémon Selection")
-show_shadow = st.checkbox('Show only Shadow Pokémon', False)
+show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow)
+
+if show_shadow != st.session_state.show_shadow:
+    st.session_state.show_shadow = show_shadow
+
+    
+st.write("### Pokémon Selection")
+#show_shadow = st.checkbox('Show only Shadow Pokémon', False)
 #streamlit_analytics.track(save_to_json="analytics.json")
 
 # Filter the dropdown list based on the checkbox
@@ -92,11 +105,7 @@ if show_shadow:
     pokemon_list = df[df['Shadow']]['Pokemon'].unique()
 else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique()
-    
-if 'pokemon_choice' in st.session_state:
-    if pokemon_choice != 'None':
-        load_new(streamlit_analytics.counts,"counts")
-        streamlit_analytics.start_tracking()
+
             
 #pokemon_list = list(pokemon_list) + [""]
 pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = len(pokemon_list) - 1)
