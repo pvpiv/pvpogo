@@ -85,7 +85,7 @@ if 'show_shadow' not in st.session_state:
     st.session_state.show_shadow = False
     
 if 'pokemon_choice' in st.session_state:
-    if pokemon_choice != 'None':
+    if pokemon_choice != 'None' and pokemon_choice != "None (Shadow)":
         load_new(streamlit_analytics.counts,"counts")
         streamlit_analytics.start_tracking()
 
