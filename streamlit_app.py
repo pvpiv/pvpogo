@@ -140,7 +140,7 @@ if pokemon_list:
             st.write("No data available for the selected options.")
             streamlit_analytics.stop_tracking()
     else:
-        streamlit_analytics.counts["widgets"][pokemon_choice] -= 1
+        streamlit_analytics.counts["widgets"]["Select a Pokémon:"][pokemon_choice] -= 1
         streamlit_analytics.counts["total_script_runs"] -= 1
         streamlit_analytics.counts["per_day"]["script_runs"][-1] -= 1
         save_new(streamlit_analytics.counts,"counts")
