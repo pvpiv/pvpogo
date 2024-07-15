@@ -64,8 +64,7 @@ if 'show_shadow' not in st.session_state:
     st.session_state.show_shadow_user_interaction = False
 
 if 'pokemon_choice' not in st.session_state:
-    st.session_state.pokemon_choice = None
-    st.session_state.pokemon_choice_user_interaction = False
+    st.session_state.pokemon_choice = ""
 
 # Checkbox for shadow Pokémon
 show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow)
@@ -81,17 +80,20 @@ if show_shadow:
 else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique()
 
+# Add an empty option for the selectbox
+pokemon_list = list(pokemon_list) + [""]
+
 # Selectbox for Pokémon selection
-pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list, index=0 if st.session_state.pokemon_choice is None else list(pokemon_list).index(st.session_state.pokemon_choice))
+pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list, index=pokemon_list.index(st.session_state.pokemon_choice))
 
 # Update session state and log interaction only if user interaction
-if pokemon_choice != st.session_state.pokemon_choice:
+if pokemon_choice and pokemon_choice != st.session_state.pokemon_choice:
     st.session_state.pokemon_choice = pokemon_choice
     st.session_state.pokemon_choice_user_interaction = True
 
 # Process data only if a valid Pokémon is selected
 if st.session_state.pokemon_choice_user_interaction:
-    pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
+    pokemon_family = df[df['Pokemon'] == st.session_state.pokemon_choice]['Family'].iloc[0]
     family_data = format_data(pokemon_family, show_shadow)
     if family_data:
         df_display = pd.DataFrame(family_data)
