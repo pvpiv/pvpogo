@@ -60,10 +60,12 @@ st.write("### Pokémon Selection")
 # Initialize session state for checkbox and selectbox
 if 'show_shadow' not in st.session_state:
     st.session_state.show_shadow = False
+if 'show_shadow_user_interaction' not in st.session_state:
     st.session_state.show_shadow_user_interaction = False
 
 if 'pokemon_choice' not in st.session_state:
     st.session_state.pokemon_choice = ""
+if 'pokemon_choice_user_interaction' not in st.session_state:
     st.session_state.pokemon_choice_user_interaction = False
 
 # Checkbox for shadow Pokémon
