@@ -135,10 +135,10 @@ if pokemon_list:
             df_display.set_index(['Pokemon'], inplace=True)
             st.table(df_display)
             save_new(streamlit_analytics.counts,"counts")
-            streamlit_analytics.stop_tracking()
+            streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
         else:
             st.write("No data available for the selected options.")
-            streamlit_analytics.stop_tracking()
+            streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     else:
         #streamlit_analytics.counts["widgets"]["Select a Pokémon:"][pokemon_choice] -= 1
         #streamlit_analytics.counts["total_script_runs"] -= 1
