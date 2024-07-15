@@ -81,7 +81,7 @@ if show_shadow:
 else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique()
 
-pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index=None)
+pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list)
 
 # Find the family of the selected Pokémon
 pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
