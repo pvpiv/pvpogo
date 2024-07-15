@@ -6,20 +6,11 @@ import base64
 import tempfile
 from google.cloud import firestore
 from google.oauth2 import service_account
-#counts = {"loaded_from_firestore": False}
+
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
 url = "https://pvpcalc.streamlit.app/"
 st.write("[Check CP for all IVs here](%s)" % url)
-# Define a function to format the data as required
-
-#fbase = st.secrets["fbase"]
-#fbase = json.dumps(fbase.to_dict())
-
-
-#key_dict = json.loads(st.secrets["textkey"])
-#creds = service_account.Credentials.from_service_account_info(key_dict)
-#db = firestore.Client(credentials=creds, project="Pvpogo")
 
 
 def load_new(counts, collection_name):
@@ -52,9 +43,6 @@ def save_new(counts, collection_name):
     doc.set(counts)  # creates if doesn't exist
     
 
-#with open("/mount/src/pvpogo/cred.json", "w") as json_file:
-    #json_file.write(fbase)
-    
 def format_data(pokemon_family, shadow_only):
     # Filter data for the family and shadow condition
     if shadow_only:
@@ -93,7 +81,7 @@ if show_shadow:
 else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique()
 
-pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list)
+pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index=None)
 
 # Find the family of the selected Pokémon
 pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
