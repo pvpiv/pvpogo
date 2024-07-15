@@ -94,7 +94,7 @@ else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique()
     
 if 'pokemon_choice' in st.session_state:
-    if st.session_state.pokemon_choice != 'None':
+    if pokemon_choice != 'None':
         load_new(streamlit_analytics.counts,"counts")
         streamlit_analytics.start_tracking()
             
