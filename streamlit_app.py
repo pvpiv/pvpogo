@@ -60,7 +60,6 @@ def format_data(pokemon_family, shadow_only):
     if shadow_only:
         family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == True)]
     else:
-        st.write(pokemon_family)
         family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == False)]
     
     # Prepare the data for display
@@ -103,7 +102,7 @@ if show_shadow != st.session_state.show_shadow:
 if show_shadow:
     pokemon_list = df[df['Shadow']]['Pokemon'].unique()
 else:
-    pokemon_list = df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique()
+    pokemon_list = df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
 
             
 #pokemon_list = list(pokemon_list) + [""]
