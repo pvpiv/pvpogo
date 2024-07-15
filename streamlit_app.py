@@ -118,7 +118,7 @@ if pokemon_list:
         sel_pok = pokemon_choice
         #pokemon_choice = st.empty()
         del pokemon_choice
-        pokemon_choice_new = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(sel_pok), label_visibility = 'hidden',key="poke_choice")
+        pokemon_choice_new = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(sel_pok), label_visibility = 'hidden',key="pcn")
         
         #pokemon_choice = pokemon_choice
         #with streamlit_analytics.track():
