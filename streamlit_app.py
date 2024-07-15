@@ -94,10 +94,10 @@ if show_shadow:
 else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow")]['Pokemon'].unique()
 
-#pokemon_list = list(pokemon_list,None)
+pokemon_list = list(None,pokemon_list)
 
 
-pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,index = None,on_change = streamlit_analytics.start_tracking )
+pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list,on_change = streamlit_analytics.start_tracking )
 
 if pokemon_choice is not None:
     
