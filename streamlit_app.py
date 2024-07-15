@@ -95,8 +95,6 @@ show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.sh
 if show_shadow != st.session_state.show_shadow:
     st.session_state.show_shadow = show_shadow
 
-    
-st.write("### Pokémon Selection")
 #show_shadow = st.checkbox('Show only Shadow Pokémon', False)
 #streamlit_analytics.track(save_to_json="analytics.json")
 
