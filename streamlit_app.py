@@ -120,7 +120,7 @@ pokemon_list = MyList(pokemon_list)
 if pokemon_list:
     #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
     if not show_shadow:
-        pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list, index = None,label_visibility = 'hidden',key="poke_choice1",placeholder = "Select a pokemon")
+        pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list, index = None,label_visibility = 'hidden',key="poke_choice1")
     else:
         pokemon_choice = st.selectbox('Select a Shadow pokemon:',pokemon_list, index = None,label_visibility = 'hidden',key="poke_choice2",placeholder = "Select a Shadow pokemon")
         
