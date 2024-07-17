@@ -125,7 +125,7 @@ pokemon_list = MyList(pokemon_list)
 if pokemon_list:
     #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
     pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = None, label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
-    del pokemon_choice
+    #del pokemon_choice
     if st.session_state['get_dat']:
         if st.session_state['last_sel'] is not None:
             load_new(streamlit_analytics.counts,"counts")
