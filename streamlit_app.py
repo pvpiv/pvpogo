@@ -99,6 +99,7 @@ def poke_search():
     st.write(str(pokemon_choice) +'@'+ str(st.session_state['get_dat'])) 
     if not st.session_state['get_dat'] and st.session_state['last_sel'] is not None:
         st.session_state['get_dat'] = True
+        st.write(str(pokemon_choice) +'$'+ str(st.session_state['get_dat'])) 
 #pokemon_choice_new = ""
 
 
