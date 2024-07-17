@@ -86,7 +86,16 @@ def format_data(pokemon_family, shadow_only):
 
 if 'show_shadow' not in st.session_state:
     st.session_state.show_shadow = False
-        
+
+if 'last_sel' not in st.session_state:
+    st.session_state['last_sel'] = "Blank"
+    st.session_state['get_dat'] = False
+else:
+     if pokemon_choice != "Select a pokemon" and pokemon_choice != "Select a Shadow pokemon":
+         if not st.session_state['get_dat'] and pokemon_choice != st.session_state['last_sel']
+             st.session_state['last_sel'] = pokemon_choice
+             st.session_state['get_dat'] = True
+         
         #pokemon_choice_new = ""
 load_new(streamlit_analytics.counts,"counts")
 streamlit_analytics.start_tracking()
@@ -112,39 +121,41 @@ pokemon_list = MyList(pokemon_list)
 if pokemon_list:
     pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
     
-    if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
-        #sel_pok = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(pokemon_choice), label_visibility = 'hidden',key="pcn")
-        #pokemon_choice = sel_pok
-        
-        
-        #pokemon_choice = pokemon_choice
-        #with streamlit_analytics.track():
-        #track = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(sel_pok), label_visibility="hidden")
-    
-        # Find the family of the selected Pokémon
-        pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
-        
-        # Display formatted data for the selected Pokémon's family
-        family_data = format_data(pokemon_family, show_shadow)
-        if family_data:
+    if st.session_state['get_dat']:
+        if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
+            #sel_pok = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(pokemon_choice), label_visibility = 'hidden',key="pcn")
+            #pokemon_choice = sel_pok
             
-            df_display = pd.DataFrame(family_data)
-            # Set up DataFrame for proper display
-            df_display.rename(columns={df.columns[0]: 'Pokemon'})
-            df_display.rename(columns={df.columns[1]: 'Attribute'})
-            df_display.set_index(['Pokemon'], inplace=True)
-            st.table(df_display)
-            save_new(streamlit_analytics.counts,"counts")
-            streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+            
+            #pokemon_choice = pokemon_choice
+            #with streamlit_analytics.track():
+            #track = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(sel_pok), label_visibility="hidden")
+        
+            # Find the family of the selected Pokémon
+            pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
+            
+            # Display formatted data for the selected Pokémon's family
+            family_data = format_data(pokemon_family, show_shadow)
+            if family_data:
+                
+                df_display = pd.DataFrame(family_data)
+                # Set up DataFrame for proper display
+                df_display.rename(columns={df.columns[0]: 'Pokemon'})
+                df_display.rename(columns={df.columns[1]: 'Attribute'})
+                df_display.set_index(['Pokemon'], inplace=True)
+                st.table(df_display)
+                save_new(streamlit_analytics.counts,"counts")
+                streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+            else:
+                st.write("No data available for the selected options.")
+                streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
         else:
-            st.write("No data available for the selected options.")
-            streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
-    else:
-        #streamlit_analytics.counts["widgets"]["Select a Pokémon:"][pokemon_choice] -= 1
-        #streamlit_analytics.counts["total_script_runs"] -= 1
-        #streamlit_analytics.counts["per_day"]["script_runs"][-1] -= 1
-        #save_new(streamlit_analytics.counts,"counts")
-        streamlit_analytics.stop_tracking()
+            #streamlit_analytics.counts["widgets"]["Select a Pokémon:"][pokemon_choice] -= 1
+            #streamlit_analytics.counts["total_script_runs"] -= 1
+            #streamlit_analytics.counts["per_day"]["script_runs"][-1] -= 1
+            #save_new(streamlit_analytics.counts,"counts")
+            streamlit_analytics.stop_tracking()
+        st.session_state['get_dat'] = False
 #streamlit_analytics.track(save_to_json="analytics.json")
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
