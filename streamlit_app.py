@@ -92,7 +92,7 @@ if 'last_sel' not in st.session_state:
     st.session_state['get_dat'] = False
 else:
      if pokemon_choice != "Select a pokemon" and pokemon_choice != "Select a Shadow pokemon":
-         if not st.session_state['get_dat'] and pokemon_choice != st.session_state['last_sel']
+         if not st.session_state['get_dat'] and pokemon_choice != st.session_state['last_sel']:
              st.session_state['last_sel'] = pokemon_choice
              st.session_state['get_dat'] = True
          
