@@ -117,7 +117,8 @@ pokemon_list = MyList(pokemon_list)
 #pokemon_list = list(pokemon_list) + [""]
 
 if pokemon_list:
-    pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
+    #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
+    pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list, label_visibility = 'hidden',key="poke_choice",placeholder = "Select a pokemon")
     st.session_state['last_sel'] = pokemon_choice
     
     if st.session_state['get_dat']:
