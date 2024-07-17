@@ -101,6 +101,9 @@ else:
 #st.write("### Pokémon Selection")
 show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow)
 
+load_new(streamlit_analytics.counts,"counts")
+streamlit_analytics.start_tracking()
+
 if show_shadow != st.session_state.show_shadow:
     st.session_state.show_shadow = show_shadow
 
@@ -125,8 +128,7 @@ if pokemon_list:
         
     st.session_state['last_sel'] = pokemon_choice
     
-    load_new(streamlit_analytics.counts,"counts")
-    streamlit_analytics.start_tracking()
+
     
     if pokemon_choice != "Select a pokemon" and pokemon_choice != "Select a Shadow pokemon":
        
