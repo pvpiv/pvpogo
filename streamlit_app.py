@@ -128,7 +128,7 @@ if pokemon_list:
     pokemon_choice = st.empty()
     load_new(streamlit_analytics.counts,"counts")
     streamlit_analytics.start_tracking()
-    pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(st.session_state['last_sel']), label_visibility = 'hidden',key="poke_choice2",on_change = poke_search)
+    pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(st.session_state['last_sel']), label_visibility = 'hidden',key="poke_choice2")
     
     if st.session_state['get_dat']:
         if pokemon_choice is not None:
