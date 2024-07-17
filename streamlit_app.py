@@ -96,8 +96,6 @@ if 'last_sel' not in st.session_state:
          #st.session_state['get_dat'] = True
 
 def poke_search():
-    st.write(str(pokemon_choice) +'@'+ str(st.session_state['get_dat'])) 
-    st.write(str(st.session_state['get_dat'] == False) +'+' +str(st.session_state['last_sel'] is None))
     if not st.session_state['get_dat']:
         st.session_state['get_dat'] = True
         st.write(str(pokemon_choice) +'$'+ str(st.session_state['get_dat'])) 
@@ -126,10 +124,8 @@ pokemon_list = MyList(pokemon_list)
 
 if pokemon_list:
     #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
-    #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
     pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = None, label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
     
-    st.write(str(pokemon_choice) +'|'+ str(st.session_state['get_dat'])) 
     if st.session_state['get_dat']:
         if pokemon_choice is not None:
             load_new(streamlit_analytics.counts,"counts")
