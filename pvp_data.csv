@@ -1292,5 +1292,3 @@ ID,Pokemon,Family,Shadow,Little_Rank,Great_Rank,Ultra_Rank,Master_Rank,Little_IV
 1000,Gholdengo,Gimmighoul,FALSE,1128,667,427,89,2/15/14,0/15/10,0/15/12,15/15/15,5.5,16,26.5,50,500,1494,2495,3976,"Hex, Shadow Ball, Focus Blast","Hex, Shadow Ball, Focus Blast","Hex, Shadow Ball, Focus Blast","Hex, Shadow Ball, Focus Blast",999;1000,1000
 1111,Select a pokemon,select,FALSE,,,,,,,,,,,,,,,,,,,,,1111,1111
 1111,Select a Shadow pokemon,select,TRUE,,,,,,,,,,,,,,,,,,,,,1111,1111
-1112,Select a TEST pokemon,select,FALSE,,,,,,,,,,,,,,,,,,,,,1112,1112
-1112,Select a Shadow TEST pokemon,select,TRUE,,,,,,,,,,,,,,,,,,,,,1112,1112
