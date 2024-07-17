@@ -87,13 +87,17 @@ def format_data(pokemon_family, shadow_only):
 #if 'show_shadow' not in st.session_state:
     #st.session_state.show_shadow = False
 
+if 'get_dat' not in st.session_state:
+    st.session_state['get_dat'] = False
 if 'last_sel' not in st.session_state:
     st.session_state['last_sel'] = None
-    st.session_state['get_dat'] = False
-else:
+#else:
+     #if not st.session_state['get_dat'] and st.session_state['last_sel'] is not None:
+         #st.session_state['get_dat'] = True
+
+def poke_search():
      if not st.session_state['get_dat'] and st.session_state['last_sel'] is not None:
          st.session_state['get_dat'] = True
-     
         #pokemon_choice_new = ""
 
 
@@ -121,7 +125,7 @@ if pokemon_list:
     #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
     #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
     pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = None, label_visibility = 'hidden',key="poke_choice")
-    st.session_state['last_sel'] = pokemon_choice
+    
     st.write(str(pokemon_choice) +'|'+ str(st.session_state['get_dat'])) 
     if st.session_state['get_dat']:
         if pokemon_choice is not None:
