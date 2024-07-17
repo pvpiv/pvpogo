@@ -98,7 +98,7 @@ if 'last_sel' not in st.session_state:
 def poke_search():
     if not st.session_state['get_dat']:
         st.session_state['get_dat'] = True
-        #st.session_state['last_sel'] = pokemon_choice
+        #st.session_stat['last_sel'] = pokemon_choice
         #del pokemon_choice
 #pokemon_choice_new = ""
 
@@ -131,7 +131,6 @@ if pokemon_list:
         if pokemon_choice is not None:
             load_new(streamlit_analytics.counts,"counts")
             streamlit_analytics.start_tracking()
-            pokemon_choice = pokemon_choice
         #if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
             #sel_pok = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(pokemon_choice), label_visibility = 'hidden',key="pcn")
             #pokemon_choice = sel_pok
