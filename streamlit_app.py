@@ -92,7 +92,8 @@ if 'last_sel' not in st.session_state:
     st.session_state['get_dat'] = False
 else:
      if not st.session_state['get_dat'] and st.session_state['last_sel'] != "Blank":
-         st.session_state['get_dat'] = True
+         if st.session_state['last_sel'] != "Select a pokemon" and st.session_state['last_sel'] != "Select a Shadow pokemon":
+             st.session_state['get_dat'] = True
      
         #pokemon_choice_new = ""
 load_new(streamlit_analytics.counts,"counts")
@@ -118,11 +119,16 @@ pokemon_list = MyList(pokemon_list)
 
 if pokemon_list:
     #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
-    pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list, label_visibility = 'hidden',key="poke_choice",placeholder = "Select a pokemon")
+    if not show_shadow:
+        pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list, index = None,label_visibility = 'hidden',key="poke_choice1",placeholder = "Select a pokemon")
+    else:
+        pokemon_choice = st.selectbox('Select a Shadow pokemon:',pokemon_list, index = None,label_visibility = 'hidden',key="poke_choice2",placeholder = "Select a Shadow pokemon")
+        
     st.session_state['last_sel'] = pokemon_choice
     
-    if st.session_state['get_dat']:
-        if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
+    if pokemon_choice != "Select a pokemon" and pokemon_choice != "Select a Shadow pokemon":
+       
+        if st.session_state['get_dat']:
             #sel_pok = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(pokemon_choice), label_visibility = 'hidden',key="pcn")
             #pokemon_choice = sel_pok
             
