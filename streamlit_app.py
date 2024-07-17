@@ -98,8 +98,8 @@ if 'last_sel' not in st.session_state:
 def poke_search():
     if not st.session_state['get_dat']:
         st.session_state['get_dat'] = True
-        #st.session_stat['last_sel'] = pokemon_choice
-        #del pokemon_choice
+        st.session_stat['last_sel'] = pokemon_choice
+        del pokemon_choice
 #pokemon_choice_new = ""
 
 
