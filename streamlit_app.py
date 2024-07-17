@@ -95,8 +95,9 @@ if 'last_sel' not in st.session_state:
      #if not st.session_state['get_dat'] and st.session_state['last_sel'] is not None:
          #st.session_state['get_dat'] = True
 
-def poke_search():
+def poke_search(pokemon_choice):
     if not st.session_state['get_dat']:
+        st.session_state['last_sel'] = pokemon_choice
         st.session_state['get_dat'] = True
 #pokemon_choice_new = ""
 
@@ -123,7 +124,11 @@ pokemon_list = MyList(pokemon_list)
 
 if pokemon_list:
     #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
-    pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = None, label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
+    pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = None, label_visibility = 'hidden',key="poke_choice1",on_change = poke_search)
+    pokemon_choice = st.empty()
+    load_new(streamlit_analytics.counts,"counts")
+    streamlit_analytics.start_tracking()
+    pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(st.session_state['last_sel']), label_visibility = 'hidden',key="poke_choice2",on_change = poke_search)
     
     if st.session_state['get_dat']:
         if pokemon_choice is not None:
