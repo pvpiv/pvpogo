@@ -1290,7 +1290,7 @@ ID,Pokemon,Family,Shadow,Little_Rank,Great_Rank,Ultra_Rank,Master_Rank,Little_IV
 998,Baxcalibur,Frigibax,FALSE,236,237,195,38,0/15/13,0/15/5,1/15/15,15/15/15,5.5,16,26,50,499,1495,2495,4013,"Dragon Breath, Avalanche, Dragon Claw","Dragon Breath, Avalanche, Dragon Claw","Dragon Breath, Avalanche, Dragon Claw","Dragon Breath, Avalanche, Dragon Claw",996;997;998,998
 999,Gimmighoul,Gimmighoul,FALSE,1100,,,,1/15/14,,,,17.5,,,,496,,,,"Astonish, Shadow Ball, NA",,,,999;1000,999;1000
 1000,Gholdengo,Gimmighoul,FALSE,1128,667,427,89,2/15/14,0/15/10,0/15/12,15/15/15,5.5,16,26.5,50,500,1494,2495,3976,"Hex, Shadow Ball, Focus Blast","Hex, Shadow Ball, Focus Blast","Hex, Shadow Ball, Focus Blast","Hex, Shadow Ball, Focus Blast",999;1000,1000
-1111,Select a pokemon,select,FALSE,,,,,,,,,,,,,,,,,,,,,1111,1111
+1111,Select a pokemon,select,FALSE,,,,,,,,,,,,,,,,,,,,,1111,1112
 1111,Select a Shadow pokemon,select,TRUE,,,,,,,,,,,,,,,,,,,,,1112,1112
 1112,Select a TEST pokemon,select,FALSE,,,,,,,,,,,,,,,,,,,,,1112,1112
 1112,Select a Shadow TEST pokemon,select,TRUE,,,,,,,,,,,,,,,,,,,,,1112,1112
