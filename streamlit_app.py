@@ -84,8 +84,8 @@ def format_data(pokemon_family, shadow_only):
 # Set up UI elements
 #streamlit_analytics.start_tracking(load_from_json='data/data.json')
 
-if 'show_shadow' not in st.session_state:
-    st.session_state.show_shadow = False
+#if 'show_shadow' not in st.session_state:
+    #st.session_state.show_shadow = False
 
 if 'last_sel' not in st.session_state:
     st.session_state['last_sel'] = "Blank"
@@ -99,10 +99,12 @@ load_new(streamlit_analytics.counts,"counts")
 streamlit_analytics.start_tracking()
 
 #st.write("### Pokémon Selection")
-show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow)
+#show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow, on_change=None)
 
-if show_shadow != st.session_state.show_shadow:
-    st.session_state.show_shadow = show_shadow
+show_shadow = st.checkbox('Show only Shadow Pokémon')#, on_change= track_shadow)
+
+#if show_shadow != st.session_state.show_shadow:
+    #st.session_state.show_shadow = show_shadow
 
 #show_shadow = st.checkbox('Show only Shadow Pokémon', False)
 #streamlit_analytics.track(save_to_json="analytics.json")
