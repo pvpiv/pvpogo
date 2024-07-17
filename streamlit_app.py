@@ -123,10 +123,12 @@ if pokemon_list:
     pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = None, label_visibility = 'hidden',key="poke_choice")
     st.session_state['last_sel'] = pokemon_choice
     if pokemon_choice is not None:
-        load_new(streamlit_analytics.counts,"counts")
-        streamlit_analytics.start_tracking()
+        
     if st.session_state['get_dat']:
-        if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
+        if pokemon_choice is not None:
+            load_new(streamlit_analytics.counts,"counts")
+            streamlit_analytics.start_tracking()
+        #if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
             #sel_pok = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(pokemon_choice), label_visibility = 'hidden',key="pcn")
             #pokemon_choice = sel_pok
             
