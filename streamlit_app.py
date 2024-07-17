@@ -132,7 +132,7 @@ if pokemon_list:
             
             load_new(streamlit_analytics.counts,"counts")
             streamlit_analytics.start_tracking()
-            st.text_input(label = "",value = st.session_state['last_sel'],disabled = True,label_visibility = 'hidden')
+            st.text_input(label = " ",value = st.session_state['last_sel'],disabled = True,label_visibility = 'hidden')
         #if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
             #sel_pok = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(pokemon_choice), label_visibility = 'hidden',key="pcn")
             #pokemon_choice = sel_pok
