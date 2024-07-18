@@ -159,15 +159,15 @@ if pokemon_list:
                     try:
                         save_new(streamlit_analytics.counts,"counts")
                         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
-                    pass:
-                        print(':)')
+                    except:
+                        pass
             else:
                 if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
                     try:
                         save_new(streamlit_analytics.counts,"counts")
                         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
-                    pass:
-                        print(':)')
+                    except:
+                        pass
         else:
             #streamlit_analytics.counts["widgets"]["Select a Pokémon:"][pokemon_choice] -= 1
             #streamlit_analytics.counts["total_script_runs"] -= 1
@@ -175,8 +175,8 @@ if pokemon_list:
             #save_new(streamlit_analytics.counts,"counts")
             try: 
                 streamlit_analytics.stop_tracking()
-            pass:
-                print(':)')
+            except:
+                pass
         st.session_state['get_dat'] = False
 #streamlit_analytics.track(save_to_json="analytics.json")
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
