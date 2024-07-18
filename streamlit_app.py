@@ -129,7 +129,7 @@ if pokemon_list:
     
     if st.session_state['get_dat']:
         if pokemon_choice is not None:
-            if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
+            if pokemon_choice != "Select a pokemon" and pokemon_choice != "Select a Shadow pokemon":
                 load_new(streamlit_analytics.counts,"counts")
                 streamlit_analytics.start_tracking()
             st.text_input(label = " ",value = st.session_state['last_sel'],disabled = True,label_visibility = 'hidden')
