@@ -159,7 +159,6 @@ if pokemon_list:
                     try:
                         save_new(streamlit_analytics.counts,"counts")
                         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
-                        st.write(':)')
                     except:
                         pass
             else:
@@ -167,7 +166,6 @@ if pokemon_list:
                     try:
                         save_new(streamlit_analytics.counts,"counts")
                         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
-                        st.write(':(')
                     except:
                         pass
         else:
@@ -180,7 +178,6 @@ if pokemon_list:
 else:
     try: 
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
-        st.write(':|')
     except:
         pass
 #streamlit_analytics.track(save_to_json="analytics.json")
