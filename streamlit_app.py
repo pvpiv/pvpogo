@@ -176,7 +176,7 @@ if pokemon_list:
             #streamlit_analytics.counts["per_day"]["script_runs"][-1] -= 1
             #save_new(streamlit_analytics.counts,"counts")
          
-        st.session_state['get_dat'] = False
+            st.session_state['get_dat'] = False
 else:
     try: 
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
