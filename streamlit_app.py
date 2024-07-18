@@ -129,9 +129,9 @@ if pokemon_list:
     
     if st.session_state['get_dat']:
         if pokemon_choice is not None:
-            
-            load_new(streamlit_analytics.counts,"counts")
-            streamlit_analytics.start_tracking()
+            if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
+                load_new(streamlit_analytics.counts,"counts")
+                streamlit_analytics.start_tracking()
             st.text_input(label = " ",value = st.session_state['last_sel'],disabled = True,label_visibility = 'hidden')
         #if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
             #sel_pok = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(pokemon_choice), label_visibility = 'hidden',key="pcn")
@@ -155,17 +155,28 @@ if pokemon_list:
                 df_display.rename(columns={df.columns[1]: 'Attribute'})
                 df_display.set_index(['Pokemon'], inplace=True)
                 st.table(df_display)
-                save_new(streamlit_analytics.counts,"counts")
-                streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+                if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
+                    try:
+                        save_new(streamlit_analytics.counts,"counts")
+                        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+                    pass:
+                        print(':)')
             else:
-                st.write("No data available for the selected options.")
-                streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+                if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
+                    try:
+                        save_new(streamlit_analytics.counts,"counts")
+                        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+                    pass:
+                        print(':)')
         else:
             #streamlit_analytics.counts["widgets"]["Select a Pokémon:"][pokemon_choice] -= 1
             #streamlit_analytics.counts["total_script_runs"] -= 1
             #streamlit_analytics.counts["per_day"]["script_runs"][-1] -= 1
             #save_new(streamlit_analytics.counts,"counts")
-            streamlit_analytics.stop_tracking()
+            try: 
+                streamlit_analytics.stop_tracking()
+            pass:
+                print(':)')
         st.session_state['get_dat'] = False
 #streamlit_analytics.track(save_to_json="analytics.json")
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
