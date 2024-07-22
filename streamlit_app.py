@@ -132,7 +132,7 @@ if pokemon_list:
             if pokemon_choice != "Select a pokemon" and pokemon_choice != "Select a Shadow pokemon":
                 load_new(streamlit_analytics.counts,"counts")
                 streamlit_analytics.start_tracking()
-            st.text_input(label = " ",value = st.session_state['last_sel'],disabled = True,label_visibility = 'hidden')
+           
         #if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
             #sel_pok = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(pokemon_choice), label_visibility = 'hidden',key="pcn")
             #pokemon_choice = sel_pok
@@ -148,7 +148,7 @@ if pokemon_list:
             # Display formatted data for the selected Pokémon's family
             family_data = format_data(pokemon_family, show_shadow)
             if family_data:
-                
+                st.text_input(label = " ",value = pokemon_choice ,disabled = True,label_visibility = 'hidden')
                 df_display = pd.DataFrame(family_data)
                 # Set up DataFrame for proper display
                 df_display.rename(columns={df.columns[0]: 'Pokemon'})
