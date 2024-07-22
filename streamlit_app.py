@@ -129,7 +129,7 @@ if pokemon_list:
     
     if st.session_state['get_dat']:
         if pokemon_choice is not None:
-            if pokemon_choice != "Select a pokemon" and pokemon_choice != "Select a Shadow pokemon":
+            if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                 load_new(streamlit_analytics.counts,"counts")
                 streamlit_analytics.start_tracking()
            
@@ -148,7 +148,7 @@ if pokemon_list:
             # Display formatted data for the selected Pokémon's family
             family_data = format_data(pokemon_family, show_shadow)
             if family_data:
-                if pokemon_choice != "Select a pokemon" and pokemon_choice != "Select a Shadow pokemon":
+                if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     st.text_input(label = " ",value = pokemon_choice ,disabled = True,label_visibility = 'hidden')
                 df_display = pd.DataFrame(family_data)
                 # Set up DataFrame for proper display
@@ -156,14 +156,14 @@ if pokemon_list:
                 df_display.rename(columns={df.columns[1]: 'Attribute'})
                 df_display.set_index(['Pokemon'], inplace=True)
                 st.table(df_display)
-                if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
+                if pokemon_choice != "Select a Pokemon" or pokemon_choice != "Select a Shadow Pokemon":
                     try:
                         save_new(streamlit_analytics.counts,"counts")
                         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
                     except:
                         pass
             else:
-                if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
+                if pokemon_choice != "Select a Pokemon" or pokemon_choice != "Select a Shadow Pokemon":
                     try:
                         save_new(streamlit_analytics.counts,"counts")
                         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
