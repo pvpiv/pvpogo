@@ -156,14 +156,14 @@ if pokemon_list:
                 df_display.rename(columns={df.columns[1]: 'Attribute'})
                 df_display.set_index(['Pokemon'], inplace=True)
                 st.table(df_display)
-                if pokemon_choice != "Select a Pokemon" or pokemon_choice != "Select a Shadow Pokemon":
+                if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     try:
                         save_new(streamlit_analytics.counts,"counts")
                         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
                     except:
                         pass
             else:
-                if pokemon_choice != "Select a Pokemon" or pokemon_choice != "Select a Shadow Pokemon":
+                if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     try:
                         save_new(streamlit_analytics.counts,"counts")
                         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
