@@ -112,7 +112,7 @@ def get_top_50_ids(rank_column,league):
     ids_string = ','.join(top_50_ids)
     # Append the appropriate string based on the league
     if league == 'little':
-        prefix = 'cp-500&'
+        prefix = 'cp-500|'
     elif league == 'great':
         prefix = 'cp-1500&'
     elif league == 'ultra':
