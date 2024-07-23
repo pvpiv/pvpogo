@@ -101,7 +101,7 @@ def poke_search():
         st.session_state['last_sel'] = st.session_state.poke_choice
         #del pokemon_choice
 #pokemon_choice_new = ""
-def get_top_50_unique_ids(rank_column):
+def get_top_50_ids(rank_column):
     # Drop rows where the rank column is NaN
     df_filtered = df.dropna(subset=[rank_column])
     # Sort the DataFrame by the rank column
