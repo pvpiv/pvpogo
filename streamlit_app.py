@@ -90,10 +90,10 @@ def make_string():
     #st.session_state.grt = st.empty()
     #st.session_state.ult = st.empty()
     #st.session_state.mst = st.empty()
-    st.session_state.lil = st.text_input(key='lil',label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True)
-    st.session_state.grt = st.text_input(key='grt',label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = great_league_top_50,disabled = True)
-    st.session_state.ult = st.text_input(key='ult',label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = ultra_league_top_50,disabled = True)
-    st.session_state.mst = st.text_input(key='mst',label ="Master League Top 50 Search String: (For BEST PVP IVs add 3-4*)", value = master_league_top_50,disabled = True)
+    st.session_state.lil =  little_league_top_50
+    st.session_state.grt =  great_league_top_50
+    st.session_state.ult = ultra_league_top_50
+    st.session_state.mst = master_league_top_50
 # Set up UI elements
 #streamlit_analytics.start_tracking(load_from_json='data/data.json')
 
