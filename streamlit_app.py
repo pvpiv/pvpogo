@@ -91,6 +91,8 @@ if 'get_dat' not in st.session_state:
     st.session_state['get_dat'] = False
 if 'last_sel' not in st.session_state:
     st.session_state['last_sel'] = None
+    if 'last_n' not in st.session_state:
+    st.session_state['last_n'] = 0
 #else:
      #if not st.session_state['get_dat'] and st.session_state['last_sel'] is not None:
          #st.session_state['get_dat'] = True
@@ -154,7 +156,9 @@ show_string = st.checkbox('Show Top 50 Search String',value=False)
 # Extract top 50 IDs for each league
 if show_string:
     top_n = st.number_input('Enter the number of top Pokémon (between 5 and 200):', min_value=5, max_value=200, value=50, step=1)
-    if st.button:
+    
+    if st.session_state['last_n'] != top_n:
+        st.session_state['last_n'] = top_n
         little_league_top_50 = get_top_50_ids('Little_Rank','little',top_n)
         great_league_top_50 = get_top_50_ids('Great_Rank','great',top_n)
         ultra_league_top_50 = get_top_50_ids('Ultra_Rank','ultra',top_n)
