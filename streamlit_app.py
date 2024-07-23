@@ -135,9 +135,9 @@ if show_string:
     ultra_league_top_50 = get_top_50_ids('Ultra_Rank','ultra')
     master_league_top_50 = get_top_50_ids('Master_Rank',"")
     st.text_input(label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True)
-    st.text_input(label ="Great League Top 50 Search String:", value = great_league_top_50,disabled = True)
-    st.text_input(label ="Ultra League Top 50 Search String:", value = ultra_league_top_50,disabled = True)
-    st.text_input(label ="Master League Top 50 Search String:", value = master_league_top_50,disabled = True)
+    st.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = great_league_top_50,disabled = True)
+    st.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = ultra_league_top_50,disabled = True)
+    st.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add 3-4*)", value = master_league_top_50,disabled = True)
     
 show_shadow = st.checkbox('Show only Shadow Pokémon')#, on_change= track_shadow)
 
