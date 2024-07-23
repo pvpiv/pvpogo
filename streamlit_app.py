@@ -131,11 +131,10 @@ if show_string:
     ultra_league_top_50 = get_top_50_ids('Ultra_Rank') + '&CP-2500'
     master_league_top_50 = get_top_50_ids('Master_Rank')
 
-# Print the results
-print("Little League Top 50 IDs:", little_league_top_50)
-print("Great League Top 50 IDs:", great_league_top_50)
-print("Ultra League Top 50 IDs:", ultra_league_top_50)
-print("Master League Top 50 IDs:", master_league_top_50)
+    st.write("Little League Top 50 IDs:", little_league_top_50)
+    st.write("Great League Top 50 IDs:", great_league_top_50)
+    st.write("Ultra League Top 50 IDs:", ultra_league_top_50)
+    st.write("Master League Top 50 IDs:", master_league_top_50)
 pokemon_list = MyList(pokemon_list)            
 #pokemon_list = list(pokemon_list) + [""]
 
