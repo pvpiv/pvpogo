@@ -101,14 +101,23 @@ def poke_search():
         st.session_state['last_sel'] = st.session_state.poke_choice
         #del pokemon_choice
 #pokemon_choice_new = ""
-def get_top_50_ids(rank_column):
+def get_top_50_ids(rank_column,league):
     # Drop rows where the rank column is NaN
     df_filtered = df.dropna(subset=[rank_column])
     # Sort the DataFrame by the rank column
     top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(50)
     # Get the list of unique IDs
     top_50_ids = top_df['ID'].astype(str).tolist()
-    return ','.join(top_50_ids)
+    # Join the IDs into a string
+    ids_string = ','.join(top_50_ids)
+    # Append the appropriate string based on the league
+    if league == 'little':
+        ids_string += '&CP-500'
+    elif league == 'great':
+        ids_string += '&CP-1500'
+    elif league == 'ultra':
+        ids_string += '&CP-2500'
+    return ids_string
 
 #st.write("### Pokémon Selection")
 #show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow, on_change=None)
@@ -118,9 +127,9 @@ show_string = st.checkbox('Show Top 50 Search String',value=False)
 
 # Extract top 50 IDs for each league
 if show_string:
-    little_league_top_50 = get_top_50_ids('Little_Rank') + '&CP-500'
-    great_league_top_50 = get_top_50_ids('Great_Rank') + '&CP-1500'
-    ultra_league_top_50 = get_top_50_ids('Ultra_Rank') + '&CP-2500'
+    little_league_top_50 = get_top_50_ids('Little_Rank','little')
+    great_league_top_50 = get_top_50_ids('Great_Rank','great')
+    ultra_league_top_50 = get_top_50_ids('Ultra_Rank','ultra')
     master_league_top_50 = get_top_50_ids('Master_Rank')
     st.text_input(label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True)
     st.text_input(label ="Great League Top 50 Search String:", value = great_league_top_50,disabled = True)
