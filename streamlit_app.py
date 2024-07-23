@@ -91,7 +91,7 @@ if 'get_dat' not in st.session_state:
     st.session_state['get_dat'] = False
 if 'last_sel' not in st.session_state:
     st.session_state['last_sel'] = None
-    if 'last_n' not in st.session_state:
+if 'last_n' not in st.session_state:
     st.session_state['last_n'] = 0
 #else:
      #if not st.session_state['get_dat'] and st.session_state['last_sel'] is not None:
