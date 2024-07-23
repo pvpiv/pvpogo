@@ -130,10 +130,10 @@ if show_string:
     great_league_top_50 = get_top_50_ids('Great_Rank') + '&CP-1500'
     ultra_league_top_50 = get_top_50_ids('Ultra_Rank') + '&CP-2500'
     master_league_top_50 = get_top_50_ids('Master_Rank')
-    st.text_input(label ="Little League Top 50 IDs:", value = little_league_top_50,disabled = True)
-    st.text_input(label ="Great League Top 50 IDs:", value = great_league_top_50,disabled = True)
-    st.text_input(label ="Ultra League Top 50 IDs:", value = ultra_league_top_50,disabled = True)
-    st.text_input(label ="Master League Top 50 IDs:", value = master_league_top_50,disabled = True)
+    st.text_input(label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True)
+    st.text_input(label ="Great League Top 50 Search String:", value = great_league_top_50,disabled = True)
+    st.text_input(label ="Ultra League Top 50 Search String:", value = ultra_league_top_50,disabled = True)
+    st.text_input(label ="Master League Top 50 Search String:", value = master_league_top_50,disabled = True)
     
 pokemon_list = MyList(pokemon_list)            
 #pokemon_list = list(pokemon_list) + [""]
