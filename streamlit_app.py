@@ -81,15 +81,15 @@ def format_data(pokemon_family, shadow_only):
             formatted_data.append(entry)
     return formatted_data
     
-def make_string(top_n):
+def make_string():
     little_league_top_50 = get_top_50_ids('Little_Rank','little',top_n)
     great_league_top_50 = get_top_50_ids('Great_Rank','great',top_n)
     ultra_league_top_50 = get_top_50_ids('Ultra_Rank','ultra',top_n)
     master_league_top_50 = get_top_50_ids('Master_Rank',"",top_n)
-    st.session_state.lil = st.empty()
-    st.session_state.grt = st.empty()
-    st.session_state.ult = st.empty()
-    st.session_state.mst = st.empty()
+    #st.session_state.lil = st.empty()
+    #st.session_state.grt = st.empty()
+    #st.session_state.ult = st.empty()
+    #st.session_state.mst = st.empty()
     st.session_state.lil = st.text_input(key='lil',label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True)
     st.session_state.grt = st.text_input(key='grt',label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = great_league_top_50,disabled = True)
     st.session_state.ult = st.text_input(key='ult',label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = ultra_league_top_50,disabled = True)
