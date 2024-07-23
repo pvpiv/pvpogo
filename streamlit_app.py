@@ -111,6 +111,18 @@ def get_top_50_ids(rank_column):
 
 show_string = st.checkbox('Show Top 50 Search String',value=False)
 
+
+# Extract top 50 IDs for each league
+if show_string:
+    little_league_top_50 = get_top_50_ids('Little_Rank') + '&CP-500'
+    great_league_top_50 = get_top_50_ids('Great_Rank') + '&CP-1500'
+    ultra_league_top_50 = get_top_50_ids('Ultra_Rank') + '&CP-2500'
+    master_league_top_50 = get_top_50_ids('Master_Rank')
+    st.text_input(label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True)
+    st.text_input(label ="Great League Top 50 Search String:", value = great_league_top_50,disabled = True)
+    st.text_input(label ="Ultra League Top 50 Search String:", value = ultra_league_top_50,disabled = True)
+    st.text_input(label ="Master League Top 50 Search String:", value = master_league_top_50,disabled = True)
+    
 show_shadow = st.checkbox('Show only Shadow Pokémon')#, on_change= track_shadow)
 
 #if show_shadow != st.session_state.show_shadow:
@@ -125,16 +137,6 @@ if show_shadow:
 else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow", na= False)]['Pokemon'].unique()
 
-# Extract top 50 IDs for each league
-if show_string:
-    little_league_top_50 = get_top_50_ids('Little_Rank') + '&CP-500'
-    great_league_top_50 = get_top_50_ids('Great_Rank') + '&CP-1500'
-    ultra_league_top_50 = get_top_50_ids('Ultra_Rank') + '&CP-2500'
-    master_league_top_50 = get_top_50_ids('Master_Rank')
-    st.text_input(label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True)
-    st.text_input(label ="Great League Top 50 Search String:", value = great_league_top_50,disabled = True)
-    st.text_input(label ="Ultra League Top 50 Search String:", value = ultra_league_top_50,disabled = True)
-    st.text_input(label ="Master League Top 50 Search String:", value = master_league_top_50,disabled = True)
     
 pokemon_list = MyList(pokemon_list)            
 #pokemon_list = list(pokemon_list) + [""]
