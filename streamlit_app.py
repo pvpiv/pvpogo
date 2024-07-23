@@ -109,6 +109,8 @@ def get_top_50_ids(rank_column):
 #st.write("### Pokémon Selection")
 #show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow, on_change=None)
 
+show_string = st.checkbox('Show Top 50 Search String',value=False)
+
 show_shadow = st.checkbox('Show only Shadow Pokémon')#, on_change= track_shadow)
 
 #if show_shadow != st.session_state.show_shadow:
@@ -123,7 +125,6 @@ if show_shadow:
 else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow", na= False)]['Pokemon'].unique()
 
-show_string = st.checkbox('Show Top 50 Search String',value=False)
 # Extract top 50 IDs for each league
 if show_string:
     little_league_top_50 = get_top_50_ids('Little_Rank') + '&CP-500'
