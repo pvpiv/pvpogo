@@ -120,7 +120,7 @@ def get_top_50_unique_ids(rank_column,league, top_n):
     else:
         prefix = ''
     return prefix + ids_string
-def get_top_50_ids(rank_column, league):
+def get_top_50_ids(rank_column, league,top_n):
     # Drop rows where the rank column is NaN
     df_filtered = df.dropna(subset=[rank_column])
     # Sort the DataFrame by the rank column
