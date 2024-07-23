@@ -101,7 +101,7 @@ def poke_search():
         st.session_state['last_sel'] = st.session_state.poke_choice
         #del pokemon_choice
 #pokemon_choice_new = ""
-def get_top_50_ids(rank_column,league):
+def get_top_50_unique_ids(rank_column,league):
     # Drop rows where the rank column is NaN
     df_filtered = df.dropna(subset=[rank_column])
     # Sort the DataFrame by the rank column
@@ -120,7 +120,30 @@ def get_top_50_ids(rank_column,league):
     else:
         prefix = ''
     return prefix + ids_string
+def get_top_50_ids(rank_column, league):
+    # Drop rows where the rank column is NaN
+    df_filtered = df.dropna(subset=[rank_column])
+    # Sort the DataFrame by the rank column
+    top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(50)
+    # Get the list of unique IDs
+    top_50_ids = top_df['ID'].astype(str).tolist()
+    # Determine the appropriate prefix based on the league
+    if league == 'little':
+        prefix = 'cp-500&'
+    elif league == 'great':
+        prefix = 'cp-1500&'
+    elif league == 'ultra':
+        prefix = 'cp-2500&'
+    else:
+        prefix = ''
+    # Add the prefix to the top_50_ids list
+    top_50_ids.insert(0, prefix)
+    # Join the IDs into a string
+    ids_string = ','.join(top_50_ids)
 
+    ids_string = ids_string.replace("&,","&")
+    
+    return ids_string
 
 #st.write("### Pokémon Selection")
 #show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow, on_change=None)
