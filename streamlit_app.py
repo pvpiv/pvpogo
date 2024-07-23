@@ -101,9 +101,13 @@ def poke_search():
         st.session_state['last_sel'] = st.session_state.poke_choice
         #del pokemon_choice
 #pokemon_choice_new = ""
-def get_top_50_ids(rank_column):
-    top_50_df = df.sort_values(by=rank_column, na_position='last').head(50)
-    top_50_ids = top_50_df['ID'].astype(str).tolist()
+def get_top_50_unique_ids(rank_column):
+    # Drop rows where the rank column is NaN
+    df_filtered = df.dropna(subset=[rank_column])
+    # Sort the DataFrame by the rank column
+    top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(50)
+    # Get the list of unique IDs
+    top_50_ids = top_df['ID'].astype(str).tolist()
     return ','.join(top_50_ids)
 
 #st.write("### Pokémon Selection")
