@@ -130,7 +130,7 @@ if show_string:
     little_league_top_50 = get_top_50_ids('Little_Rank','little')
     great_league_top_50 = get_top_50_ids('Great_Rank','great')
     ultra_league_top_50 = get_top_50_ids('Ultra_Rank','ultra')
-    master_league_top_50 = get_top_50_ids('Master_Rank')
+    master_league_top_50 = get_top_50_ids('Master_Rank',"")
     st.text_input(label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True)
     st.text_input(label ="Great League Top 50 Search String:", value = great_league_top_50,disabled = True)
     st.text_input(label ="Ultra League Top 50 Search String:", value = ultra_league_top_50,disabled = True)
