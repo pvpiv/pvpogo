@@ -80,16 +80,16 @@ def format_data(pokemon_family, shadow_only):
                     entry[league] = value if pd.notna(value) else ''
             formatted_data.append(entry)
     return formatted_data
-def make_string():
-    st.session_state['last_n'] = top_n
+    
+def make_string(top_n):
     little_league_top_50 = get_top_50_ids('Little_Rank','little',top_n)
     great_league_top_50 = get_top_50_ids('Great_Rank','great',top_n)
     ultra_league_top_50 = get_top_50_ids('Ultra_Rank','ultra',top_n)
     master_league_top_50 = get_top_50_ids('Master_Rank',"",top_n)
-    st.text_input(label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True)
-    st.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = great_league_top_50,disabled = True)
-    st.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = ultra_league_top_50,disabled = True)
-    st.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add 3-4*)", value = master_league_top_50,disabled = True)
+    st.session_state.lil = st.text_input(label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True)
+    st.session_state.grt = st.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = great_league_top_50,disabled = True)
+    st.session_state.ult = st.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = ultra_league_top_50,disabled = True)
+    st.session_state.mst = st.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add 3-4*)", value = master_league_top_50,disabled = True)
 # Set up UI elements
 #streamlit_analytics.start_tracking(load_from_json='data/data.json')
 
@@ -165,7 +165,14 @@ show_string = st.checkbox('Show Top 50 Search String',value=False)
 # Extract top 50 IDs for each league
 if show_string:
     top_n = st.number_input('Enter the number of top Pokémon (between 5 and 200):', min_value=5, max_value=200, value=50, step=1,on_change = make_string)
-    
+    little_league_top_50 = get_top_50_ids('Little_Rank','little',top_n)
+    great_league_top_50 = get_top_50_ids('Great_Rank','great',top_n)
+    ultra_league_top_50 = get_top_50_ids('Ultra_Rank','ultra',top_n)
+    master_league_top_50 = get_top_50_ids('Master_Rank',"",top_n)
+    lil = st.text_input(label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True)
+    grt = st.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = great_league_top_50,disabled = True)
+    ult = st.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = ultra_league_top_50,disabled = True)
+    mst = st.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add 3-4*)", value = master_league_top_50,disabled = True)
     
 show_shadow = st.checkbox('Show only Shadow Pokémon')#, on_change= track_shadow)
 
