@@ -112,12 +112,15 @@ def get_top_50_ids(rank_column,league):
     ids_string = ','.join(top_50_ids)
     # Append the appropriate string based on the league
     if league == 'little':
-        ids_string += '&CP-500'
+        prefix = 'cp-500&'
     elif league == 'great':
-        ids_string += '&CP-1500'
+        prefix = 'cp-1500&'
     elif league == 'ultra':
-        ids_string += '&CP-2500'
-    return ids_string
+        prefix = 'cp-2500&'
+    else:
+        prefix = ''
+    return prefix + ids_string
+
 
 #st.write("### Pokémon Selection")
 #show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow, on_change=None)
