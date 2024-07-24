@@ -6,6 +6,7 @@ import base64
 import tempfile
 from google.cloud import firestore
 from google.oauth2 import service_account
+import streamlit.components.v1 as components
 #counts = {"loaded_from_firestore": False}
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
@@ -268,7 +269,7 @@ else:
 HtmlFile = open("toast.html", 'r', encoding='utf-8')
 source_code = HtmlFile.read()
 print(source_code)
-#components.html(source_code, height=600)
+components.html(source_code, height=600)
 
 st.markdown(
     """
