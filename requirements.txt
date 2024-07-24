@@ -2,4 +2,3 @@ streamlit
 streamlit_analytics
 firebase_admin
 google.cloud
-SessionState
