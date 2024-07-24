@@ -110,6 +110,7 @@ if 'last_sel' not in st.session_state:
     st.session_state['last_sel'] = None
 if 'last_n' not in st.session_state:
     st.session_state['last_n'] = 0
+
 #else:
      #if not st.session_state['get_dat'] and st.session_state['last_sel'] is not None:
          #st.session_state['get_dat'] = True
@@ -207,9 +208,14 @@ pokemon_list = MyList(pokemon_list)
 
 if pokemon_list:
     #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
-    
-    pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
-    
+    if "dex" in st.query_params:
+        if st.query_params["dex"] in pokemon_list:
+            pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(st.query_params["dex"]), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
+        else:
+            pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
+    else:       
+        pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
+
     if st.session_state['get_dat']:
         if pokemon_choice is not None:
             if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
