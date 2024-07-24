@@ -264,6 +264,12 @@ else:
 #streamlit_analytics.stop_tracking(firestore_key_file="/mount/src/pvpogo/cred.json", firestore_collection_name="counts")
 #streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="pvpogo")
 # Custom CSS to improve mobile view and table fit
+
+HtmlFile = open(“toast.html”, ‘r’, encoding=‘utf-8’)
+source_code = HtmlFile.read()
+print(source_code)
+components.html(source_code, height=600)
+
 st.markdown(
     """
     <style>
@@ -293,5 +299,3 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.markdown("""<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9364288870737191"
-     crossorigin="anonymous"></script>""",unsafe_allow_html=True)
