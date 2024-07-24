@@ -7,6 +7,9 @@ import tempfile
 from google.cloud import firestore
 from google.oauth2 import service_account
 import streamlit.components.v1 as components
+import SessionState
+
+
 #counts = {"loaded_from_firestore": False}
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
@@ -200,6 +203,21 @@ else:
     
 pokemon_list = MyList(pokemon_list)            
 #pokemon_list = list(pokemon_list) + [""]
+
+query_params = st.experimental_get_query_params()
+app_state = st.experimental_get_query_params()
+
+first_query_params = session_state.first_query_params
+session_state = SessionState.get(first_query_params=query_params)
+
+
+# The trick here is you can't change the default index based on query params on every run!
+# The *only time* you do that is on the *first* run.
+default_index = eval(first_query_params["dex"][0]) if "dex" in app_state else 0
+
+app_state["dex"] = pokemon_list.index(Pokemon)
+
+st.experimental_set_query_params(**app_state)
 
 if pokemon_list:
     #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
