@@ -261,6 +261,7 @@ if pokemon_list:
                         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
                     except:
                         pass
+            st.session_state['get_dat'] = False
         else:
             #streamlit_analytics.counts["widgets"]["Select a Pokémon:"][pokemon_choice] -= 1
             #streamlit_analytics.counts["total_script_runs"] -= 1
