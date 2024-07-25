@@ -214,6 +214,7 @@ if pokemon_list:
     if "dex" in st.query_params:
         if st.query_params["dex"] in pokemon_list:
             pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(st.query_params["dex"]), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
+            poke_search()
         else:
             pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
     else:       
