@@ -220,7 +220,7 @@ if pokemon_list:
         pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
         
     if "analytics" in st.query_params:
-        st.query_params.from_dict({"dex":pokemon_choice,"analytics":"on"})
+        st.query_params.from_dict({"analytics":"on","dex":pokemon_choice})
     else:
         st.query_params.from_dict({"dex":pokemon_choice})
             
