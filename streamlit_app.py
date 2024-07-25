@@ -219,7 +219,7 @@ if pokemon_list:
     if st.session_state['get_dat']:
         if pokemon_choice is not None:
             if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
-                load_new(streamlit_analytics.counts,"counts")
+                load_new(streamlit_analytics.counts,st.secrets["fb_col"])
                 streamlit_analytics.start_tracking()
                 #st.experimental_set_query_params(dex=pokemon_choice)
            
@@ -248,14 +248,14 @@ if pokemon_list:
                 st.table(df_display)
                 if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     try:
-                        save_new(streamlit_analytics.counts,"counts")
+                        save_new(streamlit_analytics.counts,st.secrets["fb_col"])
                         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
                     except:
                         pass
             else:
                 if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     try:
-                        save_new(streamlit_analytics.counts,"counts")
+                        save_new(streamlit_analytics.counts,st.secrets["fb_col"])
                         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
                     except:
                         pass
@@ -263,7 +263,7 @@ if pokemon_list:
             #streamlit_analytics.counts["widgets"]["Select a Pokémon:"][pokemon_choice] -= 1
             #streamlit_analytics.counts["total_script_runs"] -= 1
             #streamlit_analytics.counts["per_day"]["script_runs"][-1] -= 1
-            #save_new(streamlit_analytics.counts,"counts")
+            #save_new(streamlit_analytics.counts,st.secrets["fb_col"])
          
             st.session_state['get_dat'] = False
 else:
