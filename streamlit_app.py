@@ -221,7 +221,7 @@ if pokemon_list:
         
     if "analytics" in st.query_params:
         st.experimental_set_query_params(dex=pokemon_choice,analytics = "on")
-    else
+    else:
         st.experimental_set_query_params(dex=pokemon_choice)
             
     if st.session_state['get_dat']:
