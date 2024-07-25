@@ -275,13 +275,15 @@ if pokemon_list:
             #save_new(streamlit_analytics.counts,st.secrets["fb_col"])
          
             st.session_state['get_dat'] = False
+    if "analytics" not in st.query_params:
+        st.query_params.from_dict({"dex":pokemon_choice})
 else:
     try: 
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     except:
         pass
-if "analytics" not in st.query_params:
-    st.query_params.from_dict({"dex":pokemon_choice})
+    if "analytics" not in st.query_params:
+        st.query_params.from_dict({"dex":pokemon_choice})
 #streamlit_analytics.track(save_to_json="analytics.json")
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
