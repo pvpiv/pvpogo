@@ -39,7 +39,7 @@ def load_new(counts, collection_name):
     db = firestore.Client(credentials=creds, project="pvpogo")
    
     col = db.collection(collection_name)
-    firestore_counts = col.document("counts").get().to_dict()
+    firestore_counts = col.document("counts_dev").get().to_dict()
 
     # Update all fields in counts that appear in both counts and firestore_counts.
     if firestore_counts is not None:
@@ -55,7 +55,7 @@ def save_new(counts, collection_name):
     #creds = firestore.Client.from_service_account_json(key_dict)
     db = firestore.Client(credentials=creds, project="pvpogo")
     col = db.collection(collection_name)
-    doc = col.document("counts")
+    doc = col.document("counts_dev")
     doc.set(counts)  # creates if doesn't exist
     
 
@@ -219,7 +219,7 @@ if pokemon_list:
     if st.session_state['get_dat']:
         if pokemon_choice is not None:
             if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
-                load_new(streamlit_analytics.counts,"counts")
+                load_new(streamlit_analytics.counts,"counts_dev")
                 streamlit_analytics.start_tracking()
                 #st.experimental_set_query_params(dex=pokemon_choice)
            
@@ -248,14 +248,14 @@ if pokemon_list:
                 st.table(df_display)
                 if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     try:
-                        save_new(streamlit_analytics.counts,"counts")
+                        save_new(streamlit_analytics.counts,"counts_dev")
                         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
                     except:
                         pass
             else:
                 if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     try:
-                        save_new(streamlit_analytics.counts,"counts")
+                        save_new(streamlit_analytics.counts,"counts_dev")
                         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
                     except:
                         pass
@@ -263,7 +263,7 @@ if pokemon_list:
             #streamlit_analytics.counts["widgets"]["Select a Pokémon:"][pokemon_choice] -= 1
             #streamlit_analytics.counts["total_script_runs"] -= 1
             #streamlit_analytics.counts["per_day"]["script_runs"][-1] -= 1
-            #save_new(streamlit_analytics.counts,"counts")
+            #save_new(streamlit_analytics.counts,"counts_dev")
          
             st.session_state['get_dat'] = False
 else:
