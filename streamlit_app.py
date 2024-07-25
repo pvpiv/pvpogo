@@ -121,7 +121,7 @@ def poke_search():
             st.session_state['get_dat'] = True
             #st.write(st.session_state['last_sel'])
             st.session_state['last_sel'] = st.session_state.poke_choice
-            #st.write(st.session_state['last_sel'])
+            ##st.write(st.session_state['last_sel'])
         #del pokemon_choice
 #pokemon_choice_new = ""
 def get_top_50_unique_ids(rank_column,league, top_n):
