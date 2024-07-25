@@ -278,10 +278,10 @@ else:
 #streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="pvpogo")
 # Custom CSS to improve mobile view and table fit
 
-HtmlFile = open("toast.html", 'r', encoding='utf-8')
-source_code = HtmlFile.read()
-print(source_code)
-components.html(source_code, height=600)
+#HtmlFile = open("toast.html", 'r', encoding='utf-8')
+#source_code = HtmlFile.read()
+#print(source_code)
+#components.html(source_code, height=600)
 
 st.markdown(
     """
