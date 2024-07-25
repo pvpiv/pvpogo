@@ -82,7 +82,7 @@ def format_data(pokemon_family, shadow_only):
                     entry[league] = f'{int(value):,}'  # Remove decimals and format as integer
                 else:
                     entry[league] = value if pd.notna(value) else ''
-            formatted_data.append(entry.title())
+            formatted_data.append(entry)
     return formatted_data
     
 def make_string():
@@ -204,8 +204,10 @@ if show_shadow:
 else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow", na= False)]['Pokemon'].unique()
 
-    
-pokemon_list = MyList(pokemon_list)            
+pokes = [i.title() for i in pokemon_list]
+
+pokemon_list = MyList(pokes)
+
 #pokemon_list = list(pokemon_list) + [""]
 
 
