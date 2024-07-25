@@ -39,8 +39,7 @@ def load_new(counts, collection_name):
     db = firestore.Client(credentials=creds, project="pvpogo")
    
     col = db.collection(collection_name)
-    firestore_counts = col.document("counts").get().to_dict()
-
+    firestore_counts = col.document(st.secrets["fb_col"]).get().to_dict()
     # Update all fields in counts that appear in both counts and firestore_counts.
     if firestore_counts is not None:
         for key in firestore_counts:
@@ -55,7 +54,7 @@ def save_new(counts, collection_name):
     #creds = firestore.Client.from_service_account_json(key_dict)
     db = firestore.Client(credentials=creds, project="pvpogo")
     col = db.collection(collection_name)
-    doc = col.document("counts")
+    doc = col.document(st.secrets["fb_col"])
     doc.set(counts)  # creates if doesn't exist
     
 
