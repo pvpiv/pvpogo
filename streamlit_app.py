@@ -239,7 +239,7 @@ if pokemon_list:
             family_data = format_data(pokemon_family, show_shadow)
             if family_data:
                 if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
-                    st.text_input(label = " ",value = pokemon_choice ,disabled = True,label_visibility = 'hidden')
+                    st.text_input(label = "  ",value = pokemon_choice ,disabled = True,label_visibility = 'hidden')
                 df_display = pd.DataFrame(family_data)
                 # Set up DataFrame for proper display
                 df_display.rename(columns={df.columns[0]: 'Pokemon'})
