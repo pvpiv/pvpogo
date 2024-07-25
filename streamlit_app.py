@@ -277,7 +277,7 @@ if pokemon_list:
             st.session_state['get_dat'] = False
     if "analytics" not in st.query_params:
         try:
-            st.query_params.from_dict({"dex":pokemon_choice})
+            st.query_params["dex"] = pokemon_choice
         except:
             pass
 else:
@@ -287,7 +287,7 @@ else:
         pass
     if "analytics" not in st.query_params:
         try:
-            st.query_params.from_dict({"dex":pokemon_choice})
+            st.query_params["dex"] = pokemon_choice
         except:
             pass
 #streamlit_analytics.track(save_to_json="analytics.json")
