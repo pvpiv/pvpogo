@@ -7,7 +7,7 @@ import tempfile
 from google.cloud import firestore
 from google.oauth2 import service_account
 import streamlit.components.v1 as components
-
+from datetime import date
 
 
 #counts = {"loaded_from_firestore": False}
@@ -238,7 +238,8 @@ if pokemon_list:
             family_data = format_data(pokemon_family, show_shadow)
             if family_data:
                 if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
-                    st.text_input(label = "  ",value = pokemon_choice ,disabled = True,label_visibility = 'hidden')
+                    today = date.today()
+                    st.text_input(label = today.strftime("%m/%d/%y"),value = pokemon_choice ,disabled = True,label_visibility = 'hidden')
                 df_display = pd.DataFrame(family_data)
                 # Set up DataFrame for proper display
                 df_display.rename(columns={df.columns[0]: 'Pokemon'})
