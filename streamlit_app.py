@@ -118,9 +118,9 @@ if 'last_n' not in st.session_state:
 def poke_search():
     if not st.session_state['get_dat']:
         st.session_state['get_dat'] = True
-        print(st.session_state['last_sel'])
+        st.write(st.session_state['last_sel'])
         st.session_state['last_sel'] = st.session_state.poke_choice
-        print(st.session_state['last_sel'])
+        st.write(st.session_state['last_sel'])
         #del pokemon_choice
 #pokemon_choice_new = ""
 def get_top_50_unique_ids(rank_column,league, top_n):
