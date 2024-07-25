@@ -228,7 +228,7 @@ if pokemon_list:
                 load_new(streamlit_analytics.counts,st.secrets["fb_col"])
                 streamlit_analytics.start_tracking()
 
-                    
+                st.query_params["dex"] = pokemon_choice   
                 #st.experimental_set_query_params(dex=pokemon_choice)
            
         #if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
@@ -282,7 +282,7 @@ else:
     except:
         pass
 
-st.query_params["dex"] = pokemon_choice
+
 #streamlit_analytics.track(save_to_json="analytics.json")
 #streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
