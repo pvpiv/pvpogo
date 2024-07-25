@@ -204,19 +204,16 @@ if show_shadow:
 else:
     pokemon_list = df[~df['Pokemon'].str.contains("Shadow", na= False)]['Pokemon'].unique()
 
-pokes = [i.title() for i in pokemon_list]
-
-pokemon_list = MyList(pokes)
-
+    
+pokemon_list = MyList(pokemon_list)            
 #pokemon_list = list(pokemon_list) + [""]
 
 
 if pokemon_list:
     #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
     if "dex" in st.query_params:
-        pquery = st.query_params["dex"].title()
         if st.query_params["dex"] in pokemon_list:
-            pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(pquery), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
+            pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(st.query_params["dex"]), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
             poke_search()
         else:
             pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
@@ -326,4 +323,3 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
