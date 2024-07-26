@@ -167,12 +167,12 @@ def get_top_50_ids(rank_column, league,top_n):
 #st.write("### Pokémon Selection")
 #show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow, on_change=None)
 
-show_string = st.checkbox('Generate Top 50 PVP Pokemon Search String',value=False)
+show_string = st.checkbox('View Top 50 PVP Pokemon Search String (copy/paste into POGO)',value=False)
 
 
 # Extract top 50 IDs for each league
 if show_string:
-    st.write('Copy/Paste this search string into PokeGO inventory to view top ranked Pokemon which you own')
+    st.write('Copy/Paste this search string into PokeGO inventory')
     top_n = 50
     little_league_top_50 = get_top_50_ids('Little_Rank','little',top_n)
     great_league_top_50 = get_top_50_ids('Great_Rank','great',top_n)
