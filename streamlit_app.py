@@ -218,8 +218,8 @@ if pokemon_list:
     pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
     
     if st.session_state['get_dat']:
-        if pokemon_choice is not None:
-            if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
+        #if pokemon_choice is not None:
+        if pokemon_choice is not None and pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                 #load_new(streamlit_analytics.counts,st.secrets["fb_col"])
                 #streamlit_analytics.start_tracking()
                 #st.experimental_set_query_params(dex=pokemon_choice)
