@@ -167,9 +167,10 @@ def get_top_50_ids(rank_column, league,top_n):
 #st.write("### Pokémon Selection")
 #show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow, on_change=None)
 
+
 show_string = st.checkbox('View Top 50 PVP Pokemon Search String (copy/paste into POGO)',value=False)
-load_new(streamlit_analytics.counts,st.secrets["fb_col"])
-streamlit_analytics.start_tracking()
+
+
 
 # Extract top 50 IDs for each league
 if show_string:
@@ -187,7 +188,12 @@ if show_string:
     grt = st.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = great_league_top_50,disabled = True,key='grtw')
     ult = st.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = ultra_league_top_50,disabled = True,key='ultw')
     mst = st.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value = master_league_top_50,disabled = True,key='mstw')
-
+    load_new(streamlit_analytics.counts,st.secrets["fb_col"])
+    today = date.today()
+    streamlit_analytics.start_tracking()
+    st.text_input(label = today.strftime("%m/%d/%y"),value = 'Copy/Paste this search string into PokeGO inventory' ,disabled = True,label_visibility = 'hidden')
+    streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+    
 show_shadow = st.checkbox('Show only Shadow Pokémon')#, on_change= track_shadow)
 
 #if show_shadow != st.session_state.show_shadow:
@@ -220,8 +226,8 @@ if pokemon_list:
     if st.session_state['get_dat']:
         #if pokemon_choice is not None:
         if pokemon_choice is not None and pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
-                #load_new(streamlit_analytics.counts,st.secrets["fb_col"])
-                #streamlit_analytics.start_tracking()
+                load_new(streamlit_analytics.counts,st.secrets["fb_col"])
+                streamlit_analytics.start_tracking()
                 #st.experimental_set_query_params(dex=pokemon_choice)
            
         #if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
