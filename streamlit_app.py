@@ -168,6 +168,7 @@ def get_top_50_ids(rank_column, league,top_n):
 #show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow, on_change=None)
 
 show_string = st.checkbox('View Top 50 PVP Pokemon Search String (copy/paste into POGO)',value=False)
+load_new(streamlit_analytics.counts,st.secrets["fb_col"])
 streamlit_analytics.start_tracking()
 
 # Extract top 50 IDs for each league
@@ -219,8 +220,8 @@ if pokemon_list:
     if st.session_state['get_dat']:
         if pokemon_choice is not None:
             if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
-                load_new(streamlit_analytics.counts,st.secrets["fb_col"])
-                streamlit_analytics.start_tracking()
+                #load_new(streamlit_analytics.counts,st.secrets["fb_col"])
+                #streamlit_analytics.start_tracking()
                 #st.experimental_set_query_params(dex=pokemon_choice)
            
         #if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
