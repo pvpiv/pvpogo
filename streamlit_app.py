@@ -168,7 +168,7 @@ def get_top_50_ids(rank_column, league,top_n):
 #show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow, on_change=None)
 
 show_string = st.checkbox('View Top 50 PVP Pokemon Search String (copy/paste into POGO)',value=False)
-
+streamlit_analytics.start_tracking()
 
 # Extract top 50 IDs for each league
 if show_string:
@@ -215,7 +215,7 @@ if pokemon_list:
            #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
     #else:       
     pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
-
+    
     if st.session_state['get_dat']:
         if pokemon_choice is not None:
             if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
@@ -272,11 +272,9 @@ else:
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     except:
         pass
-#streamlit_analytics.track(save_to_json="analytics.json")
-#streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
-#streamlit_analytics.stop_tracking(firestore_key_file="/mount/src/pvpogo/cred.json", firestore_collection_name="counts")
-#streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="pvpogo")
+streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+
 # Custom CSS to improve mobile view and table fit
 
 #HtmlFile = open("toast.html", 'r', encoding='utf-8')
