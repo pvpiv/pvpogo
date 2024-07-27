@@ -174,7 +174,7 @@ show_string = st.checkbox('View Top 50 PVP Pokemon Search String (copy/paste int
 
 # Extract top 50 IDs for each league
 if show_string:
-    #st.write('Copy/Paste this search string into PokeGO inventory')
+    st.write('Copy/Paste this search string into PokeGO inventory')
     top_n = 50
     little_league_top_50 = get_top_50_ids('Little_Rank','little',top_n)
     great_league_top_50 = get_top_50_ids('Great_Rank','great',top_n)
@@ -188,11 +188,7 @@ if show_string:
     grt = st.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = great_league_top_50,disabled = True,key='grtw')
     ult = st.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = ultra_league_top_50,disabled = True,key='ultw')
     mst = st.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value = master_league_top_50,disabled = True,key='mstw')
-    load_new(streamlit_analytics.counts,st.secrets["fb_col"])
-    streamlit_analytics.start_tracking()
-    today = date.today()
-    st.text_input(label = today.strftime("%m/%d/%y"),value = 'Copy/Paste this search string into PokeGO inventory' ,disabled = True,label_visibility = 'hidden')
-    streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+
     
 show_shadow = st.checkbox('Show only Shadow Pokémon')#, on_change= track_shadow)
 
