@@ -230,8 +230,9 @@ if pokemon_list:
         #if pokemon_choice is not None:
         if pokemon_choice is not None:
             if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
-                load_new(streamlit_analytics.counts,st.secrets["fb_col"])
-                streamlit_analytics.start_tracking()
+                if st.session_state['last_sel'] != pokemon_choice:
+                    load_new(streamlit_analytics.counts,st.secrets["fb_col"])
+                    streamlit_analytics.start_tracking()
                 #st.experimental_set_query_params(dex=pokemon_choice)
            
         #if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
@@ -244,6 +245,7 @@ if pokemon_list:
             #track = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(sel_pok), label_visibility="hidden")
         
             # Find the family of the selected Pokémon
+            st.session_state['last_sel'] = pokemon_choice
             pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
             
             # Display formatted data for the selected Pokémon's family
