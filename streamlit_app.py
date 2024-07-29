@@ -181,7 +181,7 @@ def updateSS():
 if show_string:
 
 
-    top_nbox = st.number_input('Input', value = st.session_state.top_num, key = 'top_no',on_change = updateSS,min_value = 3,max_value = 200,step=5)
+    top_nbox = st.number_input('Top', value = st.session_state.top_num, key = 'top_no',on_change = updateSS,min_value = 3,max_value = 200,step=5)
 
     if  'placeholderlilw' not in st.session_state:
         #st.write(st.session_state.lil)
