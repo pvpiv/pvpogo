@@ -85,7 +85,7 @@ def format_data(pokemon_family, shadow_only):
     return formatted_data
     
 def make_string():
-    top_n = st.session_state.topn
+    top_n = st.session_state['topn']
     little_league_top_50 = get_top_50_ids('Little_Rank','little',top_n)
     great_league_top_50 = get_top_50_ids('Great_Rank','great',top_n)
     ultra_league_top_50 = get_top_50_ids('Ultra_Rank','ultra',top_n)
