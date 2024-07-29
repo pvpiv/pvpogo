@@ -90,7 +90,10 @@ def make_string():
     great_league_top_50 = get_top_50_ids('Great_Rank','great',top_n)
     ultra_league_top_50 = get_top_50_ids('Ultra_Rank','ultra',top_n)
     master_league_top_50 = get_top_50_ids('Master_Rank',"",top_n)
-    
+    placeholderlilw = st.empty()
+    placeholdergrtw = st.empty()
+    placeholderultw = st.empty()
+    placeholdermstw = st.empty()
     lil = placeholderlilw.text_input(label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True)#,key='lilw')
     grt = placeholdergrtw.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = great_league_top_50 ,disabled = True)#,key='grtw')
     ult = placeholderultw.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = ultra_league_top_50,disabled = True)#,key='ultw')
@@ -198,10 +201,7 @@ if show_string:
     if  'placeholderlilw' not in st.session_state:
         #st.write(st.session_state.lil)
         st.write(top_n)
-        placeholderlilw = st.empty()
-        placeholdergrtw = st.empty()
-        placeholderultw = st.empty()
-        placeholdermstw = st.empty()
+
     else:
         st.write(st.session_state.lil)
         st.write(top_n)
