@@ -7,7 +7,7 @@ import tempfile
 from google.cloud import firestore
 from google.oauth2 import service_account
 import streamlit.components.v1 as components
-
+from datetime import date
 
 
 #counts = {"loaded_from_firestore": False}
@@ -40,7 +40,6 @@ def load_new(counts, collection_name):
    
     col = db.collection(collection_name)
     firestore_counts = col.document(st.secrets["fb_col"]).get().to_dict()
-
     # Update all fields in counts that appear in both counts and firestore_counts.
     if firestore_counts is not None:
         for key in firestore_counts:
@@ -117,11 +116,8 @@ if 'last_n' not in st.session_state:
 
 def poke_search():
     if not st.session_state['get_dat']:
-        if st.session_state.poke_choice != st.session_state['last_sel']:
-            st.session_state['get_dat'] = True
-            #st.write(st.session_state['last_sel'])
-            st.session_state['last_sel'] = st.session_state.poke_choice
-            ##st.write(st.session_state['last_sel'])
+        st.session_state['get_dat'] = True
+        #st.session_state['last_sel'] = st.session_state.poke_choice
         #del pokemon_choice
 #pokemon_choice_new = ""
 def get_top_50_unique_ids(rank_column,league, top_n):
@@ -170,12 +166,23 @@ def get_top_50_ids(rank_column, league,top_n):
 
 #st.write("### Pokémon Selection")
 #show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow, on_change=None)
+today = date.today()
 
-show_string = st.checkbox('Show Top 50 Search String',value=False)
+show_string = st.checkbox('View Top 50 PVP Pokemon Search String (copy/paste into POGO)')
+
 
 
 # Extract top 50 IDs for each league
 if show_string:
+    load_new(streamlit_analytics.counts,st.secrets["fb_col"])
+    streamlit_analytics.start_tracking()
+
+    st.text_input(label = today.strftime("%m/%d/%y"),value = '*Copy/Paste this search string into PokeGO inventory*',label_visibility = 'hidden',disabled = True,key ="sstring")
+    try:
+        save_new(streamlit_analytics.counts,st.secrets["fb_col"])
+        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+    except:
+        pass
     top_n = 50
     little_league_top_50 = get_top_50_ids('Little_Rank','little',top_n)
     great_league_top_50 = get_top_50_ids('Great_Rank','great',top_n)
@@ -196,7 +203,7 @@ show_shadow = st.checkbox('Show only Shadow Pokémon')#, on_change= track_shadow
     #st.session_state.show_shadow = show_shadow
 
 #show_shadow = st.checkbox('Show only Shadow Pokémon', False)
-#streamlit_analytics.track(save_to_json="analytics.json")
+#streamlit_analytics.track(_to_json="analytics.json")
 
 # Filter the dropdown list based on the checkbox
 if show_shadow:
@@ -211,24 +218,21 @@ pokemon_list = MyList(pokemon_list)
 
 if pokemon_list:
     #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice")
-    if "dex" in st.query_params:
-        if st.query_params["dex"] in pokemon_list:
-            pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(st.query_params["dex"]), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
-        else:
-            pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
-    else:       
-        pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
-        
-    #if "analytics" not in st.query_params:
-    st.query_params.from_dict({"dex":pokemon_choice})
-            
+    #if "dex" in st.query_params:
+        #if st.query_params["dex"] in pokemon_list:
+            #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(st.query_params["dex"]), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
+        #else:
+           #pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
+    #else:       
+    pokemon_choice = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.last_index(), label_visibility = 'hidden',key="poke_choice",on_change = poke_search)
+    
     if st.session_state['get_dat']:
+        #if pokemon_choice is not None:
         if pokemon_choice is not None:
             if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
-                load_new(streamlit_analytics.counts,st.secrets["fb_col"])
-                streamlit_analytics.start_tracking()
-                
-                    
+                if st.session_state['last_sel'] != pokemon_choice or st.session_state['last_sel'] is None:
+                    load_new(streamlit_analytics.counts,st.secrets["fb_col"])
+                    streamlit_analytics.start_tracking()
                 #st.experimental_set_query_params(dex=pokemon_choice)
            
         #if pokemon_choice != "Select a pokemon" or pokemon_choice != "Select a Shadow pokemon":
@@ -241,13 +245,15 @@ if pokemon_list:
             #track = st.selectbox('Select a Pokémon:',pokemon_list,index = pokemon_list.index(sel_pok), label_visibility="hidden")
         
             # Find the family of the selected Pokémon
+            st.session_state['last_sel'] = pokemon_choice
             pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
             
             # Display formatted data for the selected Pokémon's family
             family_data = format_data(pokemon_family, show_shadow)
             if family_data:
                 if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
-                    st.text_input(label = "  ",value = pokemon_choice ,disabled = True,label_visibility = 'hidden')
+                    today = date.today()
+                    st.text_input(label = today.strftime("%m/%d/%y"),value = pokemon_choice ,disabled = True,label_visibility = 'hidden')
                 df_display = pd.DataFrame(family_data)
                 # Set up DataFrame for proper display
                 df_display.rename(columns={df.columns[0]: 'Pokemon'})
@@ -267,7 +273,6 @@ if pokemon_list:
                         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
                     except:
                         pass
-            st.session_state['get_dat'] = False
         else:
             #streamlit_analytics.counts["widgets"]["Select a Pokémon:"][pokemon_choice] -= 1
             #streamlit_analytics.counts["total_script_runs"] -= 1
@@ -280,11 +285,9 @@ else:
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     except:
         pass
-#streamlit_analytics.track(save_to_json="analytics.json")
-#streamlit_analytics.track(firestore_key_file="firebase-key.json", firestore_collection_name="counts")
 
-#streamlit_analytics.stop_tracking(firestore_key_file="/mount/src/pvpogo/cred.json", firestore_collection_name="counts")
-#streamlit_analytics.stop_tracking(firestore_key_file="cred.json", firestore_collection_name="pvpogo")
+streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+
 # Custom CSS to improve mobile view and table fit
 
 #HtmlFile = open("toast.html", 'r', encoding='utf-8')
