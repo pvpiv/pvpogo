@@ -193,11 +193,11 @@ if show_string:
     if  'placeholderlilw' not in st.session_state:
         #st.write(st.session_state.lil)
         st.write(st.session_state.top_no)
-
+        make_string("little",top_nbox)
     else:
         #st.write(st.session_state.lil)
         st.write(st.session_state.top_no)
-
+        st.write(make_string("little",top_nbox))
     placeholderlil = st.empty()
     placeholdergrt = st.empty()
     placeholderult = st.empty()
