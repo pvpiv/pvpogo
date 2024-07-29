@@ -96,10 +96,10 @@ def make_string():
     placeholdergrtw = st.empty()
     placeholderultw = st.empty()
     placeholdermstw = st.empty()
-    lil = placeholderlilw.text_input(label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True)#,key='lilw')
-    grt = placeholdergrtw.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = great_league_top_50 ,disabled = True)#,key='grtw')
-    ult = placeholderultw.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = ultra_league_top_50,disabled = True)#,key='ultw')
-    mst = placeholdermstw.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value = master_league_top_50,disabled = True)#,key='mstw')
+    lil = placeholderlilw.text_input(label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True,key='lilw')
+    grt = placeholdergrtw.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = great_league_top_50 ,disabled = True,key='grtw')
+    ult = placeholderultw.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = ultra_league_top_50,disabled = True,key='ultw')
+    mst = placeholdermstw.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value = master_league_top_50,disabled = True,key='mstw')
 
     #st.session_state.lil = st.empty()
     #st.session_state.grt = st.empty()
@@ -193,11 +193,11 @@ if show_string:
 
     if  'placeholderlilw' not in st.session_state:
         #st.write(st.session_state.lil)
-        st.write(top_n)
+        st.write(st.session_state.top_no)
 
     else:
         st.write(st.session_state.lil)
-        st.write(top_n)
+        st.write(st.session_state.top_no)
         
    # lil = placeholderlilw.text_input(label ="Little League Top 50 Search String:", value = "",disabled = True)
    # grt = placeholdergrtw.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = "",disabled = True,)
