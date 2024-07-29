@@ -183,15 +183,6 @@ if show_string:
 
     top_nbox = st.number_input('Top', value = st.session_state.top_num, key = 'top_no',on_change = updateSS,min_value = 3,max_value = 200,step=5)
 
-    if  'placeholderlilw' not in st.session_state:
-        #st.write(st.session_state.lil)
-        st.write(st.session_state.top_no)
-        st.write(st.session_state.top_num)
-        st.write(make_string("little",st.session_state.top_num))
-    else:
-        #st.write(st.session_state.lil)
-        st.write(st.session_state.top_no)
-        st.write(make_string("little",st.session_state.top_num))
     placeholderlil = st.empty()
     placeholdergrt = st.empty()
     placeholderult = st.empty()
