@@ -169,7 +169,7 @@ def get_top_50_ids(rank_column, league,top_n):
 today = date.today()
 load_new(streamlit_analytics.counts,st.secrets["fb_col_search"])
 streamlit_analytics.start_tracking()
-show_string = st.checkbox('View Top 50 PVP Pokemon Search String (copy/paste into POGO)',value=False)
+show_string = st.checkbox('View Top 50 PVP Pokemon Search String (copy/paste into POGO)')
 
 
 
