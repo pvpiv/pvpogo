@@ -186,6 +186,7 @@ if show_string:
     if  'placeholderlilw' not in st.session_state:
         #st.write(st.session_state.lil)
         st.write(st.session_state.top_no)
+        st.write(st.session_state.top_num)
         st.write(make_string("little",st.session_state.top_num))
     else:
         #st.write(st.session_state.lil)
