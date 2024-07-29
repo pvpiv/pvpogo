@@ -193,9 +193,7 @@ if show_string:
 
     
     top_n = st.number_input('Input', value = 50, key = 'topn', on_change = make_string)
-    st.write(st.session_state.lil)
-    st.write(top_n)
-    
+
     if  'lil' not in st.session_state:
         st.write(st.session_state.lil)
         st.write(top_n)
