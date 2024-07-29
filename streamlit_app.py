@@ -1,4 +1,4 @@
-import streamlit as st
+ import streamlit as st
 import pandas as pd
 import streamlit_analytics
 import json
@@ -116,7 +116,8 @@ if 'last_sel' not in st.session_state:
     st.session_state['last_sel'] = None
 if 'last_n' not in st.session_state:
     st.session_state['last_n'] = 0
-
+if "topn" not in st.session_state:
+    st.session_state['topn'] = 50
 #else:
      #if not st.session_state['get_dat'] and st.session_state['last_sel'] is not None:
          #st.session_state['get_dat'] = True
@@ -192,7 +193,7 @@ if show_string:
 
 
     
-    top_n = st.number_input('Input', value = 50, key = 'topn', on_change = make_string)
+    top_n = st.number_input('Input', value = st.session_state['topn'], key = 'top_no', on_change = make_string)
 
     if  'placeholderlilw' not in st.session_state:
         #st.write(st.session_state.lil)
@@ -205,10 +206,10 @@ if show_string:
         st.write(st.session_state.lil)
         st.write(top_n)
         
-    lil = placeholderlilw.text_input(label ="Little League Top 50 Search String:", value = "",disabled = True)
-    grt = placeholdergrtw.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = "",disabled = True,)
-    ult = placeholderultw.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = "",disabled = True)
-    mst = placeholdermstw.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value = "",disabled = True)
+   # lil = placeholderlilw.text_input(label ="Little League Top 50 Search String:", value = "",disabled = True)
+   # grt = placeholdergrtw.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = "",disabled = True,)
+    #ult = placeholderultw.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = "",disabled = True)
+   # mst = placeholdermstw.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value = "",disabled = True)
 
     if top_n == 50:
         make_string()
