@@ -84,7 +84,7 @@ def format_data(pokemon_family, shadow_only):
             formatted_data.append(entry)
     return formatted_data
     
-def make_string(top_n,league):
+def make_string(league,top_n):
     
     if league == 'little':
         little_league_top_50 = get_top_50_ids('Little_Rank','little',top_n)
