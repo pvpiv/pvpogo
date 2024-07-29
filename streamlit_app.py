@@ -181,6 +181,7 @@ def updateSS():
 if show_string:
 
 
+    st.text_input(label = today.strftime("%m/%d/%y"),value = '*Copy/Paste this search string into PokeGO inventory*',label_visibility = 'hidden',disabled = True,key ="sstring")
     top_nbox = st.number_input('Top', value = st.session_state.top_num, key = 'top_no',on_change = updateSS,min_value = 3,max_value = 200,step=5)
 
     placeholderlil = st.empty()
@@ -200,7 +201,6 @@ if show_string:
     load_new(streamlit_analytics.counts,st.secrets["fb_col"])
     streamlit_analytics.start_tracking()
 
-    st.text_input(label = today.strftime("%m/%d/%y"),value = '*Copy/Paste this search string into PokeGO inventory*',label_visibility = 'hidden',disabled = True,key ="sstring")
     try:
         save_new(streamlit_analytics.counts,st.secrets["fb_col"])
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
