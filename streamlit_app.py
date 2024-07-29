@@ -147,7 +147,7 @@ def get_top_50_ids(rank_column, league,top_n):
     # Drop rows where the rank column is NaN
     df_filtered = df.dropna(subset=[rank_column])
     # Sort the DataFrame by the rank column
-    top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(50)
+    top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(top_n)
     # Get the list of unique IDs
     top_50_ids = top_df['ID'].astype(str).tolist()
     # Determine the appropriate prefix based on the league
