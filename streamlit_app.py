@@ -124,25 +124,7 @@ def poke_search():
         #st.session_state['last_sel'] = st.session_state.poke_choice
         #del pokemon_choice
 #pokemon_choice_new = ""
-def get_top_50_unique_ids(rank_column,league, top_n):
-    # Drop rows where the rank column is NaN
-    df_filtered = df.dropna(subset=[rank_column])
-    # Sort the DataFrame by the rank column
-    top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(top_n)
-    # Get the list of unique IDs
-    top_50_ids = top_df['ID'].astype(str).tolist()
-    # Join the IDs into a string
-    ids_string = ','.join(top_50_ids)
-    # Append the appropriate string based on the league
-    if league == 'little':
-        prefix = 'cp-500&'
-    elif league == 'great':
-        prefix = 'cp-1500&'
-    elif league == 'ultra':
-        prefix = 'cp-2500&'
-    else:
-        prefix = ''
-    return prefix + ids_string
+
 def get_top_50_ids(rank_column, league,top_n):
     # Drop rows where the rank column is NaN
     df_filtered = df.dropna(subset=[rank_column])
