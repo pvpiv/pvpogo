@@ -172,7 +172,7 @@ def get_top_50_ids(rank_column, league,top_n):
 #show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow, on_change=None)
 today = date.today()
 
-show_string = st.checkbox('View Top 50(changeable) PVP Pokemon Search String (copy/paste into POGO)')
+show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into POGO, 50 by default)')
 
 def updateSS():
     st.session_state.top_num = st.session_state.top_no
@@ -181,7 +181,7 @@ def updateSS():
 if show_string:
 
 
-    top_nbox = st.number_input('Input', value = st.session_state.top_num, key = 'top_no',on_change = updateSS)
+    top_nbox = st.number_input('Input', value = st.session_state.top_num, key = 'top_no',on_change = updateSS,min_value = 3,max_value = 200,step=5)
 
     if  'placeholderlilw' not in st.session_state:
         #st.write(st.session_state.lil)
