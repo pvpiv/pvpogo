@@ -96,7 +96,7 @@ def make_string(top_n,league):
         ultra_league_top_50 = get_top_50_ids('Ultra_Rank','ultra',top_n)
         retvalue = ultra_league_top_50
     elif league == 'master':
-    master_league_top_50 = get_top_50_ids('Master_Rank',"",top_n)
+        master_league_top_50 = get_top_50_ids('Master_Rank',"",top_n)
         retvalue = master_league_top_50
 
     return retvalue
