@@ -230,7 +230,8 @@ if pokemon_list:
         #if pokemon_choice is not None:
         if pokemon_choice is not None:
             if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
-                if st.session_state['last_sel'] != pokemon_choice:
+                
+                if st.session_state['last_sel'] != pokemon_choice or st.session_state['last_sel'] is None:
                     load_new(streamlit_analytics.counts,st.secrets["fb_col"])
                     streamlit_analytics.start_tracking()
                 #st.experimental_set_query_params(dex=pokemon_choice)
