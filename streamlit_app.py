@@ -175,7 +175,7 @@ show_string = st.checkbox('View Top 50 PVP Pokemon Search String (copy/paste int
 
 # Extract top 50 IDs for each league
 if show_string:
-    st.text_input(label = today.strftime("%m/%d/%y"),value = 'Copy/Paste this search string into PokeGO inventory',label_visibility = 'hidden',disabled = True)
+    st.text_input(label = today.strftime("%m/%d/%y"),value = 'Copy/Paste this search string into PokeGO inventory',label_visibility = 'hidden',disabled = True,key ="sstring")
     top_n = 50
     little_league_top_50 = get_top_50_ids('Little_Rank','little',top_n)
     great_league_top_50 = get_top_50_ids('Great_Rank','great',top_n)
