@@ -84,23 +84,22 @@ def format_data(pokemon_family, shadow_only):
             formatted_data.append(entry)
     return formatted_data
     
-def make_string():
+def make_string(top_n,league):
     
-    top_n = st.session_state.top_no
-    st.session_state['topn'] = top_n
-    little_league_top_50 = get_top_50_ids('Little_Rank','little',top_n)
-    great_league_top_50 = get_top_50_ids('Great_Rank','great',top_n)
-    ultra_league_top_50 = get_top_50_ids('Ultra_Rank','ultra',top_n)
+    if league == 'little':
+        little_league_top_50 = get_top_50_ids('Little_Rank','little',top_n)
+        retvalue = little_league_top_50
+    elif league == 'great':
+        great_league_top_50 = get_top_50_ids('Great_Rank','great',top_n)
+        retvalue = great_league_top_50 
+    elif league == 'ultra':
+        ultra_league_top_50 = get_top_50_ids('Ultra_Rank','ultra',top_n)
+        retvalue = ultra_league_top_50
+    elif league == 'master':
     master_league_top_50 = get_top_50_ids('Master_Rank',"",top_n)
-    placeholderlilw = st.empty()
-    placeholdergrtw = st.empty()
-    placeholderultw = st.empty()
-    placeholdermstw = st.empty()
-    lil = placeholderlilw.text_input(label ="Little League Top 50 Search String:", value = little_league_top_50,disabled = True,key='lilw')
-    grt = placeholdergrtw.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = great_league_top_50 ,disabled = True,key='grtw')
-    ult = placeholderultw.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = ultra_league_top_50,disabled = True,key='ultw')
-    mst = placeholdermstw.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value = master_league_top_50,disabled = True,key='mstw')
+        retvalue = master_league_top_50
 
+    return retvalue
     #st.session_state.lil = st.empty()
     #st.session_state.grt = st.empty()
     #st.session_state.ult = st.empty()
@@ -189,23 +188,23 @@ show_string = st.checkbox('View Top 50 PVP Pokemon Search String (copy/paste int
 if show_string:
 
 
-    top_nbox = st.number_input('Input', value = st.session_state['topn'], key = 'top_no', on_change = make_string)
+    top_nbox = st.number_input('Input', value = st.session_state['topn'], key = 'top_no')
 
     if  'placeholderlilw' not in st.session_state:
         #st.write(st.session_state.lil)
         st.write(st.session_state.top_no)
 
     else:
-        st.write(st.session_state.lil)
+        #st.write(st.session_state.lil)
         st.write(st.session_state.top_no)
         
-   # lil = placeholderlilw.text_input(label ="Little League Top 50 Search String:", value = "",disabled = True)
-   # grt = placeholdergrtw.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = "",disabled = True,)
-    #ult = placeholderultw.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = "",disabled = True)
-   # mst = placeholdermstw.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value = "",disabled = True)
+    lil = text_input(label ="Little League Top 50 Search String:", value = make_string("little",top_nbox),disabled = True)
+    grt = text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value  = make_string("great",top_nbox),disabled = True,)
+    ult = text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = make_string("ultra",top_nbox),disabled = True)
+    mst = text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value= make_string("master",top_nbox),disabled = True)
 
-    if top_nbox == 50:
-        make_string()
+    #if top_nbox == 50:
+       # make_string()
     
         
     load_new(streamlit_analytics.counts,st.secrets["fb_col"])
