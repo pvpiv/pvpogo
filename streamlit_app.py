@@ -188,7 +188,7 @@ show_string = st.checkbox('View Top 50 PVP Pokemon Search String (copy/paste int
 if show_string:
 
 
-    top_nbox = st.number_input('Input', value = st.session_state['topn'], key = 'top_no')
+    top_nbox = st.number_input('Input', value = 50, key = 'top_no')
 
     if  'placeholderlilw' not in st.session_state:
         #st.write(st.session_state.lil)
