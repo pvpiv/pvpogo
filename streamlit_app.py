@@ -197,11 +197,16 @@ if show_string:
     else:
         #st.write(st.session_state.lil)
         st.write(st.session_state.top_no)
-        
-    lil = text_input(label ="Little League Top 50 Search String:", value = make_string("little",top_nbox),disabled = True)
-    grt = text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value  = make_string("great",top_nbox),disabled = True,)
-    ult = text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = make_string("ultra",top_nbox),disabled = True)
-    mst = text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value= make_string("master",top_nbox),disabled = True)
+
+    placeholderlil = st.empty()
+    placeholdergrt = st.empty()
+    placeholderult = st.empty()
+    placeholdermstr = st.empty()
+    
+    lil = placeholderlil.text_input(label ="Little League Top 50 Search String:", value = make_string("little",top_nbox),disabled = True)
+    grt = placeholdergrt.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value  = make_string("great",top_nbox),disabled = True,)
+    ult = placeholderult.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = make_string("ultra",top_nbox),disabled = True)
+    mst = placeholdermstr.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value= make_string("master",top_nbox),disabled = True)
 
     #if top_nbox == 50:
        # make_string()
