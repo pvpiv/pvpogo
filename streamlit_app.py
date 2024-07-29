@@ -98,16 +98,8 @@ def make_string(league,top_n):
     elif league == 'master':
         master_league_top_50 = get_top_50_ids('Master_Rank',"",top_n)
         retvalue = master_league_top_50
-
     return retvalue
-    #st.session_state.lil = st.empty()
-    #st.session_state.grt = st.empty()
-    #st.session_state.ult = st.empty()
-    #st.session_state.mst = st.empty()
-    #st.session_state.lilw =  little_league_top_50
-    #st.session_state.grtw =  great_league_top_50
-    #st.session_state.ultw = ultra_league_top_50
-    #st.session_state.mstw = master_league_top_50
+    
 # Set up UI elements
 #streamlit_analytics.start_tracking(load_from_json='data/data.json')
 
@@ -120,8 +112,8 @@ if 'last_sel' not in st.session_state:
     st.session_state['last_sel'] = None
 if 'last_n' not in st.session_state:
     st.session_state['last_n'] = 0
-if "topn" not in st.session_state:
-    st.session_state['topn'] = 50
+if "top_num" not in st.session_state:
+    st.session_state['top_num'] = 50
 #else:
      #if not st.session_state['get_dat'] and st.session_state['last_sel'] is not None:
          #st.session_state['get_dat'] = True
@@ -182,13 +174,14 @@ today = date.today()
 
 show_string = st.checkbox('View Top 50 PVP Pokemon Search String (copy/paste into POGO)')
 
-
-
+def updateSS():
+    st.session_state.top_num = st.session_state.top_no
+    
 # Extract top 50 IDs for each league
 if show_string:
 
 
-    top_nbox = st.number_input('Input', value = 50, key = 'top_no')
+    top_nbox = st.number_input('Input', value = st.session_state.top_num, key = 'top_no',on_change = updateSS)
 
     if  'placeholderlilw' not in st.session_state:
         #st.write(st.session_state.lil)
