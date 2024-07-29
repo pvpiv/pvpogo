@@ -189,15 +189,18 @@ if show_string:
     grt = st.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = great_league_top_50,disabled = True,key='grtw')
     ult = st.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = ultra_league_top_50,disabled = True,key='ultw')
     mst = st.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value = master_league_top_50,disabled = True,key='mstw')
-streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
-    
+try:
+    save_new(streamlit_analytics.counts,st.secrets["fb_col_search"])
+    streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+except:
+    pass
 show_shadow = st.checkbox('Show only Shadow Pokémon')#, on_change= track_shadow)
 
 #if show_shadow != st.session_state.show_shadow:
     #st.session_state.show_shadow = show_shadow
 
 #show_shadow = st.checkbox('Show only Shadow Pokémon', False)
-#streamlit_analytics.track(save_to_json="analytics.json")
+#streamlit_analytics.track(_to_json="analytics.json")
 
 # Filter the dropdown list based on the checkbox
 if show_shadow:
