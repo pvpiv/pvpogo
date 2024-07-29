@@ -182,7 +182,8 @@ if show_string:
 
 
     st.text_input(label = today.strftime("%m/%d/%y"),value = '*Copy/Paste this search string into PokeGO inventory*',label_visibility = 'hidden',disabled = True,key ="sstring")
-    top_nbox = st.number_input('Top', value = st.session_state.top_num, key = 'top_no',on_change = updateSS,min_value = 3,max_value = 200,step=5)
+    top_nbox = st.slider('Top', value = st.session_state.top_num, key = 'top_no',on_change = updateSS,min_value = 3,max_value = 200,step=5)
+    #top_nbox = st.numeric_input('Top', value = st.session_state.top_num, key = 'top_no',on_change = updateSS,min_value = 3,max_value = 200,step=5)
 
     placeholderlil = st.empty()
     placeholdergrt = st.empty()
