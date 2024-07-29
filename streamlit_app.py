@@ -86,8 +86,8 @@ def format_data(pokemon_family, shadow_only):
     
 def make_string():
     
-    top_n = st.session_state['topn']
-    st.session_state['topn'] = st.session_state.top_n
+    top_n = st.session_state.top_no
+    st.session_state['topn'] = top_n
     little_league_top_50 = get_top_50_ids('Little_Rank','little',top_n)
     great_league_top_50 = get_top_50_ids('Great_Rank','great',top_n)
     ultra_league_top_50 = get_top_50_ids('Ultra_Rank','ultra',top_n)
@@ -189,7 +189,7 @@ show_string = st.checkbox('View Top 50 PVP Pokemon Search String (copy/paste int
 if show_string:
 
 
-    top_n = st.number_input('Input', value = st.session_state['topn'], key = 'top_no', on_change = make_string)
+    top_nbox = st.number_input('Input', value = st.session_state['topn'], key = 'top_no', on_change = make_string)
 
     if  'placeholderlilw' not in st.session_state:
         #st.write(st.session_state.lil)
@@ -204,7 +204,7 @@ if show_string:
     #ult = placeholderultw.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = "",disabled = True)
    # mst = placeholdermstw.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value = "",disabled = True)
 
-    if top_n == 50:
+    if top_nbox == 50:
         make_string()
     
         
