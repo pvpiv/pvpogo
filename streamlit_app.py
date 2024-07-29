@@ -195,7 +195,7 @@ if show_string:
     top_n = st.number_input('Input', value = 50, key = 'topn', on_change = make_string)
 
     if  'lil' not in st.session_state:
-        st.write(st.session_state.lil)
+        #st.write(st.session_state.lil)
         st.write(top_n)
         placeholderlilw = st.empty()
         placeholdergrtw = st.empty()
@@ -204,6 +204,7 @@ if show_string:
     else:
         st.write(st.session_state.lil)
         st.write(top_n)
+        
     lil = placeholderlilw.text_input(label ="Little League Top 50 Search String:", value = "",disabled = True)
     grt = placeholdergrtw.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = "",disabled = True,)
     ult = placeholderultw.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = "",disabled = True)
