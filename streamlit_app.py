@@ -188,18 +188,22 @@ if show_string:
     #grt = st.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = great_league_top_50,disabled = True,key='grtw')
     #ult = st.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = ultra_league_top_50,disabled = True,key='ultw')
     #mst = st.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value = master_league_top_50,disabled = True,key='mstw')
+    
 
-    placeholderlilw = st.empty()
-    placeholdergrtw = st.empty()
-    placeholderultw = st.empty()
-    placeholdermstw = st.empty()
+
+    
+    top_n = st.number_input('Input', value = 50, key = 'topn', on_change = make_string)
+
+    if  'lil' not in st.session_state:
+        placeholderlilw = st.empty()
+        placeholdergrtw = st.empty()
+        placeholderultw = st.empty()
+        placeholdermstw = st.empty()
+        
     lil = placeholderlilw.text_input(label ="Little League Top 50 Search String:", value = "",disabled = True)
     grt = placeholdergrtw.text_input(label ="Great League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = "",disabled = True,)
     ult = placeholderultw.text_input(label ="Ultra League Top 50 Search String: (For most PVP IVs add &0-1attack)", value = "",disabled = True)
     mst = placeholdermstw.text_input(label ="Master League Top 50 Search String: (For BEST PVP IVs add &3-4*)", value = "",disabled = True)
-
-    
-    top_n = st.number_input('Input', value = 50, key = 'topn', on_change = make_string)
 
     if top_n == 50:
         make_string()
