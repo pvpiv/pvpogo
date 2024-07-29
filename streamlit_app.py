@@ -172,7 +172,7 @@ def get_top_50_ids(rank_column, league,top_n):
 #show_shadow = st.checkbox('Show only Shadow Pokémon', value=st.session_state.show_shadow, on_change=None)
 today = date.today()
 
-show_string = st.checkbox('View Top 50 PVP Pokemon Search String (copy/paste into POGO)')
+show_string = st.checkbox('View Top 50(changeable) PVP Pokemon Search String (copy/paste into POGO)')
 
 def updateSS():
     st.session_state.top_num = st.session_state.top_no
