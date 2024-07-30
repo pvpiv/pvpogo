@@ -95,6 +95,13 @@ today = date.today()
 show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into POGO, 50 by default)')
 
 if show_string:
+
+    
+    top_nbox = st.slider('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+    #placeholderlil = st.empty()
+    #placeholdergrt = st.empty()
+    #placeholderult = st.empty()
+    #placeholdermstr = st.empty()
     load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
     streamlit_analytics.start_tracking()
     
@@ -104,13 +111,6 @@ if show_string:
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     except:
         pass
-    
-    top_nbox = st.slider('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
-    #placeholderlil = st.empty()
-    #placeholdergrt = st.empty()
-    #placeholderult = st.empty()
-    #placeholdermstr = st.empty()
-    
     #placeholderlil.text_input(label='Little League Top ' + str(st.session_state.top_num) + ' Search String:', value=make_search_string("little", st.session_state.top_num), disabled=True)
     #placeholdergrt.text_input(label='Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)', value=make_search_string("great", st.session_state.top_num), disabled=True)
     #placeholderult.text_input(label='Ultra League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)', value=make_search_string("ultra", st.session_state.top_num), disabled=True)
