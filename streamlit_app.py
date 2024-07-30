@@ -69,18 +69,21 @@ def format_data(pokemon_family, shadow_only):
 def filter_ids(row):
     current_id = row['ID']
     evo_next_list = row['Evo_next'].split(';')
-    filtered_list = [int(id) for id in evo_next_list if int(id) <= current_id]
-    return filtered_list
+    if str(current_id) in evo_next_list:
+        position = evo_next_list.index(str(current_id))
+        filtered_list = evo_next_list[:position + 1]
+    else:
+        filtered_list = evo_next_list
+    return list(filtered_list)
 # Generate top 50 IDs string for a league
 
 def get_top_50_ids(rank_column, league, top_n):
     df_filtered = df.dropna(subset=[rank_column])
     top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(top_n)
-    top_50_fams = top_df['Family'].astype(str).tolist()
-    top_50 = df_filtered[df_filtered['Family'].isin(top_50_fams)]
-    top_50_ids = unique(top_50['Pokemon'].astype(str).replace(" (Shadow)", "").tolist())
+    top_df['Filtered_Evo_next'] = top_50_df.apply(filter_ids, axis=1)
+    all_ids = set([item for sublist in top_50_df['Filtered_Evo_next'] for item in sublist])
     prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
-    ids_string = prefix + ','.join(top_50_ids)
+    ids_string = prefix + ','.join(all_ids)
     return ids_string.replace("&,", "&")
 
 # Generate search string based on league
