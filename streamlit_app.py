@@ -82,7 +82,8 @@ def get_top_50_ids(rank_column, league, top_n,fam):
     top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(top_n)
     if fam:
         top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
-        all_ids = set([item for sublist in top_df['Filtered_Evo_next'] for item in sublist])
+        all_ids_set = set([item for sublist in top_df['Filtered_Evo_next'] for item in sublist])
+        all_ids = top_df[top_df['ID'].isin(all_ids_set)]['ID'].astype(str).tolist()
     else:
         all_ids = top_df['ID'].astype(str).tolist()
     prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
