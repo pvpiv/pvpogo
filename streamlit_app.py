@@ -80,6 +80,7 @@ def filter_ids(row):
 def get_top_50_ids(rank_column, league, top_n,fam):
     df_filtered = df.dropna(subset=[rank_column])
     top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(top_n)
+    all_ids_set = [""]
     if fam:
         top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
         all_ids_set = set([item for sublist in top_df['Filtered_Evo_next'] for item in sublist])
