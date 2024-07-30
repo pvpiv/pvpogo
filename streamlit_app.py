@@ -120,7 +120,17 @@ if show_string:
     placeholdergrt.text_input(label='Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)', value=make_search_string("great", st.session_state.top_num), disabled=True)
     placeholderult.text_input(label='Ultra League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)', value=make_search_string("ultra", st.session_state.top_num), disabled=True)
     placeholdermstr.text_input(label='Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3-4*)', value=make_search_string("master", st.session_state.top_num), disabled=True)
-   
+
+    st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
+    st.code(make_search_string("little", st.session_state.top_num))
+    st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')
+    st.code(make_search_string("great", st.session_state.top_num))
+    st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')
+    st.code(make_search_string("ultra", st.session_state.top_num))
+    st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')
+    st.code(make_search_string("master", st.session_state.top_num))
+
+
 show_shadow = st.checkbox('Show only Shadow Pokémon')
 pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
 pokemon_list = MyList(pokemon_list)
