@@ -16,7 +16,17 @@ st.write("[Check CP for all IVs here](%s)" % url)
 class MyList(list):
     def last_index(self):
         return len(self) - 1
+def unique(list1):
 
+    # initialize a null list
+    unique_list = []
+
+    # traverse for all elements
+    for x in list1:
+        # check if exists in unique_list or not
+        if x not in unique_list:
+            unique_list.append(x)
+    return(unique_list)        
 # Firestore loading function
 def load_from_firestore(counts, collection_name):
     key_dict = json.loads(st.secrets["textkey"])
