@@ -81,7 +81,6 @@ def get_top_50_ids(rank_column, league, top_n,fam):
     df_filtered = df.dropna(subset=[rank_column])
     df_filtered = df_filtered.sort_values(by=rank_column)
     top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(top_n)
-    all_ids_set = [""]
     seen = set()
     if fam:
         top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
@@ -93,8 +92,6 @@ def get_top_50_ids(rank_column, league, top_n,fam):
         all_ids = top_df['ID'].astype(str).tolist()
     prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
     ids_string = prefix + ','.join(all_ids)
-    st.write(all_ids_set)
-    st.write(top_df)
     return ids_string.replace("&,", "&")
 
 # Generate search string based on league
