@@ -5,9 +5,6 @@ import json
 from google.cloud import firestore
 from google.oauth2 import service_account
 from datetime import date
-from st_copy_to_clipboard import st_copy_to_clipboard
-
-# Render copy to clipboard button
 
 
 # Load your dataset
@@ -19,7 +16,17 @@ st.write("[Check CP for all IVs here](%s)" % url)
 class MyList(list):
     def last_index(self):
         return len(self) - 1
+def unique(list1):
 
+    # initialize a null list
+    unique_list = []
+
+    # traverse for all elements
+    for x in list1:
+        # check if exists in unique_list or not
+        if x not in unique_list:
+            unique_list.append(x)
+    return(unique_list)        
 # Firestore loading function
 def load_from_firestore(counts, collection_name):
     key_dict = json.loads(st.secrets["textkey"])
@@ -58,12 +65,20 @@ def format_data(pokemon_family, shadow_only):
                 entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
             formatted_data.append(entry)
     return formatted_data
-
+    
+def filter_ids(row):
+    current_id = row['ID']
+    evo_next_list = row['Evo_next'].split(';')
+    filtered_list = [int(id) for id in evo_next_list if int(id) <= current_id]
+    return filtered_list
 # Generate top 50 IDs string for a league
+
 def get_top_50_ids(rank_column, league, top_n):
     df_filtered = df.dropna(subset=[rank_column])
     top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(top_n)
-    top_50_ids = top_df['ID'].astype(str).tolist()
+    top_50_fams = top_df['Family'].astype(str).tolist()
+    top_50 = df_filtered[df_filtered['Family'].isin(top_50_fams)]
+    top_50_ids = unique(top_50['Pokemon'].astype(str).replace(" (Shadow)", "").tolist())
     prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
     ids_string = prefix + ','.join(top_50_ids)
     return ids_string.replace("&,", "&")
@@ -98,28 +113,26 @@ today = date.today()
 show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into POGO, 50 by default)')
 
 if show_string:
+
+    
+    top_nbox = st.slider('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+    #placeholderlil = st.empty()
+    #placeholdergrt = st.empty()
+    #placeholderult = st.empty()
+    #placeholdermstr = st.empty()
     load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
     streamlit_analytics.start_tracking()
     
-    st.text_input(label=today.strftime("%m/%d/%y"), value='*Copy/Paste this search string into PokeGO inventory*', label_visibility='hidden', disabled=True, key="sstring")
+    st.text_input(label=today.strftime("%m/%d/%y"), value='*Click string to show Copy button and Paste into PokeGO*', label_visibility='hidden', disabled=True, key="sstring")
     try:
         save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     except:
         pass
-    
-    top_nbox = st.slider('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
-    placeholderlil = st.empty()
-    placeholdergrt = st.empty()
-    placeholderult = st.empty()
-    placeholdermstr = st.empty()
-    
-    placeholderlil.text_input(label='Little League Top ' + str(st.session_state.top_num) + ' Search String:', value=make_search_string("little", st.session_state.top_num), disabled=True)
-    #st_copy_to_clipboard(make_search_string("little", st.session_state.top_num))
-    placeholdergrt.text_input(label='Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)', value=make_search_string("great", st.session_state.top_num), disabled=True)
-    placeholderult.text_input(label='Ultra League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)', value=make_search_string("ultra", st.session_state.top_num), disabled=True)
-    placeholdermstr.text_input(label='Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3-4*)', value=make_search_string("master", st.session_state.top_num), disabled=True)
-
+    #placeholderlil.text_input(label='Little League Top ' + str(st.session_state.top_num) + ' Search String:', value=make_search_string("little", st.session_state.top_num), disabled=True)
+    #placeholdergrt.text_input(label='Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)', value=make_search_string("great", st.session_state.top_num), disabled=True)
+    #placeholderult.text_input(label='Ultra League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)', value=make_search_string("ultra", st.session_state.top_num), disabled=True)
+    #placeholdermstr.text_input(label='Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3-4*)', value=make_search_string("master", st.session_state.top_num), disabled=True)
     st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
     st.code(make_search_string("little", st.session_state.top_num))
     st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
@@ -128,9 +141,8 @@ if show_string:
     st.code(make_search_string("ultra", st.session_state.top_num))
     st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3-4*)')
     st.code(make_search_string("master", st.session_state.top_num))
-
-
 show_shadow = st.checkbox('Show only Shadow Pokémon')
+
 pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
 pokemon_list = MyList(pokemon_list)
 
