@@ -125,7 +125,7 @@ show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into P
 
 if show_string:
 
-    fam_box = st.checkbox('Include pre-evolutions')
+    fam_box = st.checkbox('Include pre-evolutions',value=True)
     top_nbox = st.slider('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
     #placeholderlil = st.empty()
     #placeholdergrt = st.empty()
