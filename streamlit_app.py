@@ -77,25 +77,28 @@ def filter_ids(row):
     return list(filtered_list)
 # Generate top 50 IDs string for a league
 
-def get_top_50_ids(rank_column, league, top_n):
+def get_top_50_ids(rank_column, league, top_n,fam):
     df_filtered = df.dropna(subset=[rank_column])
     top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(top_n)
-    top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
-    all_ids = set([item for sublist in top_df['Filtered_Evo_next'] for item in sublist])
+    if fam:
+        top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
+        all_ids = set([item for sublist in top_df['Filtered_Evo_next'] for item in sublist])
+    else:
+        all_ids = top_df['ID'].astype(str).tolist()
     prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
     ids_string = prefix + ','.join(all_ids)
     return ids_string.replace("&,", "&")
 
 # Generate search string based on league
-def make_search_string(league, top_n):
+def make_search_string(league, top_n,fam):
     if league == 'little':
-        return get_top_50_ids('Little_Rank', 'little', top_n)
+        return get_top_50_ids('Little_Rank', 'little', top_n,fam)
     elif league == 'great':
-        return get_top_50_ids('Great_Rank', 'great', top_n)
+        return get_top_50_ids('Great_Rank', 'great', top_n,fam)
     elif league == 'ultra':
-        return get_top_50_ids('Ultra_Rank', 'ultra', top_n)
+        return get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam)
     elif league == 'master':
-        return get_top_50_ids('Master_Rank', '', top_n)
+        return get_top_50_ids('Master_Rank', '', top_n,fam)
 
 # Update session state for top number
 def update_top_num():
@@ -117,7 +120,7 @@ show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into P
 
 if show_string:
 
-    
+    fam_box = st.checkbox('Include pre-evolutions')
     top_nbox = st.slider('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
     #placeholderlil = st.empty()
     #placeholdergrt = st.empty()
@@ -137,13 +140,13 @@ if show_string:
     #placeholderult.text_input(label='Ultra League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)', value=make_search_string("ultra", st.session_state.top_num), disabled=True)
     #placeholdermstr.text_input(label='Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3-4*)', value=make_search_string("master", st.session_state.top_num), disabled=True)
     st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
-    st.code(make_search_string("little", st.session_state.top_num))
+    st.code(make_search_string("little", st.session_state.top_num,fam_box))
     st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
-    st.code(make_search_string("great", st.session_state.top_num))
+    st.code(make_search_string("great", st.session_state.top_num,fam_box))
     st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
-    st.code(make_search_string("ultra", st.session_state.top_num))
+    st.code(make_search_string("ultra", st.session_state.top_num,fam_box))
     st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3-4*)')
-    st.code(make_search_string("master", st.session_state.top_num))
+    st.code(make_search_string("master", st.session_state.top_num,fam_box))
 show_shadow = st.checkbox('Show only Shadow Pokémon')
 
 pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
