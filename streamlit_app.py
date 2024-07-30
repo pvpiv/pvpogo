@@ -122,11 +122,11 @@ if show_string:
 
     st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
     st.code(make_search_string("little", st.session_state.top_num))
-    st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')
+    st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
     st.code(make_search_string("great", st.session_state.top_num))
-    st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')
+    st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
     st.code(make_search_string("ultra", st.session_state.top_num))
-    st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')
+    st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3-4*)')
     st.code(make_search_string("master", st.session_state.top_num))
 
 
