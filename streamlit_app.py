@@ -68,7 +68,7 @@ def format_data(pokemon_family, shadow_only):
     
 def filter_ids(row):
     current_id = row['ID']
-    evo_next_list = row['Evo_next'].split(';')
+    evo_next_list = row['Evo_Fam'].split(';')
     if str(current_id) in evo_next_list:
         position = evo_next_list.index(str(current_id))
         filtered_list = evo_next_list[:position + 1]
