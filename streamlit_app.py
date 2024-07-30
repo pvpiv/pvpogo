@@ -60,7 +60,9 @@ def format_data(pokemon_family, shadow_only):
 def get_top_50_ids(rank_column, league, top_n):
     df_filtered = df.dropna(subset=[rank_column])
     top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(top_n)
-    top_50_ids = top_df['ID'].astype(str).tolist()
+    top_50_fams = top_df['Family'].astype(str).tolist()
+    top_50 = top_df[top_df['Family'].isin(top_50_fams)]
+    top_50_ids = top_50['ID'].astype(str).tolist()
     prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
     ids_string = prefix + ','.join(top_50_ids)
     return ids_string.replace("&,", "&")
