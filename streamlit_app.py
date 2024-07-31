@@ -78,6 +78,7 @@ def filter_ids(row):
 # Generate top 50 IDs string for a league
 
 def get_top_50_ids(rank_column, league, top_n,fam):
+    df = df.sort_values(by=rank_column)
     df_filtered = df.dropna(subset=[rank_column])
     df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
     #df_filtered = df_filtered.sort_values(by=rank_column)
