@@ -87,7 +87,7 @@ def get_top_50_ids(rank_column, league, top_n,fam):
     if fam:
         top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
         all_ids_set = set([item for sublist in top_df['Filtered_Evo_next'] for item in sublist])
-        all_ids = df_filtered['ID'].astype(str).tolist()
+        all_ids = df['ID'].astype(str).tolist()
         all_ids = [element for element in all_ids if element in all_ids_set and not (element in seen or seen.add(element))]
         #all_ids = all_ids_set['ID'].astype(str).tolist()
     else:
