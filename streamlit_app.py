@@ -140,8 +140,8 @@ pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['
 pokemon_list = MyList(pokemon_list)
 
 if pokemon_list:
-    pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list, index=pokemon_list.last_index(), label_visibility='hidden', key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
-    if pokemon_choice != "Select a pokemon" and pokemon_choice != "Select a Shadow pokemon":
+    pokemon_choice = st.selectbox('Select a Pokemon', pokemon_list, index=pokemon_list.last_index(), label_visibility='hidden', key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
+    if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
         if st.session_state['get_dat'] and pokemon_choice:
             if st.session_state['last_sel'] != pokemon_choice or st.session_state['last_sel'] is None:
                 load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
