@@ -79,8 +79,10 @@ def filter_ids(row):
 
 def get_top_50_ids(rank_column, league, top_n,fam):
     df_filtered = df.dropna(subset=[rank_column])
-    df_filtered = df_filtered.sort_values(by=rank_column)
-    top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(top_n)
+    df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
+    #df_filtered = df_filtered.sort_values(by=rank_column)
+    #top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(top_n)
+    top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID'])
     seen = set()
     if fam:
         top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
