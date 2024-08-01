@@ -5,7 +5,7 @@ import json
 from google.cloud import firestore
 from google.oauth2 import service_account
 from datetime import date
-import streamlit.components.v1 as components
+
 
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
@@ -16,18 +16,7 @@ st.write("[Check CP for all IVs here](%s)" % url)
 class MyList(list):
     def last_index(self):
         return len(self) - 1
-def unique(list1):
 
-    # initialize a null list
-    unique_list = []
-
-    # traverse for all elements
-    for x in list1:
-        # check if exists in unique_list or not
-        if x not in unique_list:
-            unique_list.append(x)
-    return(unique_list)        
-# Firestore loading function
 def load_from_firestore(counts, collection_name):
     key_dict = json.loads(st.secrets["textkey"])
     creds = service_account.Credentials.from_service_account_info(key_dict)
@@ -75,19 +64,18 @@ def filter_ids(row):
     else:
         filtered_list = evo_next_list
     return list(filtered_list)
-# Generate top 50 IDs string for a league
 
 def get_top_50_ids(rank_column, league, top_n,fam):
+    df_all = df.sort_values(by=rank_column)
     df_filtered = df.dropna(subset=[rank_column])
-    df_filtered = df_filtered.sort_values(by=rank_column)
-    top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID']).head(top_n)
+    df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
+    top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID'])
     seen = set()
     if fam:
         top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
         all_ids_set = set([item for sublist in top_df['Filtered_Evo_next'] for item in sublist])
-        all_ids = df_filtered['ID'].astype(str).tolist()
+        all_ids = df_all['ID'].astype(str).tolist()
         all_ids = [element for element in all_ids if element in all_ids_set and not (element in seen or seen.add(element))]
-        #all_ids = all_ids_set['ID'].astype(str).tolist()
     else:
         all_ids = top_df['ID'].astype(str).tolist()
     prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
@@ -127,10 +115,6 @@ if show_string:
 
     fam_box = st.checkbox('Include pre-evolutions',value=True)
     top_nbox = st.slider('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
-    #placeholderlil = st.empty()
-    #placeholdergrt = st.empty()
-    #placeholderult = st.empty()
-    #placeholdermstr = st.empty()
     load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
     streamlit_analytics.start_tracking()
     
@@ -140,10 +124,7 @@ if show_string:
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     except:
         pass
-    #placeholderlil.text_input(label='Little League Top ' + str(st.session_state.top_num) + ' Search String:', value=make_search_string("little", st.session_state.top_num), disabled=True)
-    #placeholdergrt.text_input(label='Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)', value=make_search_string("great", st.session_state.top_num), disabled=True)
-    #placeholderult.text_input(label='Ultra League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)', value=make_search_string("ultra", st.session_state.top_num), disabled=True)
-    #placeholdermstr.text_input(label='Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3-4*)', value=make_search_string("master", st.session_state.top_num), disabled=True)
+    
     st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
     st.code(make_search_string("little", st.session_state.top_num,fam_box))
     st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
@@ -152,40 +133,48 @@ if show_string:
     st.code(make_search_string("ultra", st.session_state.top_num,fam_box))
     st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3-4*)')
     st.code(make_search_string("master", st.session_state.top_num,fam_box))
+    
 show_shadow = st.checkbox('Show only Shadow Pokémon')
 
 pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
 pokemon_list = MyList(pokemon_list)
 
 if pokemon_list:
-    pokemon_choice = st.selectbox('Select a Pokémon:', pokemon_list, index=pokemon_list.last_index(), label_visibility='hidden', key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
-
-    if st.session_state['get_dat'] and pokemon_choice:
-        if st.session_state['last_sel'] != pokemon_choice or st.session_state['last_sel'] is None:
-            load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
-            streamlit_analytics.start_tracking()
-
-        st.session_state['last_sel'] = pokemon_choice
-        pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
-        family_data = format_data(pokemon_family, show_shadow)
-        
-        if family_data:
-            st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
-            df_display = pd.DataFrame(family_data)
-            df_display.set_index(['Pokemon'], inplace=True)
-            st.table(df_display)
+    pokemon_choice = st.selectbox('Select a Pokemon', pokemon_list, index=pokemon_list.last_index(), label_visibility='hidden', key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
+    if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
+        if st.session_state['get_dat'] and pokemon_choice:
+            if st.session_state['last_sel'] != pokemon_choice or st.session_state['last_sel'] is None:
+                load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
+                streamlit_analytics.start_tracking()
+    
+            st.session_state['last_sel'] = pokemon_choice
+            pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
+            family_data = format_data(pokemon_family, show_shadow)
             
-            try:
-                save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
-                streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
-            except:
-                pass
-        else:
-            st.session_state['get_dat'] = False
-HtmlFile = open("toast.html", 'r', encoding='utf-8')
-source_code = HtmlFile.read()
-print(source_code)
-components.html(source_code, height=600)
+            if family_data:
+                if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
+                    st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
+                    df_display = pd.DataFrame(family_data)
+                    df_display.set_index(['Pokemon'], inplace=True)
+                    st.table(df_display)
+                    #if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
+                    try:
+                        save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
+                        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+                    except:
+                        pass
+                else:
+                    try: 
+                        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+                    except:
+                        pass
+            else:
+                st.session_state['get_dat'] = False
+else:
+    try: 
+        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+    except:
+        pass
 # Custom CSS for mobile view and table fit
 st.markdown(
     """
