@@ -181,6 +181,10 @@ else:
 #print(source_code)
 components.html("""<!DOCTYPE html>
 <html>
+<head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9364288870737191"
+     crossorigin="anonymous"></script>
+ </head>
   <body>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9364288870737191"
      crossorigin="anonymous"></script>
