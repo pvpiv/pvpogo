@@ -96,7 +96,7 @@ def make_search_string(league, top_n,fam,iv_b):
     elif league == 'ultra':
         return get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b)
     elif league == 'master':
-        return get_top_50_ids('Master_Rank', '', top_n,fam,iv_b)
+        return get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b)
 
 # Update session state for top number
 def update_top_num():
