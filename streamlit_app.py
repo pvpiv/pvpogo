@@ -6,9 +6,7 @@ from google.cloud import firestore
 from google.oauth2 import service_account
 from datetime import date
 import streamlit.components.v1 as components
-import os
 
-st.write(os.path.dirname(st.file))
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
 url = "https://pvpcalc.streamlit.app/"
@@ -116,7 +114,7 @@ show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into P
 if show_string:
 
     fam_box = st.checkbox('Include pre-evolutions',value=True)
-    top_nbox = st.slider('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+    top_nbox = st.number_input('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
     load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
     streamlit_analytics.start_tracking()
     
