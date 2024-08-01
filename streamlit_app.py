@@ -152,19 +152,29 @@ if pokemon_list:
             family_data = format_data(pokemon_family, show_shadow)
             
             if family_data:
-                st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
-                df_display = pd.DataFrame(family_data)
-                df_display.set_index(['Pokemon'], inplace=True)
-                st.table(df_display)
-                
-                try:
-                    save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
-                    streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
-                except:
-                    pass
+                if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
+                    st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
+                    df_display = pd.DataFrame(family_data)
+                    df_display.set_index(['Pokemon'], inplace=True)
+                    st.table(df_display)
+                    #if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
+                    try:
+                        save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
+                        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+                    except:
+                        pass
+                else:
+                    try: 
+                        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+                    except:
+                        pass
             else:
                 st.session_state['get_dat'] = False
-
+else:
+    try: 
+        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+    except:
+        pass
 # Custom CSS for mobile view and table fit
 st.markdown(
     """
