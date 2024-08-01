@@ -176,9 +176,9 @@ else:
     except:
         pass
 
-HtmlFile = open("toast.html", 'r', encoding='utf-8')
-source_code = HtmlFile.read()
-print(source_code)
+#HtmlFile = open("toast.html", 'r', encoding='utf-8')
+#source_code = HtmlFile.read()
+#print(source_code)
 components.html("""<!DOCTYPE html>
 <html>
   <body>
