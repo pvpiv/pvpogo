@@ -179,7 +179,23 @@ else:
 HtmlFile = open("toast.html", 'r', encoding='utf-8')
 source_code = HtmlFile.read()
 print(source_code)
-components.html(source_code, height=600)
+components.html("""<!DOCTYPE html>
+<html>
+  <body>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9364288870737191"
+     crossorigin="anonymous"></script>
+<!-- pvpogo -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9364288870737191"
+     data-ad-slot="6522187769"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  </body>
+</html>""", height=600)
 
 # Custom CSS for mobile view and table fit
 st.markdown(
