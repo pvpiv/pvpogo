@@ -6,7 +6,9 @@ from google.cloud import firestore
 from google.oauth2 import service_account
 from datetime import date
 import streamlit.components.v1 as components
+import os
 
+st.write((os.path.dirname(st.file))
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
 url = "https://pvpcalc.streamlit.app/"
