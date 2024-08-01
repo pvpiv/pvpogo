@@ -5,7 +5,7 @@ import json
 from google.cloud import firestore
 from google.oauth2 import service_account
 from datetime import date
-
+import streamlit.components.v1 as components
 
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
@@ -175,6 +175,12 @@ else:
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     except:
         pass
+
+HtmlFile = open("toast.html", 'r', encoding='utf-8')
+source_code = HtmlFile.read()
+print(source_code)
+components.html(source_code, height=600)
+
 # Custom CSS for mobile view and table fit
 st.markdown(
     """
