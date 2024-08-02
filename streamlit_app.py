@@ -5,7 +5,7 @@ import json
 from google.cloud import firestore
 from google.oauth2 import service_account
 from datetime import date
-import streamlit.components.v1 as components
+
 
 # Load your dataset
 df = pd.read_csv('pvp_data.csv')
@@ -65,7 +65,7 @@ def filter_ids(row):
         filtered_list = evo_next_list
     return list(filtered_list)
 
-def get_top_50_ids(rank_column, league, top_n,fam):
+def get_top_50_ids(rank_column, league, top_n,fam,iv_bool):
     df_all = df.sort_values(by=rank_column)
     df_filtered = df.dropna(subset=[rank_column])
     df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
@@ -80,18 +80,23 @@ def get_top_50_ids(rank_column, league, top_n,fam):
         all_ids = top_df['ID'].astype(str).tolist()
     prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
     ids_string = prefix + ','.join(all_ids)
+    if iv_bool:
+        if league != 'master':
+            ids_string = ids_string + "&0-1attack&3-4defense,3-4hp&2-4defense&2-4hp"
+        if league == 'master':
+            ids_string = ids_string + "&3*,4*"
     return ids_string.replace("&,", "&")
 
 # Generate search string based on league
-def make_search_string(league, top_n,fam):
+def make_search_string(league, top_n,fam,iv_b):
     if league == 'little':
-        return get_top_50_ids('Little_Rank', 'little', top_n,fam)
+        return get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b)
     elif league == 'great':
-        return get_top_50_ids('Great_Rank', 'great', top_n,fam)
+        return get_top_50_ids('Great_Rank', 'great', top_n,fam,iv_b)
     elif league == 'ultra':
-        return get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam)
+        return get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b)
     elif league == 'master':
-        return get_top_50_ids('Master_Rank', '', top_n,fam)
+        return get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b)
 
 # Update session state for top number
 def update_top_num():
@@ -114,25 +119,32 @@ show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into P
 if show_string:
 
     fam_box = st.checkbox('Include pre-evolutions',value=True)
+    iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
     top_nbox = st.number_input('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+    placeholder = st.empty()
     load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
     streamlit_analytics.start_tracking()
     
     st.text_input(label=today.strftime("%m/%d/%y"), value='*Click string to show Copy button and Paste into PokeGO*', label_visibility='hidden', disabled=True, key="sstring")
+    #st.text_input(label=today.strftime("%m/%d/%y"), value='Results for Top ' + str(st.session_state.top_num), label_visibility='hidden', disabled=True, key="nstring")
+    
     try:
+        resnstring = placeholder.text_input(label=today.strftime("%m/%d/%y"), value='Results for Top ' + str(st.session_state.top_num), label_visibility='hidden', disabled=True, key="nstring")
+        resnstring = placeholder.empty()
         save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+        
     except:
         pass
     
     st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
-    st.code(make_search_string("little", st.session_state.top_num,fam_box))
+    st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
     st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
-    st.code(make_search_string("great", st.session_state.top_num,fam_box))
+    st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box))
     st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
-    st.code(make_search_string("ultra", st.session_state.top_num,fam_box))
-    st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3-4*)')
-    st.code(make_search_string("master", st.session_state.top_num,fam_box))
+    st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box))
+    st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3*,4*)')
+    st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box))
     
 show_shadow = st.checkbox('Show only Shadow Pokémon')
 
@@ -175,11 +187,6 @@ else:
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     except:
         pass
-
-#HtmlFile = open("toast.html", 'r', encoding='utf-8')
-#source_code = HtmlFile.read()
-#print(source_code)
-
 # Custom CSS for mobile view and table fit
 st.markdown(
     """
