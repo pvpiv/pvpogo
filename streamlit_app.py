@@ -130,13 +130,12 @@ if show_string:
     
     try:
         
-        resnstring = placeholder.empty()
         save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
         
     except:
         pass
-    
+    resnstring = placeholder.empty()
     st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
     st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
     st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
