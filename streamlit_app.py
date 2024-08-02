@@ -182,31 +182,3 @@ else:
     except:
         pass
 # Custom CSS for mobile view and table fit
-st.markdown(
-    """
-    <style>
-    @media (max-width: 600px) {
-        .css-18e3th9 {
-            padding: 0.5rem 1rem;
-        }
-        .css-1d391kg {
-            font-size: 1rem;
-        }
-        .css-1i0h2kc {
-            width: 100% !important;
-            display: block;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        .css-1i0h2kc table {
-            width: 100%;
-        }
-        .css-1i0h2kc table th,
-        .css-1i0h2kc table td {
-            padding: 0.25rem;
-        }
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
