@@ -120,7 +120,7 @@ if show_string:
 
     fam_box = st.checkbox('Include pre-evolutions',value=True)
     iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
-    if session_state.top_num == 50:
+    if st.session_state['top_num'] == 50:
         top_nbox = st.number_input('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
         st.stop()
     else:
@@ -137,7 +137,7 @@ if show_string:
         
     except:
         pass
-    resnstring = placeholder.empty()
+    
     st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
     st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
     st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
