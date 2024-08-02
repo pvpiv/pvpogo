@@ -119,12 +119,14 @@ show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into P
 if show_string:
 
     fam_box = st.checkbox('Include pre-evolutions',value=True)
-    #iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
-    #top_nbox = st.number_input('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+    iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
+    
     load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
     streamlit_analytics.start_tracking()
-    iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
+
+    
     top_nbox = st.number_input('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+    
     st.text_input(label=today.strftime("%m/%d/%y"), value='*Click string to show Copy button and Paste into PokeGO*', label_visibility='hidden', disabled=True, key="sstring")
     try:
         save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
@@ -183,3 +185,31 @@ else:
     except:
         pass
 # Custom CSS for mobile view and table fit
+st.markdown(
+    """
+    <style>
+    @media (max-width: 600px) {
+        .css-18e3th9 {
+            padding: 0.5rem 1rem;
+        }
+        .css-1d391kg {
+            font-size: 1rem;
+        }
+        .css-1i0h2kc {
+            width: 100% !important;
+            display: block;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .css-1i0h2kc table {
+            width: 100%;
+        }
+        .css-1i0h2kc table th,
+        .css-1i0h2kc table td {
+            padding: 0.25rem;
+        }
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
