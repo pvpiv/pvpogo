@@ -120,9 +120,10 @@ if show_string:
 
     fam_box = st.checkbox('Include pre-evolutions',value=True)
     iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
-    top_nbox = st.number_input('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
     load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
     streamlit_analytics.start_tracking()
+    top_nbox = st.number_input('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+
     placeholder = st.empty()
     resnstring = placeholder.text_input(label=today.strftime("%m/%d/%y"), value='Results for Top ' + str(top_nbox), label_visibility='hidden', disabled=True, key="nstring")
     st.text_input(label=today.strftime("%m/%d/%y"), value='*Click string to show Copy button and Paste into PokeGO*', label_visibility='hidden', disabled=True, key="sstring")
