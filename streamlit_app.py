@@ -8,9 +8,15 @@ from datetime import date
 
 
 # Load your dataset
-df = pd.read_csv('pvp_data.csv')
+
 url = "https://pvpcalc.streamlit.app/"
 st.write("[Check CP for all IVs here](%s)" % url)
+
+show_fossil = st.checkbox('Fossil Cup Rankings')
+if not show_fossil:
+    df = pd.read_csv('pvp_data.csv')
+else:
+    df = pd.read_csv('pvp_data_fossil.csv')
 
 # Helper class for custom list behavior
 class MyList(list):
