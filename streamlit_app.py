@@ -164,6 +164,8 @@ if show_string:
         try:
             st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box))
+        except:
+            pass
 show_shadow = st.checkbox('Show only Shadow Pokémon')
 
 pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
