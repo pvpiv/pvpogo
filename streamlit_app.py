@@ -103,7 +103,8 @@ def make_search_string(league, top_n,fam,iv_b):
         return get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b)
     elif league == 'master':
         return get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b)
-
+    elif league == 'all':
+        return list(get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b),get_top_50_ids('Great_Rank', 'great', top_n,fam,iv_b),get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b),get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b))
 # Update session state for top number
 def update_top_num():
     st.session_state.top_num = st.session_state.top_no
@@ -158,6 +159,11 @@ if show_string:
         try:
             st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3*,4*)')
             st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box))
+            query_params = st.experimental_get_query_params()
+            is_all = query_params.get("all", ["false"])[0].lower() == "all"
+            if is_all
+                st.write('All ' + str(st.session_state.top_num))
+                st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box))
         except:
             pass
     else:
