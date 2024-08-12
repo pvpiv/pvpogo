@@ -104,7 +104,7 @@ def make_search_string(league, top_n,fam,iv_b):
     elif league == 'master':
         return get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b)
     elif league == 'all':
-        return get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b)+','+get_top_50_ids('Great_Rank', 'great', top_n,fam,iv_b)+','+get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b)+','+get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b))
+        return get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b)+','+get_top_50_ids('Great_Rank', 'great', top_n,fam,iv_b)+','+get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b)+','+get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b)
 # Update session state for top number
 def update_top_num():
     st.session_state.top_num = st.session_state.top_no
