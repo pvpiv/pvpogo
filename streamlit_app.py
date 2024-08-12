@@ -71,7 +71,7 @@ def filter_ids(row):
         filtered_list = evo_next_list
     return list(filtered_list)
 
-def get_top_50_ids(rank_column, league, top_n,fam,iv_bool):
+def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
     df_all = df.sort_values(by=rank_column)
     df_filtered = df.dropna(subset=[rank_column])
     df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
@@ -84,7 +84,10 @@ def get_top_50_ids(rank_column, league, top_n,fam,iv_bool):
         all_ids = [element for element in all_ids if element in all_ids_set and not (element in seen or seen.add(element))]
     else:
         all_ids = top_df['ID'].astype(str).tolist()
-    prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
+    if all:
+        prefix = ''
+    else:
+        prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
     ids_string = prefix + ','.join(all_ids)
     if iv_bool:
         if league != 'master':
@@ -94,7 +97,7 @@ def get_top_50_ids(rank_column, league, top_n,fam,iv_bool):
     return ids_string.replace("&,", "&")
 
 # Generate search string based on league
-def make_search_string(league, top_n,fam,iv_b):
+def make_search_string(league, top_n,fam,iv_b,all_pre = False):
     if league == 'little':
         return get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b)
     elif league == 'great':
@@ -104,7 +107,7 @@ def make_search_string(league, top_n,fam,iv_b):
     elif league == 'master':
         return get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b)
     elif league == 'all':
-        return get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b)+','+get_top_50_ids('Great_Rank', 'great', top_n,fam,iv_b)+','+get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b)+','+get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b)
+        return get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b,all_pre)+','+get_top_50_ids('Great_Rank', 'great', top_n,fam,iv_b,all_pre)+','+get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b,all_pre)+','+get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b,all_pre)
 # Update session state for top number
 def update_top_num():
     st.session_state.top_num = st.session_state.top_no
@@ -160,10 +163,10 @@ if show_string:
             st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3*,4*)')
             st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box))
             query_params = st.experimental_get_query_params()
-            is_all = query_params.get("all", ["false"])[0].lower() == "true"
+            is_all = query_params.get("all", [False])[0] == True
             if is_all:
                 st.write('All ' + str(st.session_state.top_num))
-                st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box))
+                st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box,is_all))
         except:
             pass
     else:
