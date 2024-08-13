@@ -85,10 +85,11 @@ def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
     else:
         all_ids = top_df['ID'].astype(str).tolist()
     if all:
-        prefix = ''
+        prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
+        ids_string =  ','.join([f"{prefix}{number}" for number in all_ids])
     else:
         prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
-    ids_string = prefix + ','.join(all_ids)
+        ids_string = prefix + ','.join(all_ids)
     if iv_bool:
         if league != 'master':
             ids_string = ids_string + "&0-1attack&3-4defense,3-4hp&2-4defense&2-4hp"
