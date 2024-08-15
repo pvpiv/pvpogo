@@ -61,32 +61,17 @@ def format_data(pokemon_family, shadow_only):
             formatted_data.append(entry)
     return formatted_data
     
-def filter_ids2(row):
-    current_id = row['ID']
-    evo_next_list = row['Evo_Fam'].split(';')
-    if str(current_id) in evo_next_list:
-        position = evo_next_list.index(str(current_id))
-        filtered_list = evo_next_list[:position + 1]
-    else:
-        filtered_list = evo_next_list
-    return list(filtered_list)
 def filter_ids(row):
     current_id = row['ID']
     evo_next_list = row['Evo_Fam'].split(';')
-    
-    # Check if 'Shadow' is True and append '&shadow' if so
-    if row['Shadow']:
-        current_id = f"{current_id}&shadow"
-        evo_next_list = [f"{id}&shadow" for id in evo_next_list]
-
     if str(current_id) in evo_next_list:
         position = evo_next_list.index(str(current_id))
         filtered_list = evo_next_list[:position + 1]
     else:
         filtered_list = evo_next_list
-
     return list(filtered_list)
-def get_top_50_ids2(rank_column, league, top_n,fam,iv_bool,all=False):
+
+def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
     df_all = df.sort_values(by=rank_column)
     df_filtered = df.dropna(subset=[rank_column])
     df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
@@ -98,8 +83,7 @@ def get_top_50_ids2(rank_column, league, top_n,fam,iv_bool,all=False):
         all_ids = df_all['ID'].astype(str).tolist()
         all_ids = [element for element in all_ids if element in all_ids_set and not (element in seen or seen.add(element))]
     else:
-        #all_ids = top_df['ID'].astype(str).tolist()
-        all_ids = top_df.apply(lambda row: f"{row['ID']}&shadow" if row['Shadow'] else str(row['ID']), axis=1).tolist()
+        all_ids = top_df['ID'].astype(str).tolist()
     if all:
         prefix = ''
     else:
@@ -110,55 +94,6 @@ def get_top_50_ids2(rank_column, league, top_n,fam,iv_bool,all=False):
             ids_string = ids_string + "&0-1attack&3-4defense,3-4hp&2-4defense&2-4hp"
         if league == 'master':
             ids_string = ids_string + "&3*,4*"
-    return ids_string.replace("&,", "&")
-
-def apply_shadow_suffix(row):
-    if row['Shadow'] == "TRUE":
-        # Append &shadow to each ID in Evo_Fam
-        evo_next_list = [f"{id}&shadow" for id in row['Evo_Fam'].split(';')]
-        # Join the modified list back into a string
-        row['Evo_Fam'] = ';'.join(evo_next_list)
-        # Append &shadow to the ID
-        row['ID'] = f"{row['ID']}&shadow"
-    return row
-
-def get_top_50_ids(rank_column, league, top_n, fam, iv_bool, all=False):
-    # Apply the shadow suffix modification to df_all
-    df_all = df.apply(apply_shadow_suffix, axis=1)
-    
-    # Filter and sort df_all
-    df_filtered = df_all.dropna(subset=[rank_column])
-    df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
-    top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID'])
-    
-    seen = set()
-    if fam:
-        top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
-        all_ids_set = set([item for sublist in top_df['Filtered_Evo_next'] for item in sublist])
-        all_ids = df_all['ID'].astype(str).tolist()
-        all_ids = [element for element in all_ids if element in all_ids_set and not (element in seen or seen.add(element))]
-    else:
-        all_ids = top_df['ID'].astype(str).tolist()
-
-    # Prefix handling based on league
-    if league == 'little':
-        prefix = 'cp-500&'
-    elif league == 'great':
-        prefix = 'cp-1500&'
-    elif league == 'ultra':
-        prefix = 'cp-2500&'
-    else:
-        prefix = ''
-
-    ids_string = prefix + ','.join(all_ids)
-    
-    # Add IV filter string
-    if iv_bool:
-        if league != 'master':
-            ids_string = ids_string + "&0-1attack&3-4defense,3-4hp&2-4defense&2-4hp"
-        if league == 'master':
-            ids_string = ids_string + "&3*,4*"
-    
     return ids_string.replace("&,", "&")
 
 # Generate search string based on league
