@@ -70,10 +70,6 @@ def filter_ids(row):
         current_id = f"{current_id}&shadow"
         evo_next_list = [f"{id}&shadow" for id in evo_next_list]
    
-    st.write(f"Row ID: {row['ID']}, Shadow: {row['Shadow']}")
-    st.write(f"Modified current_id: {current_id}")
-    st.write(f"Modified evo_next_list: {evo_next_list}")
-    
     if str(current_id) in evo_next_list:
         position = evo_next_list.index(str(current_id))
         filtered_list = evo_next_list[:position + 1]
