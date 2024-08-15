@@ -68,6 +68,7 @@ def filter_ids(row):
     # Check if Shadow is TRUE and append &shadow if so
     if row['Shadow'] == "TRUE":
         current_id = f"{current_id}&shadow"
+        st.write(current_id)
         evo_next_list = [f"{id}&shadow" for id in evo_next_list]
 
     if str(current_id) in evo_next_list:
