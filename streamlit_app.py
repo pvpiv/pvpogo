@@ -64,35 +64,26 @@ def format_data(pokemon_family, shadow_only):
 def filter_ids(row):
     current_id = row['ID']
     evo_next_list = row['Evo_Fam'].split(';')
-    
-    # Check if Shadow is TRUE and append &shadow if so
-    if row['Shadow'] == True:
-        current_id = f"{current_id}&shadow"
-        evo_next_list = [f"{id}&shadow" for id in evo_next_list]
-   
     if str(current_id) in evo_next_list:
         position = evo_next_list.index(str(current_id))
         filtered_list = evo_next_list[:position + 1]
     else:
         filtered_list = evo_next_list
-    
     return list(filtered_list)
 
 def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
     df_all = df.sort_values(by=rank_column)
-    df_all['ID_New'] = df_all.apply(lambda row: f"{row['ID']}&shadow" if row['Shadow'] == True else row['ID'],axis=1)
-    
-    df_filtered = df_all.dropna(subset=[rank_column])
+    df_filtered = df.dropna(subset=[rank_column])
     df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
-    top_df = df_filtered.sort_values(by=rank_column)#.drop_duplicates(subset=['ID'])
+    top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID'])
     seen = set()
     if fam:
         top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
         all_ids_set = set([item for sublist in top_df['Filtered_Evo_next'] for item in sublist])
-        all_ids = df_all['ID_New'].astype(str).tolist()
+        all_ids = df_all['ID'].astype(str).tolist()
         all_ids = [element for element in all_ids if element in all_ids_set and not (element in seen or seen.add(element))]
     else:
-        all_ids = top_df['ID_New'].astype(str).tolist()
+        all_ids = top_df['ID'].astype(str).tolist()
     if all:
         prefix = ''
     else:
