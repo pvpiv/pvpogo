@@ -111,6 +111,30 @@ def make_search_string(league, top_n,fam,iv_b,all_pre = False):
 # Update session state for top number
 def update_top_num():
     st.session_state.top_num = st.session_state.top_no
+def calculate_days_since_june_30():
+    # Define the date range
+    start_date = datetime.date(2024, 6, 30)
+    end_date = datetime.date.today()
+    
+    # Calculate the number of days since June 30
+    days_since_june_30 = (end_date - start_date).days
+    
+    return days_since_june_30
+
+def make_search_string_with_age(league, top_num, fam_box, iv_box):
+    days_since_june_30 = calculate_days_since_june_30()
+    
+    # Generate the age0-X part of the search string
+    age_string = f"age0-{days_since_june_30}&"
+    
+    # Assuming `make_search_string` is your existing function to generate the rest of the search string
+    search_string = make_search_string(league, top_num, fam_box, iv_box)
+    
+    # Combine the age string with the generated search string
+    full_search_string = age_string + search_string
+    
+    return full_search_string
+
 
 # Initialize session state variables
 if 'get_dat' not in st.session_state:
@@ -172,7 +196,7 @@ if show_string:
     else:
         try:
             st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
-            st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box))
+            st.code(make_search_string_with_age("great", st.session_state.top_num, fam_box, iv_box))
         except:
             pass
 show_shadow = st.checkbox('Show only Shadow Pokémon')
