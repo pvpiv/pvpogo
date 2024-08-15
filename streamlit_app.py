@@ -66,7 +66,7 @@ def filter_ids(row):
     evo_next_list = row['Evo_Fam'].split(';')
     
     # Check if Shadow is TRUE and append &shadow if so
-    if row['Shadow'] == "TRUE":
+    if row['Shadow'] == "True":
         current_id = f"{current_id}&shadow"
         evo_next_list = [f"{id}&shadow" for id in evo_next_list]
    
