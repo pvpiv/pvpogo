@@ -61,7 +61,7 @@ def format_data(pokemon_family, shadow_only):
             formatted_data.append(entry)
     return formatted_data
     
-def filter_ids(row):
+def filter_ids2(row):
     current_id = row['ID']
     evo_next_list = row['Evo_Fam'].split(';')
     if str(current_id) in evo_next_list:
@@ -70,7 +70,22 @@ def filter_ids(row):
     else:
         filtered_list = evo_next_list
     return list(filtered_list)
+def filter_ids(row):
+    current_id = row['ID']
+    evo_next_list = row['Evo_Fam'].split(';')
+    
+    # Check if 'Shadow' is True and append '&shadow' if so
+    if row['Shadow']:
+        current_id = f"{current_id}&shadow"
+        evo_next_list = [f"{id}&shadow" for id in evo_next_list]
 
+    if str(current_id) in evo_next_list:
+        position = evo_next_list.index(str(current_id))
+        filtered_list = evo_next_list[:position + 1]
+    else:
+        filtered_list = evo_next_list
+
+    return list(filtered_list)
 def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
     df_all = df.sort_values(by=rank_column)
     df_filtered = df.dropna(subset=[rank_column])
@@ -83,7 +98,8 @@ def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
         all_ids = df_all['ID'].astype(str).tolist()
         all_ids = [element for element in all_ids if element in all_ids_set and not (element in seen or seen.add(element))]
     else:
-        all_ids = top_df['ID'].astype(str).tolist()
+        #all_ids = top_df['ID'].astype(str).tolist()
+        all_ids = top_df.apply(lambda row: f"{row['ID']}&shadow" if row['Shadow'] else str(row['ID']), axis=1).tolist()
     if all:
         prefix = ''
     else:
