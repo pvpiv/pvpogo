@@ -61,14 +61,14 @@ def format_data(pokemon_family, shadow_only):
             formatted_data.append(entry)
     return formatted_data
 def apply_shadow_suffix(row):
-if row['Shadow'] == "TRUE":
-    # Append &shadow to each ID in Evo_Fam
-    evo_next_list = [f"{id}&shadow" for id in row['Evo_Fam'].split(';')]
-    # Join the modified list back into a string
-    row['Evo_Fam'] = ';'.join(evo_next_list)
-    # Append &shadow to the ID
-    row['ID'] = f"{row['ID']}&shadow"
-return row
+    if row['Shadow'] == "TRUE":
+        # Append &shadow to each ID in Evo_Fam
+        evo_next_list = [f"{id}&shadow" for id in row['Evo_Fam'].split(';')]
+        # Join the modified list back into a string
+        row['Evo_Fam'] = ';'.join(evo_next_list)
+        # Append &shadow to the ID
+        row['ID'] = f"{row['ID']}&shadow"
+    return row
 
 # Apply the function to each row in df_all
 df_all = df_all.apply(apply_shadow_suffix, axis=1)   
