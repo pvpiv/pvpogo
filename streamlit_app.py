@@ -60,7 +60,18 @@ def format_data(pokemon_family, shadow_only):
                 entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
             formatted_data.append(entry)
     return formatted_data
-    
+def apply_shadow_suffix(row):
+if row['Shadow'] == "TRUE":
+    # Append &shadow to each ID in Evo_Fam
+    evo_next_list = [f"{id}&shadow" for id in row['Evo_Fam'].split(';')]
+    # Join the modified list back into a string
+    row['Evo_Fam'] = ';'.join(evo_next_list)
+    # Append &shadow to the ID
+    row['ID'] = f"{row['ID']}&shadow"
+return row
+
+# Apply the function to each row in df_all
+df_all = df_all.apply(apply_shadow_suffix, axis=1)   
 def filter_ids(row):
     current_id = row['ID']
     evo_next_list = row['Evo_Fam'].split(';')
@@ -75,8 +86,9 @@ def filter_ids(row):
     return list(filtered_list)
 def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
     df_all = df.sort_values(by=rank_column)
-    df_all['Evo_Fam'] = df_all.apply(lambda row: ';'.join([f"{id}&shadow" for id in row['Evo_Fam'].split(';')]) if row['Shadow'] == "TRUE" else row['Evo_Fam'],axis=1)
-    df_all['ID'] = df_all.apply(lambda row: f"{row['ID']}&shadow" if row['Shadow'] == "TRUE" else row['ID'],axis=1)
+    df_all = df_all.apply(apply_shadow_suffix, axis=1)
+    #df_all['Evo_Fam'] = df_all.apply(lambda row: ';'.join([f"{id}&shadow" for id in row['Evo_Fam'].split(';')]) if row['Shadow'] == "TRUE" else row['Evo_Fam'],axis=1)
+    #df_all['ID'] = df_all.apply(lambda row: f"{row['ID']}&shadow" if row['Shadow'] == "TRUE" else row['ID'],axis=1)
     
     df_filtered = df.dropna(subset=[rank_column])
     df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
