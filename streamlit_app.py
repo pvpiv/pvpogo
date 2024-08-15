@@ -80,15 +80,9 @@ def filter_ids(row):
 
 def get_top_50_ids(rank_column, league, top_n, fam, iv_bool, all=False):
     # Modify the Shadow IDs in both df_all and df_filtered before filtering and sorting
-    df_all['ID'] = df.apply(
-        lambda row: f"{row['ID']}&shadow" if row['Shadow'] == "TRUE" else row['ID'],
-        axis=1
-    )
-    
-    df_all['Evo_Fam'] = df_all.apply(
-        lambda row: ';'.join([f"{id}&shadow" if row['Shadow'] == "TRUE" else id for id in row['Evo_Fam'].split(';')]),
-        axis=1
-    )
+    df_all = df
+    df_all['ID'] = df_all.apply(lambda row: f"{row['ID']}&shadow" if row['Shadow'] == "TRUE" else row['ID'],axis=1)
+    df_all['Evo_Fam'] = df_all.apply(lambda row: ';'.join([f"{id}&shadow" if row['Shadow'] == "TRUE" else id for id in row['Evo_Fam'].split(';')]),axis=1)
 
     # Filter and sort df_all
     df_filtered = df_all.dropna(subset=[rank_column])
