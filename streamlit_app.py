@@ -197,7 +197,7 @@ if show_string:
         try:
             days_since_june_30 = calculate_days_since_june_30()
             age_string = f"age0-{days_since_june_30}&"
-            st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
+            st.write('Catch Cup Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
             st.code(str(age_string) + make_search_string("great", st.session_state.top_num,fam_box,iv_box))
         except:
             pass
