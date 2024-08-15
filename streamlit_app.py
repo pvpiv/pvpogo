@@ -181,10 +181,11 @@ if show_string:
     except:
         pass
     if not show_fossil:    
-        
-        st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
-        st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
-
+        try:
+            st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
+            st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
+        except:
+            pass
         try:
             st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box))
