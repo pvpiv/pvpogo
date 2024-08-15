@@ -70,8 +70,6 @@ def apply_shadow_suffix(row):
         row['ID'] = f"{row['ID']}&shadow"
     return row
 
-# Apply the function to each row in df_all
-df_all = df_all.apply(apply_shadow_suffix, axis=1)   
 def filter_ids(row):
     current_id = row['ID']
     evo_next_list = row['Evo_Fam'].split(';')
