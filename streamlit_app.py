@@ -80,9 +80,7 @@ def filter_ids(row):
 
 def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
     df_all = df.sort_values(by=rank_column)
-    df_all['ID_New'] = df_all.apply(
-    lambda row: f"{row['ID']}&shadow" if row['Shadow'] == "TRUE" else row['ID'],
-    axis=1)
+    df_all['ID_New'] = df_all.apply(lambda row: f"{row['ID']}&shadow" if row['Shadow'] == "TRUE" else row['ID'],axis=1)
     
     df_filtered = df.dropna(subset=[rank_column])
     df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
