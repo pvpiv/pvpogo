@@ -60,16 +60,7 @@ def format_data(pokemon_family, shadow_only):
                 entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
             formatted_data.append(entry)
     return formatted_data
-def apply_shadow_suffix(row):
-    if row['Shadow'] == "TRUE":
-        # Append &shadow to each ID in Evo_Fam
-        evo_next_list = [f"{id}&shadow" for id in row['Evo_Fam'].split(';')]
-        # Join the modified list back into a string
-        row['Evo_Fam'] = ';'.join(evo_next_list)
-        # Append &shadow to the ID
-        row['ID'] = f"{row['ID']}&shadow"
-    return row
-
+    
 def filter_ids(row):
     current_id = row['ID']
     evo_next_list = row['Evo_Fam'].split(';')
@@ -80,20 +71,11 @@ def filter_ids(row):
         filtered_list = evo_next_list
     return list(filtered_list)
 
-
-    return list(filtered_list)
-def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
+def get_top_50_ids2(rank_column, league, top_n,fam,iv_bool,all=False):
     df_all = df.sort_values(by=rank_column)
-    df_all = df_all.apply(apply_shadow_suffix, axis=1)
-    #df_all['Evo_Fam'] = df_all.apply(lambda row: ';'.join([f"{id}&shadow" for id in row['Evo_Fam'].split(';')]) if row['Shadow'] == "TRUE" else row['Evo_Fam'],axis=1)
-    #df_all['ID'] = df_all.apply(lambda row: f"{row['ID']}&shadow" if row['Shadow'] == "TRUE" else row['ID'],axis=1)
-    
     df_filtered = df.dropna(subset=[rank_column])
     df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
-    
-    top_df = top_df.apply(apply_shadow_suffix, axis=1)
-    top_df = top_df.sort_values(by=rank_column)
-    #top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID'])
+    top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID'])
     seen = set()
     if fam:
         top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
@@ -102,8 +84,6 @@ def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
         all_ids = [element for element in all_ids if element in all_ids_set and not (element in seen or seen.add(element))]
     else:
         all_ids = top_df['ID'].astype(str).tolist()
-       
-    if all:
         prefix = ''
     else:
         prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
@@ -114,7 +94,54 @@ def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
         if league == 'master':
             ids_string = ids_string + "&3*,4*"
     return ids_string.replace("&,", "&")
+def apply_shadow_suffix(row):
+    if row['Shadow'] == "TRUE":
+        # Append &shadow to each ID in Evo_Fam
+        evo_next_list = [f"{id}&shadow" for id in row['Evo_Fam'].split(';')]
+        # Join the modified list back into a string
+        row['Evo_Fam'] = ';'.join(evo_next_list)
+        # Append &shadow to the ID
+        row['ID'] = f"{row['ID']}&shadow"
+    return row
 
+def get_top_50_ids(rank_column, league, top_n, fam, iv_bool, all=False):
+    # Apply the shadow suffix modification to df_all
+    df_all = df.apply(apply_shadow_suffix, axis=1)
+    
+    # Filter and sort df_all
+    df_filtered = df_all.dropna(subset=[rank_column])
+    df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
+    top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID'])
+    
+    seen = set()
+    if fam:
+        top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
+        all_ids_set = set([item for sublist in top_df['Filtered_Evo_next'] for item in sublist])
+        all_ids = df_all['ID'].astype(str).tolist()
+        all_ids = [element for element in all_ids if element in all_ids_set and not (element in seen or seen.add(element))]
+    else:
+        all_ids = top_df['ID'].astype(str).tolist()
+
+    # Prefix handling based on league
+    if league == 'little':
+        prefix = 'cp-500&'
+    elif league == 'great':
+        prefix = 'cp-1500&'
+    elif league == 'ultra':
+        prefix = 'cp-2500&'
+    else:
+        prefix = ''
+
+    ids_string = prefix + ','.join(all_ids)
+    
+    # Add IV filter string
+    if iv_bool:
+        if league != 'master':
+            ids_string = ids_string + "&0-1attack&3-4defense,3-4hp&2-4defense&2-4hp"
+        if league == 'master':
+            ids_string = ids_string + "&3*,4*"
+    
+    return ids_string.replace("&,", "&")
 # Generate search string based on league
 def make_search_string(league, top_n,fam,iv_b,all_pre = False):
     if league == 'little':
