@@ -75,7 +75,7 @@ def filter_ids(row):
         filtered_list = evo_next_list[:position + 1]
     else:
         filtered_list = evo_next_list
-    st.write(filtered_list)    
+    #st.write(filtered_list)    
     return list(filtered_list)
 
 def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
