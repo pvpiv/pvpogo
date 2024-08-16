@@ -111,21 +111,21 @@ def make_search_string(league, top_n,fam,iv_b,all_pre = False):
 # Update session state for top number
 def update_top_num():
     st.session_state.top_num = st.session_state.top_no
-def calculate_days_since_june_30():
+def calculate_days_since_june_1():
     # Define the date range
-    start_date = date(2024, 6, 30)
+    start_date = date(2024, 6, 1)
     end_date = date.today()
     
     # Calculate the number of days since June 30
-    days_since_june_30 = (end_date - start_date).days
+    days_since_june_1 = (end_date - start_date).days
     
-    return days_since_june_30
+    return days_since_june_1
 
 def make_search_string_with_age(league, top_num, fam_box, iv_box):
     days_since_june_30 = calculate_days_since_june_30()
     
     # Generate the age0-X part of the search string
-    age_string = f"age0-{days_since_june_30}&"
+    age_string = f"age0-{days_since_june_1}&"
     
     # Assuming `make_search_string` is your existing function to generate the rest of the search string
     search_string = make_search_string(league, top_num, fam_box, iv_box)
