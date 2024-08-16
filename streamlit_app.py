@@ -25,6 +25,9 @@ class MyList(list):
 
 def load_from_firestore(counts, collection_name):
     key_dict = json.loads(st.secrets["textkey"])
+    st.write(json.loads(st.secrets["textkey"]))
+    st.write(st.secrets["textkey"])
+    
     creds = service_account.Credentials.from_service_account_info(key_dict)
     db = firestore.Client(credentials=creds, project="pvpogo")
     col = db.collection(collection_name)
