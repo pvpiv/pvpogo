@@ -121,20 +121,6 @@ def calculate_days_since_june_1():
     
     return days_since_june_1
 
-def make_search_string_with_age(league, top_num, fam_box, iv_box):
-    days_since_june_1 = calculate_days_since_june_1()
-    
-    # Generate the age0-X part of the search string
-    age_string = f"age0-{days_since_june_1}&"
-    
-    # Assuming `make_search_string` is your existing function to generate the rest of the search string
-    search_string = make_search_string(league, top_num, fam_box, iv_box)
-    
-    # Combine the age string with the generated search string
-    full_search_string = age_string + search_string
-    
-    return full_search_string
-
 
 # Initialize session state variables
 if 'get_dat' not in st.session_state:
