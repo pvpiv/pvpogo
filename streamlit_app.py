@@ -144,7 +144,6 @@ if is_string:
 
 if show_string:
     is_num = query_params.get("show_top", [50])[0]
-    st.write(is_num)
     if is_num != 50:
         st.session_state.top_num = int(is_num)
         
