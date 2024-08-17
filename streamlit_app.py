@@ -140,13 +140,14 @@ is_string = query_params.get("string", [False])[0]
 
 if is_string:
     show_string = is_string
+
+
+if show_string:
     is_num = query_params.get("show_top", [50])[0]
     st.write(is_num)
     if is_num != 50:
-        p=5#st.session_state['top_num'] = is_num
-
-if show_string:
-
+        st.session_state.top_num = int(is_num)
+        
     fam_box = st.checkbox('Include pre-evolutions',value=True)
     iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
     top_nbox = st.number_input('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
