@@ -148,8 +148,8 @@ if show_string:
     is_num = query_params.get("show_top", [50])[0]
     if is_num != 50:
         st.session_state.top_num = int(is_num)
-        is_string = bool(show_string)
-        st.query_params.string = bool(show_string)
+        #is_string = bool(show_string)
+        #st.query_params.string = bool(show_string)
         
     fam_box = st.checkbox('Include pre-evolutions',value=True)
     iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
