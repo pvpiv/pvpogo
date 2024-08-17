@@ -134,9 +134,11 @@ if "top_num" not in st.session_state:
 
 # UI elements
 today = date.today()
-show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into POGO, 50 by default)')
 query_params = st.experimental_get_query_params()
 is_string = query_params.get("string", [False])[0]
+
+show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into POGO, 50 by default)')
+
 
 if is_string:
     show_string = is_string
