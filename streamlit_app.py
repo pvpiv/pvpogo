@@ -140,8 +140,8 @@ is_string = query_params.get("string", [False])[0]
 
 if is_string:
     show_string = is_string
-    is_num = query_params.get("show_top", [False])[0]
-    if not is_num:
+    is_num = query_params.get("show_top", [50])[0]
+    if is_num != 50:
         st.session_state['top_num'] = is_num
 
 if show_string:
