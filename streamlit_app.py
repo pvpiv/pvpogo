@@ -141,8 +141,9 @@ is_string = query_params.get("string", [False])[0]
 if is_string:
     show_string = is_string
     is_num = query_params.get("show_top", [50])[0]
+    st.write(is_num)
     if is_num != 50:
-        st.session_state['top_num'] = is_num
+        p=5#st.session_state['top_num'] = is_num
 
 if show_string:
 
