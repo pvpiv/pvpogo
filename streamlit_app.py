@@ -137,8 +137,12 @@ today = date.today()
 show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into POGO, 50 by default)')
 query_params = st.experimental_get_query_params()
 is_string = query_params.get("string", [False])[0]
+
 if is_string:
     show_string = is_string
+    is_num = query_params.get("top_n", [50])[0]
+    st.session_state['top_num'] = is_num
+
 if show_string:
 
     fam_box = st.checkbox('Include pre-evolutions',value=True)
