@@ -141,7 +141,8 @@ is_string = query_params.get("string", [False])[0]
 if is_string:
     show_string = is_string
     is_num = query_params.get("top_n", [50])[0]
-    st.session_state['top_num'] = is_num
+    if is_num:
+        st.session_state['top_num'] = is_num
 
 if show_string:
 
