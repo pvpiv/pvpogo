@@ -6,19 +6,16 @@ from google.cloud import firestore
 from google.oauth2 import service_account
 from datetime import date
 
-if "new_seas" not in st.session_state:
-    st.session_state['new_seas'] = True
+
 # Load your dataset
 
 url = "https://pvpcalc.streamlit.app/"
 st.write("[Check CP for all IVs here](%s)" % url)
 #df = pd.read_csv('pvp_data.csv')
 show_fossil = st.checkbox('Catch Cup Rankings')
-show_new_season = st.checkbox('New Season Rankings', value= st.session_state['new_seas'])
+show_new_season = st.checkbox('New Season Rankings', value= True)
 if show_fossil:
     df = pd.read_csv('pvp_data_catch.csv')
-    st.session_state['new_seas'] = False
-    show_new_season = st.session_state['new_seas']
 elif show_new_season:
     df = pd.read_csv('pvp_data_new.csv')
 else:
