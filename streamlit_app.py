@@ -14,6 +14,7 @@ st.write("[Check CP for all IVs here](%s)" % url)
 #df = pd.read_csv('pvp_data.csv')
 show_fossil = st.checkbox('Catch Cup Rankings')
 show_new_season = st.checkbox('New Season Rankings', value=True)
+st.write(show_new_season)
 if not show_fossil:
     df = pd.read_csv('pvp_data.csv')
 elif show_new_season:
