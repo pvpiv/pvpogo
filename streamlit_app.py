@@ -13,10 +13,13 @@ url = "https://pvpcalc.streamlit.app/"
 st.write("[Check CP for all IVs here](%s)" % url)
 #df = pd.read_csv('pvp_data.csv')
 show_fossil = st.checkbox('Catch Cup Rankings')
-if not show_fossil:
-    df = pd.read_csv('pvp_data.csv')
-else:
+show_new_season = st.checkbox('New Season Rankings (Sept 3rd)', value= True)
+if show_fossil:
     df = pd.read_csv('pvp_data_catch.csv')
+elif show_new_season:
+    df = pd.read_csv('pvp_data_new.csv')
+else:
+    df = pd.read_csv('pvp_data.csv')
 
 # Helper class for custom list behavior
 class MyList(list):
@@ -25,7 +28,6 @@ class MyList(list):
 
 def load_from_firestore(counts, collection_name):
     key_dict = json.loads(st.secrets["textkey"])
-    
     creds = service_account.Credentials.from_service_account_info(key_dict)
     db = firestore.Client(credentials=creds, project="pvpogo")
     col = db.collection(collection_name)
@@ -112,29 +114,15 @@ def make_search_string(league, top_n,fam,iv_b,all_pre = False):
 # Update session state for top number
 def update_top_num():
     st.session_state.top_num = st.session_state.top_no
-def calculate_days_since_june_30():
+def calculate_days_since_june_1():
     # Define the date range
-    start_date = date(2024, 6, 30)
+    start_date = date(2024, 6, 1)
     end_date = date.today()
     
     # Calculate the number of days since June 30
-    days_since_june_30 = (end_date - start_date).days
+    days_since_june_1 = (end_date - start_date).days
     
-    return days_since_june_30
-
-def make_search_string_with_age(league, top_num, fam_box, iv_box):
-    days_since_june_30 = calculate_days_since_june_30()
-    
-    # Generate the age0-X part of the search string
-    age_string = f"age0-{days_since_june_30}&"
-    
-    # Assuming `make_search_string` is your existing function to generate the rest of the search string
-    search_string = make_search_string(league, top_num, fam_box, iv_box)
-    
-    # Combine the age string with the generated search string
-    full_search_string = age_string + search_string
-    
-    return full_search_string
+    return days_since_june_1
 
 
 # Initialize session state variables
@@ -149,10 +137,23 @@ if "top_num" not in st.session_state:
 
 # UI elements
 today = date.today()
+query_params = st.experimental_get_query_params()
+is_string = query_params.get("string", [False])[0]
+
 show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into POGO, 50 by default)')
 
-if show_string:
 
+if is_string:
+    show_string = is_string
+
+
+if show_string:
+    is_num = query_params.get("show_top", [50])[0]
+    if is_num != 50:
+        st.session_state.top_num = int(is_num)
+        #is_string = bool(show_string)
+        #st.query_params.string = bool(show_string)
+        
     fam_box = st.checkbox('Include pre-evolutions',value=True)
     iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
     top_nbox = st.number_input('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
@@ -196,8 +197,8 @@ if show_string:
             pass
     else:
         try:
-            days_since_june_30 = calculate_days_since_june_30()
-            age_string = f"age0-{days_since_june_30}&"
+            days_since_june_1 = calculate_days_since_june_1()
+            age_string = f"age0-{days_since_june_1}&"
             st.write('Catch Cup Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
             st.code(str(age_string) + make_search_string("great", st.session_state.top_num,fam_box,iv_box))
         except:
