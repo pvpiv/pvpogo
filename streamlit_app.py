@@ -12,6 +12,8 @@ from datetime import date
 # Initialize session state variables
 if 'get_dat' not in st.session_state:
     st.session_state['get_dat'] = False
+if 'get_shadow' not in st.session_state:
+    st.session_state['get_shadow'] = False  
 if 'last_sel' not in st.session_state:
     st.session_state['last_sel'] = None
 if 'last_n' not in st.session_state:
@@ -133,6 +135,8 @@ def make_search_string(league, top_n,fam,iv_b,all_pre = False):
 # Update session state for top number
 def update_top_num():
     st.session_state.top_num = st.session_state.top_no
+def upd_shadow():
+    st.session_state.get_shadow = st.session_state.sho_shad
 def calculate_days_since_june_1():
     # Define the date range
     start_date = date(2024, 6, 1)
@@ -207,8 +211,8 @@ if show_string:
     except:
         pass 
 st.divider()
-show_shadow = st.checkbox('Show only Shadow Pokémon')
-
+#show_shadow = st.checkbox('Show only Shadow Pokémon')
+show_shadow = st.session_state['get_shadow']
 pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
 pokemon_list = MyList(pokemon_list)
 
@@ -248,6 +252,7 @@ else:
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     except:
         pass
+show_shadow_box = st.checkbox('Show only Shadow Pokémon',on_change=upd_shadow,key='sho_shad') 
 st.write("#")        
 
     
