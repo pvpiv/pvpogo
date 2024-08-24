@@ -9,6 +9,20 @@ from datetime import date
 
 # Load your dataset
 
+# Initialize session state variables
+if 'get_dat' not in st.session_state:
+    st.session_state['get_dat'] = False
+if 'last_sel' not in st.session_state:
+    st.session_state['last_sel'] = None
+if 'last_n' not in st.session_state:
+    st.session_state['last_n'] = 0
+if "top_num" not in st.session_state:
+    st.session_state['top_num'] = 50
+
+# UI elements
+today = date.today()
+query_params = st.experimental_get_query_params()
+is_string = query_params.get("string", [False])[0]
 url = "https://pvpcalc.streamlit.app/"
 st.write("[Check CP for all IVs here](%s)" % url)
 #df = pd.read_csv('pvp_data.csv')
@@ -191,20 +205,6 @@ def calculate_days_since_june_1():
     return days_since_june_1
 
 
-# Initialize session state variables
-if 'get_dat' not in st.session_state:
-    st.session_state['get_dat'] = False
-if 'last_sel' not in st.session_state:
-    st.session_state['last_sel'] = None
-if 'last_n' not in st.session_state:
-    st.session_state['last_n'] = 0
-if "top_num" not in st.session_state:
-    st.session_state['top_num'] = 50
-
-# UI elements
-today = date.today()
-query_params = st.experimental_get_query_params()
-is_string = query_params.get("string", [False])[0]
 
 st.divider()
 show_shadow = st.checkbox('Show only Shadow Pokémon')
