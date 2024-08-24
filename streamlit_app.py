@@ -187,7 +187,7 @@ else:
     except:
         pass
 st.write("#")        
-show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into POGO, 50 by default)')
+show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into POGO, 50 by default)',value = True)
 
 
 if is_string:
@@ -200,11 +200,11 @@ if show_string:
         st.session_state.top_num = int(is_num)
         #is_string = bool(show_string)
         #st.query_params.string = bool(show_string)
-        
+    top_nbox = st.number_input('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+    topstrin = str(st.session_state.top_num)    
     fam_box = st.checkbox('Include pre-evolutions',value=True)
     iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
-    top_nbox = st.number_input('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
-    topstrin = str(st.session_state.top_num)
+    
 
     if not show_fossil:    
         try:
