@@ -74,7 +74,20 @@ if show_string:
             st.code(str(age_string) + make_search_string("great", st.session_state.top_num,fam_box,iv_box))
         except:
             pass
-# Helper class for custom list behavior
+            
+# Helper
+    load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
+    streamlit_analytics.start_tracking()
+    
+    st.text_input(label=today.strftime("%m/%d/%y"), value='*Click string to show Copy button and Paste Top ' + topstrin + ' into PokeGO*', label_visibility='hidden', disabled=True, key="sstring")
+    #st.text_input(label=today.strftime("%m/%d/%y"), value='Results for Top ' + str(st.session_state.top_num), label_visibility='hidden', disabled=True, key="nstring")
+    
+    try:
+        save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
+        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+    except:
+        pass 
+        #class for custom list behavior
 class MyList(list):
     def last_index(self):
         return len(self) - 1
@@ -241,17 +254,7 @@ else:
         pass
 st.write("#")        
 
-    load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
-    streamlit_analytics.start_tracking()
     
-    st.text_input(label=today.strftime("%m/%d/%y"), value='*Click string to show Copy button and Paste Top ' + topstrin + ' into PokeGO*', label_visibility='hidden', disabled=True, key="sstring")
-    #st.text_input(label=today.strftime("%m/%d/%y"), value='Results for Top ' + str(st.session_state.top_num), label_visibility='hidden', disabled=True, key="nstring")
-    
-    try:
-        save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
-        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
-    except:
-        pass
 # Custom CSS for mobile view and table fit
 st.markdown(
     """
