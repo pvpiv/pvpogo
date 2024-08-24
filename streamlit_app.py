@@ -186,7 +186,7 @@ else:
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     except:
         pass
-st.write("#")        
+st.write("--")        
 show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into POGO, 50 by default)')
 
 
