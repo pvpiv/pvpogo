@@ -144,7 +144,7 @@ def calculate_days_since_june_1():
     return days_since_june_1
 
 
-show_string = st.checkbox('View Top PVP Pokemon Search')
+show_string = st.checkbox('View Top PVP Pokemon Search Strings')
 
 
 if show_string:
