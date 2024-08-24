@@ -28,7 +28,7 @@ today = date.today()
 query_params = st.experimental_get_query_params()
 is_string = query_params.get("string", [False])[0]
 url = "https://pvpcalc.streamlit.app/"
-st.write("[Check CP for all IVs here](%s)" % url)
+#st.write("[Check CP for all IVs here](%s)" % url)
 #df = pd.read_csv('pvp_data.csv')
 show_fossil = False #st.checkbox('Catch Cup Rankings')
 #show_new_season = st.checkbox('New Season Rankings (Sept 3rd)', value= True)
@@ -151,7 +151,7 @@ def calculate_days_since_june_1():
     
     return days_since_june_1
 
-st.divider()
+#st.divider()
 #show_shadow = st.checkbox('Show only Shadow Pokémon')
 show_shadow = st.session_state['get_shadow']
 pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
