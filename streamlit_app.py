@@ -14,13 +14,66 @@ st.write("[Check CP for all IVs here](%s)" % url)
 #df = pd.read_csv('pvp_data.csv')
 show_fossil = False #st.checkbox('Catch Cup Rankings')
 show_new_season = st.checkbox('New Season Rankings (Sept 3rd)', value= True)
+st.divider()
 #if show_fossil:
     #df = pd.read_csv('pvp_data_catch.csv')
 if show_new_season:
     df = pd.read_csv('pvp_data_new.csv')
 else:
     df = pd.read_csv('pvp_data.csv')
+show_string = st.checkbox('View Top PVP Pokemon Search Strings')
 
+
+if is_string:
+    show_string = is_string
+
+
+if show_string:
+    is_num = query_params.get("show_top", [50])[0]
+    if is_num != 50:
+        st.session_state.top_num = int(is_num)
+        #is_string = bool(show_string)
+        #st.query_params.string = bool(show_string)
+    top_nbox = st.number_input('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+    topstrin = str(st.session_state.top_num)    
+    fam_box = st.checkbox('Include pre-evolutions',value=True)
+    iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
+    
+
+    if not show_fossil:    
+        try:
+            st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
+            st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
+        except:
+            pass
+        try:
+            st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
+            st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box))
+        except:
+            pass
+        try:
+            st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
+            st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box))
+        except:
+            pass
+        try:
+            st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3*,4*)')
+            st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box))
+            query_params = st.experimental_get_query_params()
+            is_all = query_params.get("all", [False])[0]
+            if is_all:
+                st.write('All ' + str(st.session_state.top_num))
+                st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box,True))
+        except:
+            pass
+    else:
+        try:
+            days_since_june_1 = calculate_days_since_june_1()
+            age_string = f"age0-{days_since_june_1}&"
+            st.write('Catch Cup Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
+            st.code(str(age_string) + make_search_string("great", st.session_state.top_num,fam_box,iv_box))
+        except:
+            pass
 # Helper class for custom list behavior
 class MyList(list):
     def last_index(self):
@@ -144,7 +197,7 @@ today = date.today()
 query_params = st.experimental_get_query_params()
 is_string = query_params.get("string", [False])[0]
 
-
+st.divider()
 show_shadow = st.checkbox('Show only Shadow Pokémon')
 
 pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
@@ -187,59 +240,7 @@ else:
     except:
         pass
 st.write("#")        
-show_string = st.checkbox('View Top PVP Pokemon Search String (copy/paste into POGO, 50 by default)',value = True)
 
-
-if is_string:
-    show_string = is_string
-
-
-if show_string:
-    is_num = query_params.get("show_top", [50])[0]
-    if is_num != 50:
-        st.session_state.top_num = int(is_num)
-        #is_string = bool(show_string)
-        #st.query_params.string = bool(show_string)
-    top_nbox = st.number_input('Top', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
-    topstrin = str(st.session_state.top_num)    
-    fam_box = st.checkbox('Include pre-evolutions',value=True)
-    iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
-    
-
-    if not show_fossil:    
-        try:
-            st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
-            st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
-        except:
-            pass
-        try:
-            st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
-            st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box))
-        except:
-            pass
-        try:
-            st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
-            st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box))
-        except:
-            pass
-        try:
-            st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3*,4*)')
-            st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box))
-            query_params = st.experimental_get_query_params()
-            is_all = query_params.get("all", [False])[0]
-            if is_all:
-                st.write('All ' + str(st.session_state.top_num))
-                st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box,True))
-        except:
-            pass
-    else:
-        try:
-            days_since_june_1 = calculate_days_since_june_1()
-            age_string = f"age0-{days_since_june_1}&"
-            st.write('Catch Cup Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
-            st.code(str(age_string) + make_search_string("great", st.session_state.top_num,fam_box,iv_box))
-        except:
-            pass
     load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
     streamlit_analytics.start_tracking()
     
