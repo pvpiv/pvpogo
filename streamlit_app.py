@@ -14,6 +14,8 @@ if 'get_dat' not in st.session_state:
     st.session_state['get_dat'] = False
 if 'get_shadow' not in st.session_state:
     st.session_state['get_shadow'] = False  
+if 'get_season' not in st.session_state:
+    st.session_state['get_season'] = True   
 if 'last_sel' not in st.session_state:
     st.session_state['last_sel'] = None
 if 'last_n' not in st.session_state:
@@ -29,7 +31,7 @@ url = "https://pvpcalc.streamlit.app/"
 st.write("[Check CP for all IVs here](%s)" % url)
 #df = pd.read_csv('pvp_data.csv')
 show_fossil = False #st.checkbox('Catch Cup Rankings')
-show_new_season = st.checkbox('New Season Rankings (Sept 3rd)', value= True)
+#show_new_season = st.checkbox('New Season Rankings (Sept 3rd)', value= True)
 
 #if show_fossil:
     #df = pd.read_csv('pvp_data_catch.csv')
@@ -137,6 +139,8 @@ def update_top_num():
     st.session_state.top_num = st.session_state.top_no
 def upd_shadow():
     st.session_state.get_shadow = st.session_state.sho_shad
+def upd_season():
+    st.session_state.get_season = st.session_state.sho_seas
 def calculate_days_since_june_1():
     # Define the date range
     start_date = date(2024, 6, 1)
@@ -167,6 +171,8 @@ if pokemon_list:
             
             if family_data:
                 if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
+                    show_shadow_box = st.checkbox('Show only Shadow Pokémon',on_change=upd_shadow,key='sho_shad') 
+                    show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas') 
                     st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
                     df_display = pd.DataFrame(family_data)
                     df_display.set_index(['Pokemon'], inplace=True)
@@ -189,7 +195,7 @@ else:
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     except:
         pass
-show_shadow_box = st.checkbox('Show only Shadow Pokémon',on_change=upd_shadow,key='sho_shad') 
+
 st.divider()      
 
    
