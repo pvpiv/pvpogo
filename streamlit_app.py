@@ -56,14 +56,18 @@ def format_data(pokemon_family, shadow_only):
     attributes = ['Rank', 'CP', 'IVs', 'Level', 'MoveSet']
     leagues = ['Little', 'Great', 'Ultra', 'Master']
     for _, row in family_data.iterrows():
-        for attr in attributes:
-            entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
-            for league in leagues:
+        #for attr in attributes:
+        for league in leagues:
+            #entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
+            entry = {'Pokemon': row['Pokemon'], 'League': league}
+            #for league in leagues:
+            for attr in attributes:
                 value = row[f'{league}_{attr}']
-                entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
+                #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
+                entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
             formatted_data.append(entry)
     return formatted_data
-    
+    pvpogo.streamlit.app 
 def filter_ids(row):
     current_id = row['ID']
     evo_next_list = row['Evo_Fam'].split(';')
