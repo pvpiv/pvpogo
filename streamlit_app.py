@@ -139,7 +139,7 @@ def update_top_num():
     st.session_state.top_num = st.session_state.top_no
 def upd_shadow():
     st.session_state.get_shadow = st.session_state.sho_shad
-def upd_season():
+def upd_seas():
     st.session_state.get_season = st.session_state.sho_seas
 def calculate_days_since_june_1():
     # Define the date range
@@ -159,6 +159,8 @@ pokemon_list = MyList(pokemon_list)
 
 if pokemon_list:
     pokemon_choice = st.selectbox('Select a Pokemon', pokemon_list, index=pokemon_list.last_index(), label_visibility='hidden', key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
+    show_shadow_box = st.checkbox('Show only Shadow Pokémon',on_change=upd_shadow,key='sho_shad') 
+    show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas') 
     if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
         if st.session_state['get_dat'] and pokemon_choice:
             if st.session_state['last_sel'] != pokemon_choice or st.session_state['last_sel'] is None:
@@ -171,8 +173,7 @@ if pokemon_list:
             
             if family_data:
                 if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
-                    show_shadow_box = st.checkbox('Show only Shadow Pokémon',on_change=upd_shadow,key='sho_shad') 
-                    show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas') 
+ 
                     st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
                     df_display = pd.DataFrame(family_data)
                     df_display.set_index(['Pokemon'], inplace=True)
