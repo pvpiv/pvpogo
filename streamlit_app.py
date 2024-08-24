@@ -53,7 +53,7 @@ def format_data(pokemon_family, shadow_only):
         family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == False)]
     
     formatted_data = []
-    attributes = ['Rank', 'CP', 'IVs', 'Level', 'MoveSet']
+    attributes = ['Rank','IVs','CP', 'Level', 'MoveSet']
     leagues = ['Little', 'Great', 'Ultra', 'Master']
     for _, row in family_data.iterrows():
         #for attr in attributes:
