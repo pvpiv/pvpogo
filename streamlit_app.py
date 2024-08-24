@@ -21,7 +21,7 @@ if show_new_season:
     df = pd.read_csv('pvp_data_new.csv')
 else:
     df = pd.read_csv('pvp_data.csv')
-show_string = st.checkbox('View Top PVP Pokemon Search 
+show_string = st.checkbox('View Top PVP Pokemon Search')
 
 
 if show_string:
