@@ -35,7 +35,7 @@ show_fossil = False #st.checkbox('Catch Cup Rankings')
 
 #if show_fossil:
     #df = pd.read_csv('pvp_data_catch.csv')
-if show_new_season:
+if st.session_state['get_season']:
     df = pd.read_csv('pvp_data_new.csv')
 else:
     df = pd.read_csv('pvp_data.csv')
