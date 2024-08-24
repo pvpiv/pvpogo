@@ -12,10 +12,10 @@ from datetime import date
 url = "https://pvpcalc.streamlit.app/"
 st.write("[Check CP for all IVs here](%s)" % url)
 #df = pd.read_csv('pvp_data.csv')
-show_fossil = st.checkbox('Catch Cup Rankings')
+show_fossil = False #st.checkbox('Catch Cup Rankings')
 show_new_season = st.checkbox('New Season Rankings (Sept 3rd)', value= True)
 #if show_fossil:
-    df = pd.read_csv('pvp_data_catch.csv')
+    #df = pd.read_csv('pvp_data_catch.csv')
 if show_new_season:
     df = pd.read_csv('pvp_data_new.csv')
 else:
