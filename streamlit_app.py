@@ -256,7 +256,7 @@ if show_string:
     streamlit_analytics.start_tracking()
     location = streamlit_geolocation()
     placeholder = st.empty()
-    placeholder.text_input(str(location['latitude']) + ',' + str(location['longitude']))
+    placeholder.text_input(label=today.strftime("%m/%d/%y"),value=str(location['latitude']) + ',' + str(location['longitude']))
     placeholder = st.empty()
     placeholder.text_input(label=today.strftime("%m/%d/%y"), value='*Click string to show Copy button and Paste Top ' + topstrin + ' into PokeGO*', label_visibility='hidden', disabled=True, key="sstring")
     #st.text_input(label=today.strftime("%m/%d/%y"), value='Results for Top ' + str(st.session_state.top_num), label_visibility='hidden', disabled=True, key="nstring")
