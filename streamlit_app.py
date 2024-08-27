@@ -5,7 +5,7 @@ import json
 from google.cloud import firestore
 from google.oauth2 import service_account
 from datetime import date
-
+from streamlit_geolocation import streamlit_geolocation
 
 # Load your dataset
 
