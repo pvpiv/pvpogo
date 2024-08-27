@@ -254,14 +254,16 @@ if show_string:
 # Helper
     load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
     streamlit_analytics.start_tracking()
-    
-    st.text_input(label=today.strftime("%m/%d/%y"), value='*Click string to show Copy button and Paste Top ' + topstrin + ' into PokeGO*', label_visibility='hidden', disabled=True, key="sstring")
+    location = streamlit_geolocation()
+    placeholder = st.empty()
+    placeholder.text_input(str(location.longitude) + ',' + str(location.latitude))
+    placeholder = st.empty()
+    placeholder.text_input(label=today.strftime("%m/%d/%y"), value='*Click string to show Copy button and Paste Top ' + topstrin + ' into PokeGO*', label_visibility='hidden', disabled=True, key="sstring")
     #st.text_input(label=today.strftime("%m/%d/%y"), value='Results for Top ' + str(st.session_state.top_num), label_visibility='hidden', disabled=True, key="nstring")
     
     try:
         
-        location = streamlit_geolocation()
-        st.write(location)
+
         save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     except:
