@@ -111,25 +111,24 @@ if 1 != 0:
         return days_since
         
 # Initialize session state variables
-if 'get_dat' not in st.session_state:
-    st.session_state['get_dat'] = False
-if 'get_shadow' not in st.session_state:
-    st.session_state['get_shadow'] = False  
-if 'get_season' not in st.session_state:
-    st.session_state['get_season'] = True   
-if 'last_sel' not in st.session_state:
-    st.session_state['last_sel'] = None
-if 'last_n' not in st.session_state:
-    st.session_state['last_n'] = 0
-if "top_num" not in st.session_state:
-    st.session_state['top_num'] = 50
-if "show_string" not in st.session_state:
-    st.session_state['show_string'] = True #st.checkbox('View Top PVP Pokemon Search Strings')
-if "show_custom" not in st.session_state:
-    st.session_state['show_custom'] = False
+    if 'get_dat' not in st.session_state:
+        st.session_state['get_dat'] = False
+    if 'get_shadow' not in st.session_state:
+        st.session_state['get_shadow'] = False  
+    if 'get_season' not in st.session_state:
+        st.session_state['get_season'] = True   
+    if 'last_sel' not in st.session_state:
+        st.session_state['last_sel'] = None
+    if 'last_n' not in st.session_state:
+        st.session_state['last_n'] = 0
+    if "top_num" not in st.session_state:
+        st.session_state['top_num'] = 50
+    if "show_string" not in st.session_state:
+        st.session_state['show_string'] = True #st.checkbox('View Top PVP Pokemon Search Strings')
+    if "show_custom" not in st.session_state:
+        st.session_state['show_custom'] = False
+    season_start = date(2024,9,3)
     
-season_start = date(2024,9,3)    
-
 if st.session_state['get_season']:
     df = pd.read_csv('pvp_data_new.csv')
 else:
@@ -201,7 +200,7 @@ if st.session_state.show_string:
     iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
     
 
-    if not show_custom:    
+    if not st.session_state['show_custom']:    
         try:
             st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
             st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
