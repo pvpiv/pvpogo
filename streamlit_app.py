@@ -259,6 +259,9 @@ if show_string:
     #st.text_input(label=today.strftime("%m/%d/%y"), value='Results for Top ' + str(st.session_state.top_num), label_visibility='hidden', disabled=True, key="nstring")
     
     try:
+        
+        location = streamlit_geolocation()
+        st.write(location)
         save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     except:
