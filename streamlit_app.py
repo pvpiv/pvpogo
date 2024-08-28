@@ -29,10 +29,12 @@ if 1 != 0:
         col.document(st.secrets["fb_col"]).set(counts)
     # Format data for display
     def format_data(pokemon_family, shadow_only):
-        st.write(shadow_only)
+
         if shadow_only:
             family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == True)]
         elif shadow_only == 'All':
+            st.write(shadow_only)
+            st.write(pokemon_family)
             family_data = df[(df['Family'] == pokemon_family)].sort_values(by=['ID','Shadow'])
         else:
             family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == False)]
@@ -52,7 +54,7 @@ if 1 != 0:
                     entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
                 formatted_data.append(entry)
         return formatted_data
-        pvpogo.streamlit.app 
+        #pvpogo.streamlit.app 
     def filter_ids(row):
         current_id = row['ID']
         evo_next_list = row['Evo_Fam'].split(';')
@@ -159,7 +161,6 @@ if pokemon_list:
     
             st.session_state['last_sel'] = pokemon_choice
             pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
-            st.write(pokemon_family)
             family_data = format_data(pokemon_family, show_shadow)
             
             if family_data:
