@@ -29,6 +29,7 @@ if 1 != 0:
         col.document(st.secrets["fb_col"]).set(counts)
     # Format data for display
     def format_data(pokemon_family, shadow_only):
+        st.print(shadow_only)
         if shadow_only:
             family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == True)]
         elif shadow_only == 'All':
@@ -158,6 +159,7 @@ if pokemon_list:
     
             st.session_state['last_sel'] = pokemon_choice
             pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
+            st.write(pokemon_family)
             family_data = format_data(pokemon_family, show_shadow)
             
             if family_data:
