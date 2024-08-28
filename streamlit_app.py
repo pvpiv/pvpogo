@@ -279,9 +279,8 @@ st.markdown(
     """
     <style>
     @media (max-width: 4000px) {
-    <style>
-    .stSlider [data-baseweb=slider]{
-        width: 25%;
+    .stNumberInput [data-baseweb=input]{
+        width: 100%;
     }
     </style>
         .css-18e3th9 {
