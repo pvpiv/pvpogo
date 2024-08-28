@@ -212,12 +212,12 @@ if st.session_state.show_string:
 
     if not st.session_state['show_custom']:    
         try:
-            st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
+            st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
             st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
         except:
             pass
         try:
-            st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
+            st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box))
         except:
             pass
@@ -227,7 +227,7 @@ if st.session_state.show_string:
         except:
             pass
         try:
-            st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3*,4*)')
+            st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
             st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box))
             query_params = st.experimental_get_query_params()
             is_all = query_params.get("all", [False])[0]
@@ -240,7 +240,7 @@ if st.session_state.show_string:
         try:
             days_since_date = calculate_days_since(season_start)
             age_string = f"age0-{days_since_date}&"
-            st.write('Catch Cup Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
+            st.write('Catch Cup Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
             st.code(str(age_string) + make_search_string("great", st.session_state.top_num,fam_box,iv_box))
         except:
             pass
