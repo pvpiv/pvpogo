@@ -141,7 +141,7 @@ query_params = st.experimental_get_query_params()
 #Section 1 - PVP Pokemon Search Table
 show_shadow = st.session_state['get_shadow']
 #pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
-pokemon_list = df['Pokemon'].unique()
+pokemon_list = MyList(df['Pokemon'].unique())
 #pokemon_list = MyList(pokemon_list)
 
 if pokemon_list:
