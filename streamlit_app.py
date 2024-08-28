@@ -32,9 +32,9 @@ if 1 != 0:
 
         if shadow_only == 'All':
             family_data = df[(df['Family'] == pokemon_family)].sort_values(by=['ID','Shadow'])
-        elif shadow_only:
+        elif shadow_only == True:
             family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == True)]
-        else:
+        elif shadow_only == False:
             family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == False)]
         
         formatted_data = []
