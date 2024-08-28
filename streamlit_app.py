@@ -121,7 +121,7 @@ if 1 != 0:
     if 'get_dat' not in st.session_state:
         st.session_state['get_dat'] = False
     if 'get_shadow' not in st.session_state:
-        st.session_state['get_shadow'] = 'All'  
+        st.session_state['get_shadow'] = False
     if 'get_season' not in st.session_state:
         st.session_state['get_season'] = True   
     if 'last_sel' not in st.session_state:
@@ -153,7 +153,7 @@ pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokem
 
 if pokemon_list:
     pokemon_choice = st.selectbox('Select a Pokemon', pokemon_list, index=pokemon_list.last_index(), label_visibility='hidden', key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
-    #show_shadow_box = st.checkbox('Show only Shadow Pokémon',on_change=upd_shadow,key='sho_shad') 
+    show_shadow_box = st.checkbox('Include Shadow Pokémon',on_change=upd_shadow,key='sho_shad') 
     show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
     if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
         if st.session_state['get_dat'] and pokemon_choice:
