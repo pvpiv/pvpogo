@@ -153,7 +153,7 @@ pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokem
 
 if pokemon_list:
     pokemon_choice = st.selectbox('Select a Pokemon', pokemon_list, index=pokemon_list.last_index(), label_visibility='hidden', key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
-    show_shadow_box = st.checkbox('Include Shadow Pokémon',on_change=upd_shadow,key='sho_shad',value=False) 
+    show_shadow_box = st.checkbox('Include Shadow Pokémon',on_change=upd_shadow,key='sho_shad',value=st.session_state['get_shadow']) 
     show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
     if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
         if st.session_state['get_dat'] and pokemon_choice:
