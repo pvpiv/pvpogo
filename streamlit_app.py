@@ -168,6 +168,26 @@ if pokemon_list:
                     df_display = pd.DataFrame(family_data)
                     #df_display.set_index(['Pokemon'], inplace=True)
                     #st.table(df_display)
+
+
+
+
+                    gd = GridOptionsBuilder.from_dataframe(df_display)
+                    gd.configure_pagination(enabled=True)
+                    
+                    gd.configure_columns(["Pokemon","Rank","IVs","CP","Level","MoveSet"],wrapText = True)
+                    gd.configure_columns(["Pokemon","Rank","IVs","CP","Level","MoveSet"],autoHeight = True)
+                    gd.configure_default_column(editable=False, groupable=True, wrapText = True)
+       
+                    gd.configure_selection(selection_mode = 'multiple',use_checkbox=False)
+                    gridoptions = gd.build()
+                    grid_table = AgGrid(df_display, columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,gridOptions=gridoptions,wrapText=  True,
+                                        update_mode=GridUpdateMode.SELECTION_CHANGED | GridUpdateMode.VALUE_CHANGED,
+                                        height=650, width = 8000,
+                                        allow_unsafe_jscode=True)
+
+
+                    
                     AgGrid(df_display, columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS)
                     #if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     try:
