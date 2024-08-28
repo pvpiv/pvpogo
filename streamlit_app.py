@@ -33,8 +33,7 @@ if 1 != 0:
         if shadow_only:
             family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == True)]
         elif shadow_only == 'All':
-            st.write(shadow_only)
-            st.write(pokemon_family)
+
             family_data = df[(df['Family'] == pokemon_family)].sort_values(by=['ID','Shadow'])
         else:
             family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == False)]
@@ -161,8 +160,10 @@ if pokemon_list:
     
             st.session_state['last_sel'] = pokemon_choice
             pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
+            st.write(show_shadow)
+            st.write(pokemon_family)
             family_data = format_data(pokemon_family, show_shadow)
-            
+
             if family_data:
                 if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
  
