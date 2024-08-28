@@ -31,6 +31,8 @@ if 1 != 0:
     def format_data(pokemon_family, shadow_only):
         if shadow_only:
             family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == True)]
+        elif shadow_only == 'All':
+            family_data = df[(df['Family'] == pokemon_family)].sort_values(by=['ID','Shadow')
         else:
             family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == False)]
         
@@ -114,7 +116,7 @@ if 1 != 0:
     if 'get_dat' not in st.session_state:
         st.session_state['get_dat'] = False
     if 'get_shadow' not in st.session_state:
-        st.session_state['get_shadow'] = False  
+        st.session_state['get_shadow'] = 'All'  
     if 'get_season' not in st.session_state:
         st.session_state['get_season'] = True   
     if 'last_sel' not in st.session_state:
