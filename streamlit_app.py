@@ -276,10 +276,10 @@ st.markdown(
         .css-1i0h2kc table td {
             padding: 0.25rem;
         }
-    }
         .my-header-class .ag-header-cell-label {
         justify-content: center !important;
         font-size: 10px !important;
+    }
     }
     </style>
     """,
