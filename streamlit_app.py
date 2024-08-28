@@ -7,7 +7,7 @@ from google.oauth2 import service_account
 from datetime import date
 from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode,GridUpdateMode
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="centered")
 
 
 
