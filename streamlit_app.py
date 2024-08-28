@@ -5,9 +5,8 @@ import json
 from google.cloud import firestore
 from google.oauth2 import service_account
 from datetime import date
-from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode,GridUpdateMode
+#from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode,GridUpdateMode
 
-st.set_page_config(layout="centered")
 
 
 
@@ -171,26 +170,10 @@ if pokemon_list:
  
                     st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
                     df_display = pd.DataFrame(family_data)
-                    #df_display.set_index(['Pokemon'], inplace=True)
-                    #st.table(df_display)
-
-
-
-
-                    gd = GridOptionsBuilder.from_dataframe(df_display)
-                    #gd.configure_pagination(enabled=True)
-                    
-                    gd.configure_columns(["Pokemon","Rank","IVs","CP","Level","MoveSet"],wrapText = True)
-                    gd.configure_columns(["Pokemon","Rank","IVs","CP","Level","MoveSet"],autoHeight = True)
-                    gd.configure_default_column(editable=False, groupable=True, wrapText = True)
-       
-                    #gd.configure_selection(selection_mode = 'multiple',use_checkbox=False)
-                    gridoptions = gd.build()
-                    grid_table = AgGrid(df_display, columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,gridOptions=gridoptions,wrapText= True, update_mode=GridUpdateMode.SELECTION_CHANGED,height=500, width = 2000, allow_unsafe_jscode=True)
-
+                    df_display.set_index(['Pokemon'], inplace=True)
+                    st.table(df_display)
 
                     
-                    #AgGrid(df_display, columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS)
                     #if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     try:
                         save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
