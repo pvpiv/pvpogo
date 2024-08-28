@@ -168,7 +168,7 @@ if pokemon_list:
                     df_display = pd.DataFrame(family_data)
                     #df_display.set_index(['Pokemon'], inplace=True)
                     #st.table(df_display)
-                    AgGrid(df_display, columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS))
+                    AgGrid(df_display, columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS)
                     #if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     try:
                         save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
