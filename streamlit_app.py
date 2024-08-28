@@ -278,7 +278,12 @@ if st.session_state.show_string:
 st.markdown(
     """
     <style>
-    @media (max-width: 600px) {
+    @media (max-width: 4000px) {
+    <style>
+    .stSlider [data-baseweb=slider]{
+        width: 25%;
+    }
+    </style>
         .css-18e3th9 {
             padding: 0.5rem 1rem;
         }
