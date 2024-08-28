@@ -31,7 +31,7 @@ if 1 != 0:
     def format_data(pokemon_family, shadow_only):
 
         if shadow_only == 'All':
-            family_data = df[(df['Family'] == pokemon_family)].sort_values(by=['Shadow','ID']).sort_values(by=['Little_Level','Little_CP'],ascending=False)
+            family_data = df[(df['Family'] == pokemon_family)].sort_values(by=['Little_CP'],ascending=False).sort_values(by=['Little_Level','Shadow','ID'])
         elif shadow_only == True:
             family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == True)]
         elif shadow_only == False:
