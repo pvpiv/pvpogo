@@ -278,11 +278,13 @@ if st.session_state.show_string:
 st.markdown(
     """
     <style>
-    @media (max-width: 4000px) {
+    @media (max-width: 2000px) {
+        .css-18e3th9 {
+            padding: 1rem 1rem;
+    }
     .stNumberInput [data-baseweb=input]{
         width: 100%;
     }
-    </style>
         .css-18e3th9 {
             padding: 0.5rem 1rem;
         }
