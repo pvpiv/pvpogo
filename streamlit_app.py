@@ -181,7 +181,7 @@ if pokemon_list:
        
                     #gd.configure_selection(selection_mode = 'multiple',use_checkbox=False)
                     gridoptions = gd.build()
-                    grid_table = AgGrid(df_display, columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,gridOptions=gridoptions,wrapText= True, update_mode=GridUpdateMode.SELECTION_CHANGED,height=8000, width = 650, allow_unsafe_jscode=True)
+                    grid_table = AgGrid(df_display, columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,gridOptions=gridoptions,wrapText= True, update_mode=GridUpdateMode.SELECTION_CHANGED,height=1500, width = 4000, allow_unsafe_jscode=True)
 
 
                     
