@@ -5,7 +5,7 @@ import json
 from google.cloud import firestore
 from google.oauth2 import service_account
 from datetime import date
-
+from st_aggrid import AgGrid
 if 1 != 0:
     class MyList(list):
         def last_index(self):
@@ -167,7 +167,8 @@ if pokemon_list:
                     st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
                     df_display = pd.DataFrame(family_data)
                     df_display.set_index(['Pokemon'], inplace=True)
-                    st.table(df_display)
+                    #st.table(df_display)
+                    AgGrid(df_display)
                     #if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     try:
                         save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
