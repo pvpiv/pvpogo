@@ -222,7 +222,7 @@ if st.session_state.show_string:
         except:
             pass
         try:
-            st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String')#:: (For most PVP IVs add &0-1attack)')
+            st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
             st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box))
         except:
             pass
