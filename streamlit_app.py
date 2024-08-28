@@ -32,7 +32,7 @@ if 1 != 0:
         if shadow_only:
             family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == True)]
         elif shadow_only == 'All':
-            family_data = df[(df['Family'] == pokemon_family)].sort_values(by=['ID','Shadow')
+            family_data = df[(df['Family'] == pokemon_family)].sort_values(by=['ID','Shadow'])
         else:
             family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == False)]
         
