@@ -277,6 +277,10 @@ st.markdown(
             padding: 0.25rem;
         }
     }
+        .my-header-class .ag-header-cell-label {
+        justify-content: center !important;
+        font-size: 10px !important;
+    }
     </style>
     """,
     unsafe_allow_html=True
