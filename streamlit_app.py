@@ -244,7 +244,7 @@ if st.session_state.show_string:
             days_since_date = calculate_days_since(season_start)
             age_string = f"age0-{days_since_date}&"
             st.write('Catch Cup Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
-            st.code(str(age_string) + make_search_string("little", st.session_state.top_num,fam_box,iv_box))
+            st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
         except:
             pass
             
