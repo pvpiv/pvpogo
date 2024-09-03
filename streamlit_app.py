@@ -109,6 +109,8 @@ if 1 != 0:
         st.session_state.get_shadow = st.session_state.sho_shad
     def upd_seas():
         st.session_state.get_season = st.session_state.sho_seas
+    def upd_cust():
+        st.session_state.show_custom = st.session_state.sho_cust
     def calculate_days_since(xDate):
         # Define the date range
         start_date = xDate
@@ -154,7 +156,8 @@ pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokem
 if pokemon_list:
     pokemon_choice = st.selectbox('Select a Pokemon', pokemon_list, index=pokemon_list.last_index(), label_visibility='hidden', key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
     show_shadow_box = st.checkbox('Include Shadow Pokémon',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow']) 
-    show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
+    #show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
+    show_custom_box = st.checkbox('Little Galar Cup',on_change=upd_cust,key='sho_cust') 
     if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
         if st.session_state['get_dat'] and pokemon_choice:
             if st.session_state['last_sel'] != pokemon_choice or st.session_state['last_sel'] is None:
@@ -241,7 +244,7 @@ if st.session_state.show_string:
             days_since_date = calculate_days_since(season_start)
             age_string = f"age0-{days_since_date}&"
             st.write('Catch Cup Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
-            st.code(str(age_string) + make_search_string("great", st.session_state.top_num,fam_box,iv_box))
+            st.code(str(age_string) + make_search_string("little", st.session_state.top_num,fam_box,iv_box))
         except:
             pass
             
