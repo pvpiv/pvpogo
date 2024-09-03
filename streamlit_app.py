@@ -138,10 +138,10 @@ if 1 != 0:
         st.session_state['show_custom'] = False
     season_start = date(2024,9,3)
     
-if st.session_state['get_season']:
-    df = pd.read_csv('pvp_data_new.csv')
+if st.session_state['show_custom']:
+    df = pd.read_csv('pvp_data_fossil.csv')
 else:
-    df = pd.read_csv('pvp_data.csv')
+    df = pd.read_csv('pvp_data_new.csv')
 
 
 today = date.today()
