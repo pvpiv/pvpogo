@@ -6,6 +6,11 @@ from google.cloud import firestore
 from google.oauth2 import service_account
 from datetime import date
 import requests
+import pytz
+
+# URL to get commit information for your file
+
+
 #from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode,GridUpdateMode
 
 
@@ -149,7 +154,16 @@ if 1 != 0:
             
             # Convert the date to a datetime object
             try:
-                return datetime.strptime(commit_date, "%Y-%m-%dT%H:%M:%SZ")
+                # Convert the UTC date string to a datetime object
+                utc_time = datetime.strptime(commit_date, "%Y-%m-%dT%H:%M:%SZ")
+    
+                # Set the timezone to UTC
+                utc_time = utc_time.replace(tzinfo=pytz.utc)
+    
+                # Convert UTC to EST (New York timezone)
+                est_time = utc_time.astimezone(pytz.timezone('America/New_York'))
+    
+                return est_time
             except ValueError:
                 st.write("Error parsing the commit date.")
                 return None
@@ -158,9 +172,13 @@ if 1 != 0:
             return None
     
     # Get the last updated date
-   # last_updated = get_last_updated_date()
-
-# Display the last updated date in Streamlit
+    last_updated = get_last_updated_date()
+    
+    # Display the last updated date in Streamlit in EST
+    if last_updated:
+        st.write(f"Last updated (EST): {last_updated.strftime('%Y-%m-%d %H:%M:%S %Z')}")
+    else:
+        st.write("Could not retrieve last updated date.")
     
 
 
