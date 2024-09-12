@@ -154,9 +154,8 @@ if 1 != 0:
             commit_date = commit_data['commit']['committer']['date']  # Access the commit date
             est_time =  datetime.strptime(commit_date, "%Y-%m-%dT%H:%M:%SZ")
             est_time = est_time.astimezone(pytz.timezone('America/New_York'))
-            st.write(est_time)
-            #st.write(commit_date)
-            # Convert the date to a datetime object
+            st.write(f"Last updated: " + est_time +  " (EST)" )
+=
 
     # Get the last updated date
     last_updated = get_last_updated_date()
