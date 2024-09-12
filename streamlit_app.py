@@ -141,7 +141,7 @@ if 1 != 0:
 if st.session_state['show_custom']:
     df = pd.read_csv('pvp_data_fossil.csv')
 else:
-    df = pd.read_csv('pvp_data_new.csv')
+    df = pd.read_csv('pvp_data.csv')
 
 
 today = date.today()
