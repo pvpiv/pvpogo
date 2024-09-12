@@ -152,7 +152,7 @@ if 1 != 0:
         if response.status_code == 200:
             commit_data = response.json()[0]  # Get the latest commit
             commit_date = commit_data['commit']['committer']['date']  # Access the commit date
-            est_time =  datetime.strptime(commit_date, "%Y-%m-%dT%H:%M:%S")
+            est_time =  datetime.strptime(commit_date, "%Y-%m-%dT%H:%M:%SZ")
             est_time = est_time.astimezone(pytz.timezone('America/New_York'))
             st.write(f"Last updated: " + str(est_time) +  " (EST)" )
 
