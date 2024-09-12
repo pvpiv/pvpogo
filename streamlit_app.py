@@ -137,7 +137,24 @@ if 1 != 0:
     if "show_custom" not in st.session_state:
         st.session_state['show_custom'] = False
     season_start = date(2024,9,3)
-    
+    # Replace 'username', 'repo', and 'path_to_csv' with your actual GitHub details
+    GITHUB_API_URL = "https://api.github.com/pvpiv/pvpogo/blob/master/pvp_data.csv"
+
+    def get_last_updated_date():
+        response = requests.get(GITHUB_API_URL)
+        if response.status_code == 200:
+            commit_data = response.json()[0]
+            commit_date = commit_data['commit']['committer']['date']
+            return datetime.strptime(commit_date, "%Y-%m-%dT%H:%M:%SZ")
+        else:
+            return None
+
+    last_updated = get_last_updated_date()
+    if last_updated:
+        st.write(f"Last updated: {last_updated.strftime('%Y-%m-%d %H:%M:%S')}")
+    else:
+        st.write("Could not retrieve last updated date.")
+
 if st.session_state['show_custom']:
     df = pd.read_csv('pvp_data_fossil.csv')
 else:
