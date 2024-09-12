@@ -153,8 +153,10 @@ if 1 != 0:
             commit_date = commit_data['commit']['committer']['date']  # Access the commit date
             st.write(commit_date)
             # Convert the date to a datetime object
-        
-    
+
+    # Get the last updated date
+    last_updated = get_last_updated_date()
+ 
 
 
 if st.session_state['show_custom']:
