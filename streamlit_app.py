@@ -151,11 +151,11 @@ if 1 != 0:
         if response.status_code == 200:
             commit_data = response.json()[0]  # Get the latest commit
             commit_date = commit_data['commit']['committer']['date']  # Access the commit date
-            
+            st.write(commit_date)
             # Convert the date to a datetime object
             try:
                 # Convert the UTC date string to a datetime object
-                utc_time = datetime.strptime(commit_date, "%Y-%m-%dT%H:%M:%SZ")
+                utc_time = datetime.strptime(commit_date,  "%Y-%m-%dT%H:%M:%SZ")
     
                 # Set the timezone to UTC
                 utc_time = utc_time.replace(tzinfo=pytz.utc)
