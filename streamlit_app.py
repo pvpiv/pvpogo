@@ -140,7 +140,6 @@ if 1 != 0:
     season_start = date(2024,9,3)
     # Replace 'username', 'repo', and 'path_to_csv' with your actual GitHub details
     GITHUB_API_URL = "https://api.github.com/repos/pvpiv/pvpogo/commits?path=pvp_data.csv"
-    GITHUB_API_URL = "https://api.github.com/repos/pvpiv/pvpogo/commits?path=pvp_data.csv"
 
     def get_last_updated_date():
         response = requests.get(GITHUB_API_URL)
@@ -159,21 +158,10 @@ if 1 != 0:
             return None
     
     # Get the last updated date
-    last_updated = get_last_updated_date()
+   # last_updated = get_last_updated_date()
 
 # Display the last updated date in Streamlit
-    if last_updated:
-        st.write(f"Last updated: {last_updated.strftime('%Y-%m-%d %H:%M:%S')}")
-    else:
-        st.write("Could not retrieve last updated date.")
-        def get_last_updated_date():
-            response = requests.get(GITHUB_API_URL)
-            if response.status_code == 200:
-                commit_data = response.json()[0]
-                commit_date = commit_data['commit']['committer']['date']
-                return datetime.strptime(commit_date, "%Y-%m-%dT%H:%M:%SZ")
-            else:
-                return None
+    
 
 
 if st.session_state['show_custom']:
