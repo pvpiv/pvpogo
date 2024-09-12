@@ -139,7 +139,7 @@ if 1 != 0:
         st.session_state['show_custom'] = False
     season_start = date(2024,9,3)
     # Replace 'username', 'repo', and 'path_to_csv' with your actual GitHub details
-    GITHUB_API_URL = "https://api.github.com/pvpiv/pvpogo/blob/master/pvp_data.csv"
+    GITHUB_API_URL = "https://api.github.com/repos/pvpiv/pvpogo/commits?path=pvp_data.csv"
 
     def get_last_updated_date():
         response = requests.get(GITHUB_API_URL)
