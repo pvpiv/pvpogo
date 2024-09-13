@@ -2,4 +2,7 @@ streamlit
 streamlit_analytics
 firebase_admin
 google.cloud
-streamlit_geolocation
+streamlit-aggrid
+requests
+datetime
+pytz
