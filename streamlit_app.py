@@ -5,162 +5,182 @@ import json
 from google.cloud import firestore
 from google.oauth2 import service_account
 from datetime import date
-from streamlit_geolocation import streamlit_geolocation
+from datetime import datetime
+import requests
+import pytz
 
-# Load your dataset
+# URL to get commit information for your file
 
+
+#from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode,GridUpdateMode
+
+
+
+
+if 1 != 0:
+    class MyList(list):
+        def last_index(self):
+            return len(self) - 1
+    def load_from_firestore(counts, collection_name):
+        key_dict = json.loads(st.secrets["textkey"])
+        creds = service_account.Credentials.from_service_account_info(key_dict)
+        db = firestore.Client(credentials=creds, project="pvpogo")
+        col = db.collection(collection_name)
+        firestore_counts = col.document(st.secrets["fb_col"]).get().to_dict()
+        if firestore_counts is not None:
+            for key in firestore_counts:
+                if key in counts:
+                    counts[key] = firestore_counts[key]
+    # Firestore saving function
+    def save_to_firestore(counts, collection_name):
+        key_dict = json.loads(st.secrets["textkey"])
+        creds = service_account.Credentials.from_service_account_info(key_dict)
+        db = firestore.Client(credentials=creds, project="pvpogo")
+        col = db.collection(collection_name)
+        col.document(st.secrets["fb_col"]).set(counts)
+    # Format data for display
+    def format_data(pokemon_family, shadow_only):
+
+        if shadow_only == True:
+            family_data = df[(df['Family'] == pokemon_family)].sort_values(by=['Shadow','ID'])
+        #elif shadow_only == True:
+            #family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == True)]
+        elif shadow_only == False:
+            family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == False)]
+        
+        formatted_data = []
+        attributes = ['Rank','IVs','CP', 'Level', 'MoveSet']
+        leagues = ['Little', 'Great', 'Ultra', 'Master']
+        for _, row in family_data.iterrows():
+            #for attr in attributes:
+            for league in leagues:
+                #entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
+                entry = {'Pokemon': row['Pokemon'], 'League': league}
+                #for league in leagues:
+                for attr in attributes:
+                    value = row[f'{league}_{attr}']
+                    #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
+                    entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
+                formatted_data.append(entry)
+        return formatted_data
+        #pvpogo.streamlit.app 
+    def filter_ids(row):
+        current_id = row['ID']
+        evo_next_list = row['Evo_Fam'].split(';')
+        if str(current_id) in evo_next_list:
+            position = evo_next_list.index(str(current_id))
+            filtered_list = evo_next_list[:position + 1]
+        else:
+            filtered_list = evo_next_list
+        return list(filtered_list)
+    def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
+        df_all = df.sort_values(by=rank_column)
+        df_filtered = df.dropna(subset=[rank_column])
+        df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
+        top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID'])
+        seen = set()
+        if fam:
+            top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
+            all_ids_set = set([item for sublist in top_df['Filtered_Evo_next'] for item in sublist])
+            all_ids = df_all['ID'].astype(str).tolist()
+            all_ids = [element for element in all_ids if element in all_ids_set and not (element in seen or seen.add(element))]
+        else:
+            all_ids = top_df['ID'].astype(str).tolist()
+        if all:
+            prefix = ''
+        else:
+            prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
+        ids_string = prefix + ','.join(all_ids)
+        if iv_bool:
+            if league != 'master':
+                ids_string = ids_string + "&0-1attack&3-4defense,3-4hp&2-4defense&2-4hp"
+            if league == 'master':
+                ids_string = ids_string + "&3*,4*"
+        return ids_string.replace("&,", "&")
+    # Generate search string based on league
+    def make_search_string(league, top_n,fam,iv_b,all_pre = False):
+        if league == 'little':
+            return get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b)
+        elif league == 'great':
+            return get_top_50_ids('Great_Rank', 'great', top_n,fam,iv_b)
+        elif league == 'ultra':
+            return get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b)
+        elif league == 'master':
+            return get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b)
+        elif league == 'all':
+            return get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b,all_pre)+','+get_top_50_ids('Great_Rank', 'great', top_n,fam,iv_b,all_pre)+','+get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b,all_pre)+','+get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b,all_pre)
+    # Update session state for top number
+    def update_top_num():
+        st.session_state.top_num = st.session_state.top_no
+    def upd_shadow():
+        st.session_state.get_shadow = st.session_state.sho_shad
+    def upd_seas():
+        st.session_state.get_season = st.session_state.sho_seas
+    def upd_cust():
+        st.session_state.show_custom = st.session_state.sho_cust
+    def calculate_days_since(xDate):
+        # Define the date range
+        start_date = xDate
+        end_date = date.today()
+        # Calculate the number of days since June 30
+        days_since = (end_date - start_date).days
+        return days_since
+        
 # Initialize session state variables
-if 'get_dat' not in st.session_state:
-    st.session_state['get_dat'] = False
-if 'get_shadow' not in st.session_state:
-    st.session_state['get_shadow'] = False  
-if 'get_season' not in st.session_state:
-    st.session_state['get_season'] = True   
-if 'last_sel' not in st.session_state:
-    st.session_state['last_sel'] = None
-if 'last_n' not in st.session_state:
-    st.session_state['last_n'] = 0
-if "top_num" not in st.session_state:
-    st.session_state['top_num'] = 50
+    if 'get_dat' not in st.session_state:
+        st.session_state['get_dat'] = False
+    if 'get_shadow' not in st.session_state:
+        st.session_state['get_shadow'] = False
+    if 'get_season' not in st.session_state:
+        st.session_state['get_season'] = True   
+    if 'last_sel' not in st.session_state:
+        st.session_state['last_sel'] = None
+    if 'last_n' not in st.session_state:
+        st.session_state['last_n'] = 0
+    if "top_num" not in st.session_state:
+        st.session_state['top_num'] = 50
+    if "show_string" not in st.session_state:
+        st.session_state['show_string'] = True #st.checkbox('View Top PVP Pokemon Search Strings')
+    if "show_custom" not in st.session_state:
+        st.session_state['show_custom'] = False
+    season_start = date(2024,9,3)
+    # Replace 'username', 'repo', and 'path_to_csv' with your actual GitHub details
+    GITHUB_API_URL = "https://api.github.com/repos/pvpiv/pvpogo/commits?path=pvp_data.csv"
 
-# UI elements
-today = date.today()
-query_params = st.experimental_get_query_params()
-is_string = query_params.get("string", [False])[0]
-url = "https://pvpcalc.streamlit.app/"
-#st.write("[Check CP for all IVs here](%s)" % url)
-#df = pd.read_csv('pvp_data.csv')
-show_fossil = False #st.checkbox('Catch Cup Rankings')
-#show_new_season = st.checkbox('New Season Rankings (Sept 3rd)', value= True)
+    def get_last_updated_date():
+        response = requests.get(GITHUB_API_URL)
+        if response.status_code == 200:
+            commit_data = response.json()[0]  # Get the latest commit
+            commit_date = commit_data['commit']['committer']['date']  # Access the commit date
+            est_time =  datetime.strptime(commit_date, "%Y-%m-%dT%H:%M:%SZ")
+            est_time = est_time.astimezone(pytz.timezone('America/New_York'))
+            st.write(f"Last updated: " + str(est_time) +  " (EST)" )
 
-#if show_fossil:
-    #df = pd.read_csv('pvp_data_catch.csv')
-if st.session_state['get_season']:
-    df = pd.read_csv('pvp_data_new.csv')
+    # Get the last updated date
+    last_updated = get_last_updated_date()
+ 
+
+
+if st.session_state['show_custom']:
+    df = pd.read_csv('pvp_data_fossil.csv')
 else:
     df = pd.read_csv('pvp_data.csv')
 
-        #class for custom list behavior
-class MyList(list):
-    def last_index(self):
-        return len(self) - 1
 
-def load_from_firestore(counts, collection_name):
-    key_dict = json.loads(st.secrets["textkey"])
-    creds = service_account.Credentials.from_service_account_info(key_dict)
-    db = firestore.Client(credentials=creds, project="pvpogo")
-    col = db.collection(collection_name)
-    firestore_counts = col.document(st.secrets["fb_col"]).get().to_dict()
-    if firestore_counts is not None:
-        for key in firestore_counts:
-            if key in counts:
-                counts[key] = firestore_counts[key]
+today = date.today()
+query_params = st.experimental_get_query_params()
 
-# Firestore saving function
-def save_to_firestore(counts, collection_name):
-    key_dict = json.loads(st.secrets["textkey"])
-    creds = service_account.Credentials.from_service_account_info(key_dict)
-    db = firestore.Client(credentials=creds, project="pvpogo")
-    col = db.collection(collection_name)
-    col.document(st.secrets["fb_col"]).set(counts)
-
-# Format data for display
-def format_data(pokemon_family, shadow_only):
-    if shadow_only:
-        family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == True)]
-    else:
-        family_data = df[(df['Family'] == pokemon_family) & (df['Shadow'] == False)]
-    
-    formatted_data = []
-    attributes = ['Rank','IVs','CP', 'Level', 'MoveSet']
-    leagues = ['Little', 'Great', 'Ultra', 'Master']
-    for _, row in family_data.iterrows():
-        #for attr in attributes:
-        for league in leagues:
-            #entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
-            entry = {'Pokemon': row['Pokemon'], 'League': league}
-            #for league in leagues:
-            for attr in attributes:
-                value = row[f'{league}_{attr}']
-                #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
-                entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
-            formatted_data.append(entry)
-    return formatted_data
-    pvpogo.streamlit.app 
-def filter_ids(row):
-    current_id = row['ID']
-    evo_next_list = row['Evo_Fam'].split(';')
-    if str(current_id) in evo_next_list:
-        position = evo_next_list.index(str(current_id))
-        filtered_list = evo_next_list[:position + 1]
-    else:
-        filtered_list = evo_next_list
-    return list(filtered_list)
-
-def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
-    df_all = df.sort_values(by=rank_column)
-    df_filtered = df.dropna(subset=[rank_column])
-    df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
-    top_df = df_filtered.sort_values(by=rank_column).drop_duplicates(subset=['ID'])
-    seen = set()
-    if fam:
-        top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
-        all_ids_set = set([item for sublist in top_df['Filtered_Evo_next'] for item in sublist])
-        all_ids = df_all['ID'].astype(str).tolist()
-        all_ids = [element for element in all_ids if element in all_ids_set and not (element in seen or seen.add(element))]
-    else:
-        all_ids = top_df['ID'].astype(str).tolist()
-    if all:
-        prefix = ''
-    else:
-        prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
-    ids_string = prefix + ','.join(all_ids)
-    if iv_bool:
-        if league != 'master':
-            ids_string = ids_string + "&0-1attack&3-4defense,3-4hp&2-4defense&2-4hp"
-        if league == 'master':
-            ids_string = ids_string + "&3*,4*"
-    return ids_string.replace("&,", "&")
-
-# Generate search string based on league
-def make_search_string(league, top_n,fam,iv_b,all_pre = False):
-    if league == 'little':
-        return get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b)
-    elif league == 'great':
-        return get_top_50_ids('Great_Rank', 'great', top_n,fam,iv_b)
-    elif league == 'ultra':
-        return get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b)
-    elif league == 'master':
-        return get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b)
-    elif league == 'all':
-        return get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b,all_pre)+','+get_top_50_ids('Great_Rank', 'great', top_n,fam,iv_b,all_pre)+','+get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b,all_pre)+','+get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b,all_pre)
-# Update session state for top number
-def update_top_num():
-    st.session_state.top_num = st.session_state.top_no
-def upd_shadow():
-    st.session_state.get_shadow = st.session_state.sho_shad
-def upd_seas():
-    st.session_state.get_season = st.session_state.sho_seas
-def calculate_days_since_june_1():
-    # Define the date range
-    start_date = date(2024, 6, 1)
-    end_date = date.today()
-    
-    # Calculate the number of days since June 30
-    days_since_june_1 = (end_date - start_date).days
-    
-    return days_since_june_1
-
-#st.divider()
-#show_shadow = st.checkbox('Show only Shadow Pokémon')
+#Section 1 - PVP Pokemon Search Table
 show_shadow = st.session_state['get_shadow']
-pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
-pokemon_list = MyList(pokemon_list)
+#pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
+pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique())
+#pokemon_list = MyList(pokemon_list)
 
 if pokemon_list:
     pokemon_choice = st.selectbox('Select a Pokemon', pokemon_list, index=pokemon_list.last_index(), label_visibility='hidden', key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
-    show_shadow_box = st.checkbox('Show only Shadow Pokémon',on_change=upd_shadow,key='sho_shad') 
-    show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
+    show_shadow_box = st.checkbox('Include Shadow Pokémon',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow']) 
+    #show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
+    show_custom_box = st.checkbox('Little Galar Cup',on_change=upd_cust,key='sho_cust') 
     if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
         if st.session_state['get_dat'] and pokemon_choice:
             if st.session_state['last_sel'] != pokemon_choice or st.session_state['last_sel'] is None:
@@ -170,7 +190,7 @@ if pokemon_list:
             st.session_state['last_sel'] = pokemon_choice
             pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
             family_data = format_data(pokemon_family, show_shadow)
-            
+
             if family_data:
                 if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
  
@@ -178,6 +198,8 @@ if pokemon_list:
                     df_display = pd.DataFrame(family_data)
                     df_display.set_index(['Pokemon'], inplace=True)
                     st.table(df_display)
+
+                    
                     #if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     try:
                         save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
@@ -199,11 +221,10 @@ else:
 
 st.divider()      
 
-   
-show_string = True #st.checkbox('View Top PVP Pokemon Search Strings')
 
 
-if show_string:
+#Section 2 - PVP Pokemon Search String
+if st.session_state.show_string:
     is_num = query_params.get("show_top", [50])[0]
     if is_num != 50:
         st.session_state.top_num = int(is_num)
@@ -215,24 +236,24 @@ if show_string:
     iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
     
 
-    if not show_fossil:    
+    if not st.session_state['show_custom']:    
         try:
-            st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')
+            st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
             st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
         except:
             pass
         try:
-            st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
+            st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box))
         except:
             pass
         try:
-            st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
+            st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
             st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box))
         except:
             pass
         try:
-            st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String: (For BEST PVP IVs add &3*,4*)')
+            st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
             st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box))
             query_params = st.experimental_get_query_params()
             is_all = query_params.get("all", [False])[0]
@@ -243,26 +264,20 @@ if show_string:
             pass
     else:
         try:
-            days_since_june_1 = calculate_days_since_june_1()
-            age_string = f"age0-{days_since_june_1}&"
-            st.write('Catch Cup Top ' + str(st.session_state.top_num) + ' Search String: (For most PVP IVs add &0-1attack)')
-            st.code(str(age_string) + make_search_string("great", st.session_state.top_num,fam_box,iv_box))
+            days_since_date = calculate_days_since(season_start)
+            age_string = f"age0-{days_since_date}&"
+            st.write('Little Galar Cup Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
+            st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
         except:
             pass
             
 
-# Helper
-    load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
-    streamlit_analytics.start_tracking()
-    location = streamlit_geolocation()
-    placeholder = st.empty()
-    box = st.text_input(label=today.strftime("%m/%d/%y"),value=str(location['latitude']) + ',' + str(location['longitude']))
-    box = placeholder.empty()
-    box = st.text_input(label=today.strftime("%m/%d/%y"), value='*Click string to show Copy button and Paste Top ' + topstrin + ' into PokeGO*', label_visibility='hidden', disabled=True, key="sstring")
-    #st.text_input(label=today.strftime("%m/%d/%y"), value='Results for Top ' + str(st.session_state.top_num), label_visibility='hidden', disabled=True, key="nstring")
-    
-    try:
+    try:    
+        load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
+        streamlit_analytics.start_tracking()
         
+        st.text_input(label=today.strftime("%m/%d/%y"), value='*Click string to show Copy button and Paste Top ' + topstrin + ' into PokeGO*', label_visibility='hidden', disabled=True, key="sstring")
+        #st.text_input(label=today.strftime("%m/%d/%y"), value='Results for Top ' + str(st.session_state.top_num), label_visibility='hidden', disabled=True, key="nstring")
 
         save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
@@ -272,7 +287,13 @@ if show_string:
 st.markdown(
     """
     <style>
-    @media (max-width: 600px) {
+    @media (max-width: 2000px) {
+        .css-18e3th9 {
+            padding: 1rem 1rem;
+    }
+    .stNumberInput [data-baseweb=input]{
+        width: 100%;
+    }
         .css-18e3th9 {
             padding: 0.5rem 1rem;
         }
