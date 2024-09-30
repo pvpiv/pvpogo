@@ -174,6 +174,7 @@ query_params = st.experimental_get_query_params()
 show_shadow = st.session_state['get_shadow']
 #pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
 pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique())
+#show_custom_box = st.checkbox('Psychic Cup',on_change=upd_cust,key='sho_cust') 
 #pokemon_list = MyList(pokemon_list)
 if st.session_state.show_string:
     is_num = query_params.get("show_top", [50])[0]
