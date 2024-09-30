@@ -223,6 +223,7 @@ else:
     except:
         pass
             
+st.divider()      
 
 if pokemon_list:
     pokemon_choice = st.selectbox('Select a Pokemon', pokemon_list, index=pokemon_list.last_index(), label_visibility='hidden', key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
