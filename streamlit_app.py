@@ -169,68 +169,18 @@ else:
 
 today = date.today()
 query_params = st.experimental_get_query_params()
-show_custom_box = st.checkbox('Galar Cup',on_change=upd_cust,key='sho_cust')
+
 #Section 1 - PVP Pokemon Search Table
 show_shadow = st.session_state['get_shadow']
 #pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
 pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique())
- 
 #pokemon_list = MyList(pokemon_list)
-if st.session_state.show_string:
-    is_num = query_params.get("show_top", [50])[0]
-    if is_num != 50:
-        st.session_state.top_num = int(is_num)
-        #is_string = bool(show_string)
-        #st.query_params.string = bool(show_string)
-    top_nbox = st.number_input('PVP Pokemon Search Strings | Showing Top:', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
-    topstrin = str(st.session_state.top_num)    
-    fam_box = st.checkbox('Include pre-evolutions',value=True)
-    iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
-    
-st.divider()      
-
-if not st.session_state['show_custom']:    
-    try:
-        st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
-        st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
-    except:
-        pass
-    try:
-        st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
-        st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box))
-    except:
-        pass
-    try:
-        st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
-        st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box))
-    except:
-        pass
-    try:
-        st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
-        st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box))
-        query_params = st.experimental_get_query_params()
-        is_all = query_params.get("all", [False])[0]
-        if is_all:
-            st.write('All ' + str(st.session_state.top_num))
-            st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box,True))
-    except:
-        pass
-else:
-    try:
-        days_since_date = calculate_days_since(season_start)
-        age_string = f"age0-{days_since_date}&"
-        st.write('Galar Cup Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
-        st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box))
-    except:
-        pass
-            
-st.divider()      
 
 if pokemon_list:
     pokemon_choice = st.selectbox('Select a Pokemon', pokemon_list, index=pokemon_list.last_index(), label_visibility='hidden', key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
     show_shadow_box = st.checkbox('Include Shadow Pokémon',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow']) 
     #show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
-    #show_custom_box = st.checkbox('Galar Cup',on_change=upd_cust,key='sho_cust') 
+    show_custom_box = st.checkbox('Galar Cup',on_change=upd_cust,key='sho_cust') 
     if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
         if st.session_state['get_dat'] and pokemon_choice:
             if st.session_state['last_sel'] != pokemon_choice or st.session_state['last_sel'] is None:
@@ -269,10 +219,58 @@ else:
     except:
         pass
 
+st.divider()      
 
 
 
 #Section 2 - PVP Pokemon Search String
+if st.session_state.show_string:
+    is_num = query_params.get("show_top", [50])[0]
+    if is_num != 50:
+        st.session_state.top_num = int(is_num)
+        #is_string = bool(show_string)
+        #st.query_params.string = bool(show_string)
+    top_nbox = st.number_input('PVP Pokemon Search Strings | Showing Top:', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+    topstrin = str(st.session_state.top_num)    
+    fam_box = st.checkbox('Include pre-evolutions',value=True)
+    iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
+    
+
+    if not st.session_state['show_custom']:    
+        try:
+            st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
+            st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
+        except:
+            pass
+        try:
+            st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
+            st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box))
+        except:
+            pass
+        try:
+            st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
+            st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box))
+        except:
+            pass
+        try:
+            st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
+            st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box))
+            query_params = st.experimental_get_query_params()
+            is_all = query_params.get("all", [False])[0]
+            if is_all:
+                st.write('All ' + str(st.session_state.top_num))
+                st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box,True))
+        except:
+            pass
+    else:
+        try:
+            days_since_date = calculate_days_since(season_start)
+            age_string = f"age0-{days_since_date}&"
+            st.write('Galar Cup Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
+            st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box))
+        except:
+            pass
+            
 
     try:    
         load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
