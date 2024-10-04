@@ -287,7 +287,7 @@ if st.session_state.show_string:
 try:    
     load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
     streamlit_analytics.start_tracking()
-    
+    st.divider()  
     st.text_input(label="Feedback", key="fstring")
     #st.text_input(label=today.strftime("%m/%d/%y"), value='Results for Top ' + str(st.session_state.top_num), label_visibility='hidden', disabled=True, key="nstring")
 
