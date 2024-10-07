@@ -109,7 +109,6 @@ if 1 != 0:
                 ids_string = ids_string + "&0-1attack&3-4defense,3-4hp&2-4defense&2-4hp"
             if league == 'master':
                 ids_string = ids_string + "&3*,4*"
-                            
         return ids_string.replace("&,", "&")
     # Generate search string based on league
     def make_search_string(league, top_n,fam,iv_b,inv_b,all_pre = False):
@@ -286,7 +285,7 @@ if st.session_state.show_string:
         except:
             pass
         try:            
-            st.write('All Leagues Top ' + str(st.session_state.top_num) + ' Search String:')
+            st.write('All Leagues Top' + str(st.session_state.top_num) + ' Search String:')
             st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box,inv_box,True))    
         except:
             pass
