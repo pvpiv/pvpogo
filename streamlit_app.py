@@ -145,8 +145,11 @@ if 1 != 0:
         st.session_state['show_custom'] = False
     season_start = date(2024,9,3)
     # Replace 'username', 'repo', and 'path_to_csv' with your actual GitHub details
-    GITHUB_API_URL = "https://api.github.com/repos/pvpiv/pvpogo/commits?path=pvp_data.csv"
 
+    if st.session_state['show_custom']:
+        GITHUB_API_URL = "https://api.github.com/repos/pvpiv/pvpogo/commits?path=pvp_data.csv"
+    else:
+        GITHUB_API_URL = "https://api.github.com/repos/pvpiv/pvpogo/commits?path=pvp_data_fossil.csv"
     def get_last_updated_date():
         response = requests.get(GITHUB_API_URL)
         if response.status_code == 200:
@@ -156,8 +159,7 @@ if 1 != 0:
             est_time = est_time.astimezone(pytz.timezone('America/New_York'))
             st.write(f"Last updated: " + str(est_time) +  " (EST)" )
 
-    # Get the last updated date
-    last_updated = get_last_updated_date()
+
  
 
 
@@ -288,6 +290,8 @@ if st.session_state.show_string:
         st.text_input(label="Feedback", key="fstring")
         save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+            # Get the last updated date
+        last_updated = get_last_updated_date()
     except:
         pass  
 
