@@ -251,7 +251,7 @@ if st.session_state.show_string:
     topstrin = str(st.session_state.top_num)    
     fam_box = st.checkbox('Include pre-evolutions',value=True)
     iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
-    inv_box = st.checkbox('Invert strings',value=st.session_state.show_inverse,key=show_inv)
+    inv_box = st.checkbox('Invert strings',value=st.session_state.show_inverse,key='show_inv')
     
 
     if not st.session_state['show_custom']:    
