@@ -180,10 +180,10 @@ show_shadow_box = st.checkbox('Include Shadow Pokémon rankings',on_change=upd_s
 st.divider()
 if pokemon_list:
     if not st.session_state['show_custom']:
-        st.write('All League Rankings, IVs, & Moves')  
+        poke_label = 'All League Rankings, IVs, & Moves'
     else:
-        st.write('Sunshine Cup Rankings, IVs, & Moves')
-    pokemon_choice = st.selectbox('Select a Pokemon', pokemon_list, index=pokemon_list.last_index(), label_visibility='hidden', key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
+        poke_label = 'Sunshine Cup Rankings, IVs, & Moves'
+    pokemon_choice = st.selectbox(poke_labl, pokemon_list, index=pokemon_list.last_index(), key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
      
     #show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
     #show_custom_box = st.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
