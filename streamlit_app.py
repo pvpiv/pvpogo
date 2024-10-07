@@ -73,7 +73,7 @@ if 1 != 0:
         else:
             filtered_list = evo_next_list
         return list(filtered_list)
-    def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,all=False):
+    def get_top_50_ids(rank_column, league, top_n,fam,iv_bool,inv_bool,all=False):
         df_all = df.sort_values(by=rank_column)
         df_filtered = df.dropna(subset=[rank_column])
         df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
@@ -90,7 +90,12 @@ if 1 != 0:
             prefix = ''
         else:
             prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
-        ids_string = prefix + ','.join(all_ids)
+       # ids_string = prefix + ','.join(all_ids)
+
+        if inv_bool:
+            ids_string = prefix + '!' + ',!'.join(all_ids)
+        else:
+            ids_string = prefix + ','.join(all_ids)
         if iv_bool:
             if league != 'master':
                 ids_string = ids_string + "&0-1attack&3-4defense,3-4hp&2-4defense&2-4hp"
@@ -98,17 +103,17 @@ if 1 != 0:
                 ids_string = ids_string + "&3*,4*"
         return ids_string.replace("&,", "&")
     # Generate search string based on league
-    def make_search_string(league, top_n,fam,iv_b,all_pre = False):
+    def make_search_string(league, top_n,fam,iv_b,inv_b,all_pre = False):
         if league == 'little':
-            return get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b)
+            return get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b,inv_b)
         elif league == 'great':
-            return get_top_50_ids('Great_Rank', 'great', top_n,fam,iv_b)
+            return get_top_50_ids('Great_Rank', 'great', top_n,fam,iv_b,inv_b)
         elif league == 'ultra':
-            return get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b)
+            return get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b,inv_b)
         elif league == 'master':
-            return get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b)
+            return get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b,inv_b)
         elif league == 'all':
-            return get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b,all_pre)+','+get_top_50_ids('Great_Rank', 'great', top_n,fam,iv_b,all_pre)+','+get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b,all_pre)+','+get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b,all_pre)
+            return get_top_50_ids('Little_Rank', 'little', top_n,fam,iv_b,inv_b,all_pre)+','+get_top_50_ids('Great_Rank', 'great', top_n,fam,iv_b,inv_b,all_pre)+','+get_top_50_ids('Ultra_Rank', 'ultra', top_n,fam,iv_b,inv_b,all_pre)+','+get_top_50_ids('Master_Rank', 'master', top_n,fam,iv_b,inv_b,all_pre)
     # Update session state for top number
     def update_top_num():
         st.session_state.top_num = st.session_state.top_no
@@ -118,6 +123,8 @@ if 1 != 0:
         st.session_state.get_season = st.session_state.sho_seas
     def upd_cust():
         st.session_state.show_custom = st.session_state.sho_cust
+    def upd_inv():
+        st.session_state.show_inverse = st.session_state.sho_inv
     def calculate_days_since(xDate):
         # Define the date range
         start_date = xDate
@@ -143,6 +150,8 @@ if 1 != 0:
         st.session_state['show_string'] = True #st.checkbox('View Top PVP Pokemon Search Strings')
     if "show_custom" not in st.session_state:
         st.session_state['show_custom'] = False
+    if "show_inverse" not in st.session_state:
+        st.session_state['show_inverse'] = False
     season_start = date(2024,9,3)
     # Replace 'username', 'repo', and 'path_to_csv' with your actual GitHub details
 
@@ -242,32 +251,33 @@ if st.session_state.show_string:
     topstrin = str(st.session_state.top_num)    
     fam_box = st.checkbox('Include pre-evolutions',value=True)
     iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
+    inv_box = st.checkbox('Invert strings',value=st.session_state.show_inverse,key=show_inv)
     
 
     if not st.session_state['show_custom']:    
         try:
             st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
-            st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box))
+            st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
         try:
             st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
-            st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box))
+            st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
         try:
             st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
-            st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box))
+            st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
         try:
             st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
-            st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box))
+            st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box,inv_box))
             query_params = st.experimental_get_query_params()
             is_all = query_params.get("all", [False])[0]
             if is_all:
                 st.write('All ' + str(st.session_state.top_num))
-                st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box,True))
+                st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box,inv_box,True))
         except:
             pass
     else:
@@ -275,7 +285,7 @@ if st.session_state.show_string:
             days_since_date = calculate_days_since(season_start)
             age_string = f"age0-{days_since_date}&"
             st.write('Sunshine Cup Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
-            st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box))
+            st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
             
