@@ -183,7 +183,7 @@ if pokemon_list:
         poke_label = 'All League Rankings, IVs, & Moves'
     else:
         poke_label = 'Sunshine Cup Rankings, IVs, & Moves'
-    pokemon_choice = st.selectbox(poke_labl, pokemon_list, index=pokemon_list.last_index(), key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
+    pokemon_choice = st.selectbox(poke_label, pokemon_list, index=pokemon_list.last_index(), key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
      
     #show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
     #show_custom_box = st.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
