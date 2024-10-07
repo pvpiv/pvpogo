@@ -87,7 +87,7 @@ if 1 != 0:
         else:
             all_ids = top_df['ID'].astype(str).tolist()
         if all:
-            prefix = ''
+            prefix = 'cp10-&'
         else:
             prefix = 'cp-500&' if league == 'little' else 'cp-1500&' if league == 'great' else 'cp-2500&' if league == 'ultra' else ''
        # ids_string = prefix + ','.join(all_ids)
