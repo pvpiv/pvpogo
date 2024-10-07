@@ -101,7 +101,7 @@ if 1 != 0:
             if inv_bool:
                 ids_string = prefix + '!' + '&!'.join(all_ids)
             else:
-                ids_string = prefix + '&'.join(all_ids)
+                ids_string = prefix + ','.join(all_ids)
 
             
         if iv_bool:
