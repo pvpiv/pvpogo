@@ -94,14 +94,15 @@ if 1 != 0:
 
         if not all:
             if inv_bool:
-                ids_string = prefix + '!' + '&!'.join(all_ids)
-            else:
-                ids_string = prefix + '&'.join(all_ids)
-        else:
-            if inv_bool:
                 ids_string = prefix + '!' + ',!'.join(all_ids)
             else:
                 ids_string = prefix + ','.join(all_ids)
+        else:
+            if inv_bool:
+                ids_string = prefix + '!' + '&!'.join(all_ids)
+            else:
+                ids_string = prefix + '&'.join(all_ids)
+
             
         if iv_bool:
             if league != 'master':
