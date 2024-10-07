@@ -163,7 +163,7 @@ if 1 != 0:
     season_start = date(2024,9,3)
     # Replace 'username', 'repo', and 'path_to_csv' with your actual GitHub details
 
-    if st.session_state['show_custom']:
+    if not st.session_state['show_custom']:
         GITHUB_API_URL = "https://api.github.com/repos/pvpiv/pvpogo/commits?path=pvp_data.csv"
     else:
         GITHUB_API_URL = "https://api.github.com/repos/pvpiv/pvpogo/commits?path=pvp_data_fossil.csv"
