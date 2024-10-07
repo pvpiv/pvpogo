@@ -130,7 +130,7 @@ if 1 != 0:
     if 'get_dat' not in st.session_state:
         st.session_state['get_dat'] = False
     if 'get_shadow' not in st.session_state:
-        st.session_state['get_shadow'] = False
+        st.session_state['get_shadow'] = True
     if 'get_season' not in st.session_state:
         st.session_state['get_season'] = True   
     if 'last_sel' not in st.session_state:
@@ -175,12 +175,13 @@ show_shadow = st.session_state['get_shadow']
 #pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
 pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique())
 #pokemon_list = MyList(pokemon_list)
-
+show_custom_box = st.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
+st.divider()
 if pokemon_list:
     pokemon_choice = st.selectbox('Select a Pokemon', pokemon_list, index=pokemon_list.last_index(), label_visibility='hidden', key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
     show_shadow_box = st.checkbox('Include Shadow Pokémon',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow']) 
     #show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
-    show_custom_box = st.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
+    #show_custom_box = st.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
     if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
         if st.session_state['get_dat'] and pokemon_choice:
             if st.session_state['last_sel'] != pokemon_choice or st.session_state['last_sel'] is None:
