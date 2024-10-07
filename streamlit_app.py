@@ -282,10 +282,14 @@ if st.session_state.show_string:
             st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
             st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box,inv_box))
             query_params = st.experimental_get_query_params()
-            is_all = query_params.get("all", [False])[0]
-            if is_all:
-                st.write('All ' + str(st.session_state.top_num))
-                st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box,inv_box,True))
+         try:            
+            st.write('All Leagues ' + str(st.session_state.top_num))
+            st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box,inv_box,True))    
+        except:
+            pass
+        #is_all = query_params.get("all", [False])[0]
+           # if is_all:
+
         except:
             pass
     else:
