@@ -264,7 +264,7 @@ if st.session_state.show_string:
 
     if not st.session_state['show_custom']:    
         try:
-            st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:'))#:')
+            st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
             st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
@@ -285,7 +285,7 @@ if st.session_state.show_string:
         except:
             pass
         try:            
-            st.write('All Leagues Top' + str(st.session_state.top_num) + ' Search String:'))
+            st.write('All Leagues Top' + str(st.session_state.top_num) + ' Search String:')
             st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box,inv_box,True))    
         except:
             pass
