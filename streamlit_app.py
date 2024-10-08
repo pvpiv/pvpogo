@@ -94,7 +94,7 @@ if 1 != 0:
 
         if not all:
             if inv_bool:
-                prefix = 'cp500-&' if league == 'little' else 'cp1500-&' if league == 'great' else 'cp2500-&' if league == 'ultra' else ''
+                prefix = 'cp501-&' if league == 'little' else 'cp1501-&' if league == 'great' else 'cp2501-&' if league == 'ultra' else ''
                 ids_string = prefix + '!' + '&!'.join(all_ids)
             else:
                 ids_string = prefix + ','.join(all_ids)
