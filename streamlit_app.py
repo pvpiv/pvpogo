@@ -165,9 +165,9 @@ if 1 != 0:
         for _, row in family_data.iterrows():
             #for attr in attributes:
             
-            rank_value =  row[league_top] if pd.notna(row[league_top]) and isinstance(row[league_top], (int, float)) else row[league_top] if pd.notna(row[league_top]) else ''
+            rank_value =  row[league_top] if pd.notna(row[league_top]) and isinstance(row[league_top], (int, float)) else row[league_top] if pd.notna(row[league_top]) else 201
             #entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
-            if num_rank >= int(rank_value):
+            if num_rank <= int(rank_value):
                 entry = {'Pokemon': row['Pokemon'], 'League': league}
                 #for league in leagues:
                 for attr in attributes:
