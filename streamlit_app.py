@@ -315,10 +315,11 @@ if st.session_state.show_string:
         
 
         if st.session_state.little_clicked:
-                family_data_lit = format_data_top(df,'Little',st.session_state.top_num)
-                df_display_lit = pd.DataFrame(family_data_lit)
-                df_display_lit.set_index(['Pokemon'], inplace=True)
-                st.table(df_display_lit)
+        
+            family_data_lit = format_data_top(df,'Little',st.session_state.top_num)
+            df_display_lit = pd.DataFrame(family_data_lit)
+            df_display_lit.set_index(['Pokemon'], inplace=True)
+            st.table(df_display_lit)
     
 
         try:
