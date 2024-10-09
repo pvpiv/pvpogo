@@ -230,9 +230,9 @@ if st.session_state['show_custom']:
 else:
     df = pd.read_csv('pvp_data.csv')
 query_params = st.experimental_get_query_params()
-is_num = query_params.get("show_top", [50])[0]
-if is_num != 50:
-    st.session_state.top_num = int(is_num)
+#is_num = query_params.get("show_top", [50])[0]
+#if is_num != 50:
+    #st.session_state.top_num = int(is_num)
     
 col1 = st.columns([1])
 popover = st.popover("Settings")
