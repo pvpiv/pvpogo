@@ -164,19 +164,19 @@ if 1 != 0:
         leagues = [league_top]
         for _, row in family_data.iterrows():
             #for attr in attributes:
-            for league in leagues:
-                d = "Rank"
-                p = row['Great_Rank']
-                rank_value = f'{int(p):,}' if pd.notna(p) and isinstance(p, (int, float)) else value if pd.notna(p) else ''
-                #entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
-                if num_rank >= int(rank_value):
-                    entry = {'Pokemon': row['Pokemon'], 'League': league}
-                    #for league in leagues:
-                    for attr in attributes:
-                            value = row[f'{league}_{attr}']
-                            #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
-                            entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
-                    formatted_data.append(entry)
+            
+            d = "Rank"
+            p = row[league_top]
+            rank_value = f'{int(p):,}' if pd.notna(p) and isinstance(p, (int, float)) else value if pd.notna(p) else ''
+            #entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
+            if num_rank >= int(rank_value):
+                entry = {'Pokemon': row['Pokemon'], 'League': league}
+                #for league in leagues:
+                for attr in attributes:
+                        value = row[f'{league}_{attr}']
+                        #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
+                        entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
+                formatted_data.append(entry)
         return formatted_data
     
     def calculate_days_since(xDate):
