@@ -248,7 +248,6 @@ popover.subheader("Search String Settings")
 topstrin = str(st.session_state.top_num)    
 fam_box = popover.checkbox('Include pre-evolutions',value=True)
 iv_box = popover.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
-inv_box = popover.checkbox('Invert strings',value=st.session_state.show_inverse,key='show_inv')
 
 
 today = date.today()
@@ -268,6 +267,7 @@ if pokemon_list:
         poke_label = 'All League Rankings, IVs, & Moves Table'
     else:
         poke_label = 'Sunshine Cup Rankings, IVs, & Moves Table'
+    st.subheading(poke_label)
     pokemon_choice = st.selectbox(poke_label, pokemon_list, index=pokemon_list.last_index(), key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
      
     #show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
@@ -314,10 +314,12 @@ st.divider()
    
 
 
-
+st.subheading("PVP Pokemon Search Strings")
 #Section 2 - PVP Pokemon Search String
 if st.session_state.show_string:
-    top_nbox = st.number_input('PVP Pokemon Search Strings | Showing Top:', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+    top_nbox = st.number_input('Showing Top:', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+    inv_box = popover.checkbox('Invert strings',value=st.session_state.show_inverse,key='show_inv')
+    tables_pop = st.popover("League Tables")
     #if is_num != 50:
         #st.session_state.top_num = int(is_num)
         #is_string = bool(show_string)
@@ -333,7 +335,7 @@ if st.session_state.show_string:
         try:
             st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
             
-            st.button("Show Little Table", key='little_table',on_click = little_but)
+            tables_pop.button("Show Little Table", key='little_table',on_click = little_but)
             #st.write(st.session_state.little_clicked)
     
             if st.session_state.little_clicked:
@@ -349,7 +351,7 @@ if st.session_state.show_string:
         try:
             st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
             
-            st.button("Show Great Table", key='great_table',on_click = great_but)
+            tables_pop.button("Show Great Table", key='great_table',on_click = great_but)
             if st.session_state.great_clicked:
                 family_data_Great = format_data_top(df,'Great',st.session_state.top_num)
                 df_display_Great = pd.DataFrame(family_data_Great)
@@ -359,7 +361,7 @@ if st.session_state.show_string:
         except:
            pass
         try:
-            st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
+            tables_pop.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
             
             st.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
             if st.session_state.ultra_clicked:
@@ -371,7 +373,7 @@ if st.session_state.show_string:
         except:
             pass
         try:
-            st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
+            tables_pop.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
             
             st.button("Show Master Table", key='master_table',on_click = master_but)
             #st.write(st.session_state.master_clicked)
