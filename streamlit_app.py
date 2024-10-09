@@ -318,7 +318,7 @@ st.subheader("PVP Pokemon Search Strings")
 #Section 2 - PVP Pokemon Search String
 if st.session_state.show_string:
     top_nbox = st.number_input('Showing Top:', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
-    inv_box = popover.checkbox('Invert strings',value=st.session_state.show_inverse,key='show_inv')
+    inv_box = st.checkbox('Invert strings',value=st.session_state.show_inverse,key='show_inv')
     tables_pop = st.popover("League Tables")
     #if is_num != 50:
         #st.session_state.top_num = int(is_num)
@@ -363,7 +363,7 @@ if st.session_state.show_string:
         try:
             st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
             
-            st.tables_pop("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
+            tables_pop.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
             if st.session_state.ultra_clicked:
                 family_data_Ultra = format_data_top(df,'Ultra',st.session_state.top_num)
                 df_display_Ultra = pd.DataFrame(family_data_Ultra)
@@ -375,7 +375,7 @@ if st.session_state.show_string:
         try:
             st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
             
-            st.tables_pop("Show Master Table", key='master_table',on_click = master_but)
+            tables_pop.button("Show Master Table", key='master_table',on_click = master_but)
             #st.write(st.session_state.master_clicked)
             if st.session_state.master_clicked:
                 family_data_master = format_data_top(df,'Master',st.session_state.top_num)
