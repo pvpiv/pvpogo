@@ -230,21 +230,22 @@ if st.session_state['show_custom']:
 else:
     df = pd.read_csv('pvp_data.csv')
 col1 = st.columns([1])
+popover = st.popover("Settings")
+show_custom_boxz = popover.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
+show_shadow_boxz = popover.checkbox('Include Shadow Pokémon in Rankings Table',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow'])
+popover.divider()
+if is_num != 50:
+    st.session_state.top_num = int(is_num)
+#is_string = bool(show_string)
+#st.query_params.string = bool(show_string)
+top_nbox = popover.number_input('PVP Pokemon Search Strings | Showing Top:', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+topstrin = str(st.session_state.top_num)    
+fam_box = popover.checkbox('Include pre-evolutions',value=True)
+iv_box = popover.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
+inv_box = popover.checkbox('Invert strings',value=st.session_state.show_inverse,key='show_inv')
+
 with col1:
-    popover = st.popover("Settings")
-    show_custom_boxz = popover.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
-    show_shadow_boxz = popover.checkbox('Include Shadow Pokémon in Rankings Table',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow'])
-    popover.divider()
-    if is_num != 50:
-        st.session_state.top_num = int(is_num)
-    #is_string = bool(show_string)
-    #st.query_params.string = bool(show_string)
-    top_nbox = popover.number_input('PVP Pokemon Search Strings | Showing Top:', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
-    topstrin = str(st.session_state.top_num)    
-    fam_box = popover.checkbox('Include pre-evolutions',value=True)
-    iv_box = popover.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
-    inv_box = popover.checkbox('Invert strings',value=st.session_state.show_inverse,key='show_inv')
-    
+
     today = date.today()
     query_params = st.experimental_get_query_params()
     
