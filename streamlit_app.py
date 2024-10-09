@@ -361,9 +361,9 @@ if st.session_state.show_string:
         except:
            pass
         try:
-            tables_pop.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
+            st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
             
-            st.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
+            st.tables_pop("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
             if st.session_state.ultra_clicked:
                 family_data_Ultra = format_data_top(df,'Ultra',st.session_state.top_num)
                 df_display_Ultra = pd.DataFrame(family_data_Ultra)
@@ -373,9 +373,9 @@ if st.session_state.show_string:
         except:
             pass
         try:
-            tables_pop.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
+            st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
             
-            st.button("Show Master Table", key='master_table',on_click = master_but)
+            st.tables_pop("Show Master Table", key='master_table',on_click = master_but)
             #st.write(st.session_state.master_clicked)
             if st.session_state.master_clicked:
                 family_data_master = format_data_top(df,'Master',st.session_state.top_num)
