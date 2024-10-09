@@ -136,6 +136,28 @@ if 1 != 0:
         st.session_state.show_custom = st.session_state.sho_cust
     def upd_inv():
         st.session_state.show_inverse = st.session_state.sho_inv
+
+      
+    if "lit_clicked" not in st.session_state:
+        st.session_state["little_clicked"] = False
+    if "great_clicked" not in st.session_state:
+        st.session_state["great_clicked"] = False
+    if "ult_clicked" not in st.session_state:
+        st.session_state["ultra_clicked"] = False
+    if "master_clicked" not in st.session_state:
+        st.session_state["master_clicked"] = False
+          
+    def little_but():
+        st.session_state["little_clicked"] =  not st.session_state["little_clicked"]
+    def great_but():
+        st.session_state["great_clicked"] = not st.session_state["great_clicked"]
+    def ultra_but():
+        st.session_state["ultra_clicked"] = not st.session_state["ultra_clicked"]
+    def master_but():
+        st.session_state["master_clicked"] = not st.session_state["master_clicked"]
+      
+    
+    
     def calculate_days_since(xDate):
         # Define the date range
         start_date = xDate
@@ -269,21 +291,25 @@ if st.session_state.show_string:
         try:
             st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
             st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
+            st.button("Show Little Table", key='little_table',on_click = upd_little)
         except:
             pass
         try:
             st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
+            st.button("Show Great Table"label, key='great_table',on_click = upd_great)
         except:
             pass
         try:
             st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
             st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box,inv_box))
+            st.button("Show Ultra Table", key='ultra_table',on_click = upd_ultra)
         except:
             pass
         try:
             st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
             st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box,inv_box))
+            st.button("Show Master Table", key='master_table',on_click = upd_master)
             query_params = st.experimental_get_query_params()
         except:
             pass
