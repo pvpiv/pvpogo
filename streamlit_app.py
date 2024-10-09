@@ -229,23 +229,23 @@ if st.session_state['show_custom']:
     df = pd.read_csv('pvp_data_fossil.csv')
 else:
     df = pd.read_csv('pvp_data.csv')
-
-popover = st.popover("Settings")
-show_custom_boxz = popover.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_custz') 
-show_shadow_boxz = popover.checkbox('Include Shadow Pokémon in Rankings Table',on_change=upd_shadow,key='sho_shadz',value = st.session_state['get_shadow'])
-today = date.today()
-query_params = st.experimental_get_query_params()
-
-#Section 1 - PVP Pokemon Search Table
-show_shadow = st.session_state['get_shadow']
-#pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
-pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique())
-#pokemon_list = MyList(pokemon_list)
-show_custom_box = st.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
-show_shadow_box = st.checkbox('Include Shadow Pokémon in Rankings Table',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow'])
-st.divider()
 col1, col2 = st.columns([1, 1])
 with col1:
+    popover = st.popover("Settings")
+    show_custom_boxz = popover.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_custz') 
+    show_shadow_boxz = popover.checkbox('Include Shadow Pokémon in Rankings Table',on_change=upd_shadow,key='sho_shadz',value = st.session_state['get_shadow'])
+    today = date.today()
+    query_params = st.experimental_get_query_params()
+    
+    #Section 1 - PVP Pokemon Search Table
+    show_shadow = st.session_state['get_shadow']
+    #pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
+    pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique())
+    #pokemon_list = MyList(pokemon_list)
+    show_custom_box = st.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
+    show_shadow_box = st.checkbox('Include Shadow Pokémon in Rankings Table',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow'])
+    st.divider()
+
        
     
     
