@@ -157,28 +157,25 @@ if 1 != 0:
         st.session_state["master_clicked"] = not st.session_state["master_clicked"]
       
     def format_data_top(pokes_df, league_top,num_rank):
-
-    
-
-    family_data = pokes_df
-    
-    formatted_data = []
-    attributes = ['Rank','IVs','CP', 'Level', 'MoveSet']
-    leagues = [league_top]
-    for _, row in family_data.iterrows():
-        #for attr in attributes:
-        for league in leagues:
-            #entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
-            entry = {'Pokemon': row['Pokemon'], 'League': league}
-            #for league in leagues:
-            for attr in attributes:
-                if attr == 'Rank':
-                    if int(value) <= num_rank:
-                        value = row[f'{league}_{attr}']
-                        #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
-                        entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
-            formatted_data.append(entry)
-    return formatted_data
+        family_data = pokes_df
+        
+        formatted_data = []
+        attributes = ['Rank','IVs','CP', 'Level', 'MoveSet']
+        leagues = [league_top]
+        for _, row in family_data.iterrows():
+            #for attr in attributes:
+            for league in leagues:
+                #entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
+                entry = {'Pokemon': row['Pokemon'], 'League': league}
+                #for league in leagues:
+                for attr in attributes:
+                    if attr == 'Rank':
+                        if int(value) <= num_rank:
+                            value = row[f'{league}_{attr}']
+                            #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
+                            entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
+                formatted_data.append(entry)
+        return formatted_data
     
     def calculate_days_since(xDate):
         # Define the date range
@@ -317,7 +314,7 @@ if st.session_state.show_string:
             
 
             if st.session_state.little_clicked:
-                    family_data_lit = format_data_top(df,'Little',st.session_state.top_num)
+                    family_data_lit = format_data_top(df,'little',st.session_state.top_num)
                     df_display_lit = pd.DataFrame(family_data_lit)
                     df_display_lit.set_index(['Pokemon'], inplace=True)
                     st.table(df_display_lit)
@@ -329,7 +326,7 @@ if st.session_state.show_string:
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
             st.button("Show Great Table", key='great_table',on_click = great_but)
             if st.session_state.great_clicked:
-                family_data_Great = format_data_top(df,'Great',st.session_state.top_num)
+                family_data_Great = format_data_top(df,'great',st.session_state.top_num)
                 df_display_Great = pd.DataFrame(family_data_Great)
                 df_display_Great.set_index(['Pokemon'], inplace=True)
                 st.table(df_display_Great)
@@ -341,7 +338,7 @@ if st.session_state.show_string:
             st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box,inv_box))
             st.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
             if st.session_state.ultra_clicked:
-                family_data_ultra = format_data_top(df,'Ultra',st.session_state.top_num)
+                family_data_ultra = format_data_top(df,'ultra',st.session_state.top_num)
                 df_display_ultra = pd.DataFrame(family_data_ultra)
                 df_display_ultra.set_index(['Pokemon'], inplace=True)
                 st.table(df_display_ultra)
@@ -353,7 +350,7 @@ if st.session_state.show_string:
             st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box,inv_box))
             st.button("Show Master Table", key='master_table',on_click = master_but)
             if st.session_state.master_clicked:
-                family_data_master = format_data_top(df,'Master',st.session_state.top_num)
+                family_data_master = format_data_top(df,'master',st.session_state.top_num)
                 df_display_master = pd.DataFrame(family_data_master)
                 df_display_master.set_index(['Pokemon'], inplace=True)
                 st.table(df_display_master)
