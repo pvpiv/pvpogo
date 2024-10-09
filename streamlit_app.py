@@ -267,7 +267,7 @@ if pokemon_list:
         poke_label = 'All League Rankings, IVs, & Moves Table'
     else:
         poke_label = 'Sunshine Cup Rankings, IVs, & Moves Table'
-    st.subheading(poke_label)
+    st.subheader(poke_label)
     pokemon_choice = st.selectbox(poke_label, pokemon_list, index=pokemon_list.last_index(), key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
      
     #show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
@@ -314,7 +314,7 @@ st.divider()
    
 
 
-st.subheading("PVP Pokemon Search Strings")
+st.subheader("PVP Pokemon Search Strings")
 #Section 2 - PVP Pokemon Search String
 if st.session_state.show_string:
     top_nbox = st.number_input('Showing Top:', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
