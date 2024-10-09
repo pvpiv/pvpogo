@@ -317,7 +317,7 @@ st.divider()
 
 #Section 2 - PVP Pokemon Search String
 if st.session_state.show_string:
-    top_nbox = popover.number_input('PVP Pokemon Search Strings | Showing Top:', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+    top_nbox = st.number_input('PVP Pokemon Search Strings | Showing Top:', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
     #if is_num != 50:
         #st.session_state.top_num = int(is_num)
         #is_string = bool(show_string)
