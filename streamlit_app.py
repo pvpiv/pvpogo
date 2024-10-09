@@ -288,12 +288,12 @@ if st.session_state.show_string:
     
 
     if not st.session_state['show_custom']:    
-        try:
-            st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
-            st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
-            st.button("Show Little Table", key='little_table',on_click = upd_little)
-        except:
-            pass
+        #try:
+        st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
+        st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
+        st.button("Show Little Table", key='little_table',on_click = upd_little)
+        #except:
+            #pass
         try:
             st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
