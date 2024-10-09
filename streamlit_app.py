@@ -244,7 +244,7 @@ pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokem
 show_custom_box = st.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
 show_shadow_box = st.checkbox('Include Shadow Pokémon in Rankings Table',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow'])
 st.divider()
-col1, col2 = st.columns([1, 3])
+col1, col2 = st.columns([1, 1])
 with col1:
        
     
