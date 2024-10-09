@@ -246,54 +246,7 @@ show_shadow_box = st.checkbox('Include Shadow Pokémon in Rankings Table',on_cha
 st.divider()
 col1, col2 = st.columns([3, 1])
 with col1:
-    if pokemon_list:
-        if not st.session_state['show_custom']:
-            poke_label = 'All League Rankings, IVs, & Moves Table'
-        else:
-            poke_label = 'Sunshine Cup Rankings, IVs, & Moves Table'
-        pokemon_choice = st.selectbox(poke_label, pokemon_list, index=pokemon_list.last_index(), key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
-         
-        #show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
-        #show_custom_box = st.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
-        if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
-            if st.session_state['get_dat'] and pokemon_choice:
-                if st.session_state['last_sel'] != pokemon_choice or st.session_state['last_sel'] is None:
-                    load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
-                    streamlit_analytics.start_tracking()
-        
-                st.session_state['last_sel'] = pokemon_choice
-                pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
-                family_data = format_data(pokemon_family, show_shadow)
-    
-                if family_data:
-                    if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
-     
-                        st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
-                        df_display = pd.DataFrame(family_data)
-                        df_display.set_index(['Pokemon'], inplace=True)
-                        st.table(df_display)
-    
-                        
-                        #if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
-                        try:
-                            save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
-                            streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
-                        except:
-                            pass
-                    else:
-                        try: 
-                            streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
-                        except:
-                            pass
-                else:
-                    st.session_state['get_dat'] = False
-    else:
-        try: 
-            streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
-        except:
-            pass
-    
-    st.divider()      
+       
     
     
     
@@ -394,8 +347,56 @@ with col1:
                 # Get the last updated date
             last_updated = get_last_updated_date()
         except:
-            pass  
-
+            pass 
+with col2:
+    if pokemon_list:
+        if not st.session_state['show_custom']:
+            poke_label = 'All League Rankings, IVs, & Moves Table'
+        else:
+            poke_label = 'Sunshine Cup Rankings, IVs, & Moves Table'
+        pokemon_choice = st.selectbox(poke_label, pokemon_list, index=pokemon_list.last_index(), key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
+         
+        #show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
+        #show_custom_box = st.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
+        if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
+            if st.session_state['get_dat'] and pokemon_choice:
+                if st.session_state['last_sel'] != pokemon_choice or st.session_state['last_sel'] is None:
+                    load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
+                    streamlit_analytics.start_tracking()
+        
+                st.session_state['last_sel'] = pokemon_choice
+                pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
+                family_data = format_data(pokemon_family, show_shadow)
+    
+                if family_data:
+                    if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
+     
+                        st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
+                        df_display = pd.DataFrame(family_data)
+                        df_display.set_index(['Pokemon'], inplace=True)
+                        st.table(df_display)
+    
+                        
+                        #if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
+                        try:
+                            save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
+                            streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+                        except:
+                            pass
+                    else:
+                        try: 
+                            streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+                        except:
+                            pass
+                else:
+                    st.session_state['get_dat'] = False
+    else:
+        try: 
+            streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+        except:
+            pass
+    
+    st.divider()  
 # Custom CSS for mobile view and table fit
 st.markdown(
     """
