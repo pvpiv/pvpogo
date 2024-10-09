@@ -166,15 +166,14 @@ if 1 != 0:
             #for attr in attributes:
             for league in leagues:
                 #entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
-                entry = {'Pokemon': row['Pokemon'], 'League': league}
-                #for league in leagues:
-                for attr in attributes:
-                    if attr == 'Rank':
-                        if int(value) <= num_rank:
+                if num_rank >= row[f'{league}_Rank']:
+                    entry = {'Pokemon': row['Pokemon'], 'League': league}
+                    #for league in leagues:
+                    for attr in attributes:
                             value = row[f'{league}_{attr}']
                             #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
                             entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
-                formatted_data.append(entry)
+                    formatted_data.append(entry)
         return formatted_data
     
     def calculate_days_since(xDate):
