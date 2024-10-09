@@ -234,6 +234,8 @@ popover = st.popover("Settings")
 show_custom_boxz = popover.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
 show_shadow_boxz = popover.checkbox('Include Shadow Pokémon in Rankings Table',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow'])
 popover.divider()
+query_params = st.experimental_get_query_params()
+is_num = query_params.get("show_top", [50])[0]
 if is_num != 50:
     st.session_state.top_num = int(is_num)
 #is_string = bool(show_string)
@@ -247,7 +249,7 @@ inv_box = popover.checkbox('Invert strings',value=st.session_state.show_inverse,
 with col1:
 
     today = date.today()
-    query_params = st.experimental_get_query_params()
+    
     
     #Section 1 - PVP Pokemon Search Table
     show_shadow = st.session_state['get_shadow']
@@ -312,7 +314,7 @@ with col1:
     
     #Section 2 - PVP Pokemon Search String
     if st.session_state.show_string:
-        is_num = query_params.get("show_top", [50])[0]
+        
         #if is_num != 50:
             #st.session_state.top_num = int(is_num)
             #is_string = bool(show_string)
