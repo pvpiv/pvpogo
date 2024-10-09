@@ -229,7 +229,7 @@ if st.session_state['show_custom']:
     df = pd.read_csv('pvp_data_fossil.csv')
 else:
     df = pd.read_csv('pvp_data.csv')
-col1, col2 = st.columns([1])
+col1 = st.columns([1])
 with col1:
     popover = st.popover("Settings")
     show_custom_boxz = popover.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_custz') 
