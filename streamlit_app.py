@@ -328,7 +328,7 @@ if st.session_state.show_string:
         st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
         st.button("Show Great Table", key='great_table',on_click = great_but)
         if st.session_state.great_clicked:
-            family_data_Great = format_data_top(df,'great',st.session_state.top_num)
+            family_data_Great = format_data_top(df,'Great_Rank',st.session_state.top_num)
             df_display_Great = pd.DataFrame(family_data_Great)
             df_display_Great.set_index(['Pokemon'], inplace=True)
             st.table(df_display_Great)
