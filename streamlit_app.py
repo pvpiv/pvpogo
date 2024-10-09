@@ -338,7 +338,7 @@ if st.session_state.show_string:
         st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
         st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box,inv_box))
         st.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
-        if st.session_state.Ultra_clicked:
+        if st.session_state.ultra_clicked:
             family_data_Ultra = format_data_top(df,'Ultra',st.session_state.top_num)
             df_display_Ultra = pd.DataFrame(family_data_Ultra)
             df_display_Ultra.set_index(['Pokemon'], inplace=True)
