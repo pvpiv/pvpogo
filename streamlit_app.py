@@ -158,10 +158,10 @@ if 1 != 0:
       
     def format_data_top(pokes_df, league,num_rank):
         family_data = pokes_df
-        
+        family_data = family_data.sort_values(by=[f'{league}_Rank'])
         formatted_data = []
-        attributes = ['IVs','CP', 'Level', 'MoveSet']
-
+        attributes = ['Rank','IVs','CP', 'Level', 'MoveSet']
+        
         for _, row in family_data.iterrows():
             #for attr in attributes:
             
@@ -322,18 +322,18 @@ if st.session_state.show_string:
         
         except:
             pass
-        #try:
-        st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
-        st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
-        st.button("Show Great Table", key='great_table',on_click = great_but)
-        if st.session_state.great_clicked:
-            family_data_Great = format_data_top(df,'Great',st.session_state.top_num)
-            df_display_Great = pd.DataFrame(family_data_Great)
-            df_display_Great.set_index(['Pokemon'], inplace=True)
-            st.table(df_display_Great)
+        try:
+            st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
+            st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
+            st.button("Show Great Table", key='great_table',on_click = great_but)
+            if st.session_state.great_clicked:
+                family_data_Great = format_data_top(df,'Great',st.session_state.top_num)
+                df_display_Great = pd.DataFrame(family_data_Great)
+                df_display_Great.set_index(['Pokemon'], inplace=True)
+                st.table(df_display_Great)
         
-        #except:
-           #pass
+        except:
+           pass
         try:
             st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
             st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box,inv_box))
