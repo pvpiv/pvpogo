@@ -138,7 +138,7 @@ if 1 != 0:
         st.session_state.show_inverse = st.session_state.sho_inv
 
       
-    if "lit_clicked" not in st.session_state:
+    if "little_clicked" not in st.session_state:
         st.session_state["little_clicked"] = False
     if "great_clicked" not in st.session_state:
         st.session_state["great_clicked"] = False
@@ -350,6 +350,7 @@ if st.session_state.show_string:
         st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
         st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box,inv_box))
         st.button("Show Master Table", key='master_table',on_click = master_but)
+        st.write(st.session_state.master_clicked)
         if st.session_state.master_clicked:
             family_data_master = format_data_top(df,'Master',st.session_state.top_num)
             df_display_master = pd.DataFrame(family_data_master)
