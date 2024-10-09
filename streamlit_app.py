@@ -149,13 +149,32 @@ if 1 != 0:
           
     def little_but():
         st.session_state["little_clicked"] =  not st.session_state["little_clicked"]
+        load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
+        streamlit_analytics.start_tracking()
+        if st.session_state["little_clicked"]:
+            st.text_input(label=today.strftime("%m/%d/%y"), value='Little Table: ', label_visibility='hidden', disabled=True, key = "lil_text")
+        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     def great_but():
         st.session_state["great_clicked"] = not st.session_state["great_clicked"]
+        load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
+        streamlit_analytics.start_tracking()
+        if st.session_state["great_clicked"]:
+            st.text_input(label=today.strftime("%m/%d/%y"), value='Great Table: ', label_visibility='hidden', disabled=True, key = "great_text")
+        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     def ultra_but():
         st.session_state["ultra_clicked"] = not st.session_state["ultra_clicked"]
+        load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
+        streamlit_analytics.start_tracking()
+        if st.session_state["ultra_clicked"]:
+            st.text_input(label=today.strftime("%m/%d/%y"), value='Ultra Table: ', label_visibility='hidden', disabled=True, key = "ultra_text")
+        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     def master_but():
         st.session_state["master_clicked"] = not st.session_state["master_clicked"]
-      
+        load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
+        streamlit_analytics.start_tracking()
+        if st.session_state["master_clicked"]:
+            st.text_input(label=today.strftime("%m/%d/%y"), value='Master Table: ', label_visibility='hidden', disabled=True, key = "master_text")
+        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
     def format_data_top(pokes_df, league,num_rank):
         family_data = pokes_df
         family_data = family_data.sort_values(by=[f'{league}_Rank'])
@@ -334,8 +353,12 @@ if st.session_state.show_string:
     if not st.session_state['show_custom']:    
         try:
             st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
-            
+
             tables_pop.button("Show Little Table", key='little_table',on_click = little_but)
+            tables_pop.button("Show Great Table", key='great_table',on_click = great_but)
+            tables_pop.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
+            tables_pop.button("Show Master Table", key='master_table',on_click = master_but)
+
             #st.write(st.session_state.little_clicked)
     
             if st.session_state.little_clicked:
@@ -351,7 +374,7 @@ if st.session_state.show_string:
         try:
             st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
             
-            tables_pop.button("Show Great Table", key='great_table',on_click = great_but)
+           
             if st.session_state.great_clicked:
                 family_data_Great = format_data_top(df,'Great',st.session_state.top_num)
                 df_display_Great = pd.DataFrame(family_data_Great)
@@ -363,7 +386,7 @@ if st.session_state.show_string:
         try:
             st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
             
-            tables_pop.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
+            
             if st.session_state.ultra_clicked:
                 family_data_Ultra = format_data_top(df,'Ultra',st.session_state.top_num)
                 df_display_Ultra = pd.DataFrame(family_data_Ultra)
@@ -375,7 +398,7 @@ if st.session_state.show_string:
         try:
             st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
             
-            tables_pop.button("Show Master Table", key='master_table',on_click = master_but)
+            
             #st.write(st.session_state.master_clicked)
             if st.session_state.master_clicked:
                 family_data_master = format_data_top(df,'Master',st.session_state.top_num)
