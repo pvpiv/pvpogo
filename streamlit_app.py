@@ -297,7 +297,7 @@ if st.session_state.show_string:
         try:
             st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
-            st.button("Show Great Table"label, key='great_table',on_click = upd_great)
+            st.button("Show Great Table", key='great_table',on_click = upd_great)
         except:
             pass
         try:
