@@ -167,7 +167,7 @@ if 1 != 0:
             
             rank_value =  row[f'{league}_Rank'] if pd.notna(row[f'{league}_Rank']) and isinstance(row[f'{league}_Rank'], (int, float)) else row[f'{league}_Rank'] if pd.notna(row[f'{league}_Rank']) else 201
             #entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
-            if num_rank <= int(rank_value):
+            if num_rank >= int(rank_value):
                 entry = {'Pokemon': row['Pokemon']}
                 #for league in leagues:
                 for attr in attributes:
