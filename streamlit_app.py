@@ -229,7 +229,7 @@ if st.session_state['show_custom']:
     df = pd.read_csv('pvp_data_fossil.csv')
 else:
     df = pd.read_csv('pvp_data.csv')
-col1, col2 = st.columns([1, 1])
+col1, col2 = st.columns([1])
 with col1:
     popover = st.popover("Settings")
     show_custom_boxz = popover.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_custz') 
@@ -348,7 +348,7 @@ with col1:
             last_updated = get_last_updated_date()
         except:
             pass 
-with col2:
+with col1:
     if pokemon_list:
         if not st.session_state['show_custom']:
             poke_label = 'All League Rankings, IVs, & Moves Table'
