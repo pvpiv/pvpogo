@@ -308,20 +308,19 @@ if st.session_state.show_string:
     
 
     if not st.session_state['show_custom']:    
-        try:
-            st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
-            st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
-            st.button("Show Little Table", key='little_table',on_click = little_but)
-            
 
-            if st.session_state.little_clicked:
-                    family_data_lit = format_data_top(df,'Little',st.session_state.top_num)
-                    df_display_lit = pd.DataFrame(family_data_lit)
-                    df_display_lit.set_index(['Pokemon'], inplace=True)
-                    st.table(df_display_lit)
+        st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
+        st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
+        st.button("Show Little Table", key='little_table',on_click = little_but)
         
-        except:
-            pass
+
+        if st.session_state.little_clicked:
+                family_data_lit = format_data_top(df,'Little',st.session_state.top_num)
+                df_display_lit = pd.DataFrame(family_data_lit)
+                df_display_lit.set_index(['Pokemon'], inplace=True)
+                st.table(df_display_lit)
+    
+
         try:
             st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
@@ -334,30 +333,28 @@ if st.session_state.show_string:
         
         except:
            pass
-        try:
-            st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
-            st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box,inv_box))
-            st.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
-            if st.session_state.ultra_clicked:
-                family_data_ultra = format_data_top(df,'Ultra',st.session_state.top_num)
-                df_display_ultra = pd.DataFrame(family_data_ultra)
-                df_display_ultra.set_index(['Pokemon'], inplace=True)
-                st.table(df_display_ultra)
+
+        st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
+        st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box,inv_box))
+        st.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
+        if st.session_state.ultra_clicked:
+            family_data_ultra = format_data_top(df,'Ultra',st.session_state.top_num)
+            df_display_ultra = pd.DataFrame(family_data_ultra)
+            df_display_ultra.set_index(['Pokemon'], inplace=True)
+            st.table(df_display_ultra)
         
-        except:
-            pass
-        try:
-            st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
-            st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box,inv_box))
-            st.button("Show Master Table", key='master_table',on_click = master_but)
-            if st.session_state.master_clicked:
-                family_data_master = format_data_top(df,'Master',st.session_state.top_num)
-                df_display_master = pd.DataFrame(family_data_master)
-                df_display_master.set_index(['Pokemon'], inplace=True)
-                st.table(df_display_master)
+
+
+        st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
+        st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box,inv_box))
+        st.button("Show Master Table", key='master_table',on_click = master_but)
+        if st.session_state.master_clicked:
+            family_data_master = format_data_top(df,'Master',st.session_state.top_num)
+            df_display_master = pd.DataFrame(family_data_master)
+            df_display_master.set_index(['Pokemon'], inplace=True)
+            st.table(df_display_master)
             query_params = st.experimental_get_query_params()
-        except:
-            pass
+
         try:            
             st.write('All Leagues Top ' + str(st.session_state.top_num) + ' Search String:')
             st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box,inv_box,True))    
