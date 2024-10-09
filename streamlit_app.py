@@ -230,7 +230,9 @@ if st.session_state['show_custom']:
 else:
     df = pd.read_csv('pvp_data.csv')
 
-
+popover = st.popover("Settings")
+show_custom_box = popover.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
+show_shadow_box = popover.checkbox('Include Shadow Pokémon in Rankings Table',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow'])
 today = date.today()
 query_params = st.experimental_get_query_params()
 
