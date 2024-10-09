@@ -312,7 +312,7 @@ if st.session_state.show_string:
             st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
             st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
             st.button("Show Little Table", key='little_table',on_click = little_but)
-            
+            st.write(st.session_state.little_clicked)
     
             if st.session_state.little_clicked:
                 
