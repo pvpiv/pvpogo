@@ -62,7 +62,7 @@ if 1 != 0:
                     #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
                     entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
                 formatted_data.append(entry)
-        formatted_data = formatted_data.rename(columns={"Level": "Lvl"}, inplace=True)
+        
         return formatted_data
         #pvpogo.streamlit.app 
     def filter_ids(row):
@@ -182,7 +182,7 @@ if 1 != 0:
                         entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''        
                 #entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
                 formatted_data.append(entry)
-        formatted_data = formatted_data.rename(columns={"Level": "Lvl"}, inplace=True)
+        #formatted_data = formatted_data.rename(columns={"Level": "Lvl"}, inplace=True)
         return formatted_data
     
     def calculate_days_since(xDate):
@@ -321,6 +321,7 @@ if pokemon_list:
  
                     st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
                     df_display = pd.DataFrame(family_data)
+                    df_display = df_display.rename(columns={"Level": "Lvl"}, inplace=True)
                     df_display.set_index(['Pokemon'], inplace=True)
 
                     #st.table(df_display)
@@ -386,6 +387,7 @@ if st.session_state.show_string:
                 df_display_Little = pd.DataFrame(family_data_Little)
                 #df_display_Little.set_index(['Pokemon'], inplace=True)
                 #st.table(df_display_Little)
+                df_display_Little = df_display_Little.rename(columns={"Level": "Lvl"}, inplace=True)
                 st.dataframe(df_display_Little,on_select="ignore",use_container_width = True,hide_index = True,
                               column_config={
         "Pokemon": st.column_config.Column(
@@ -404,6 +406,7 @@ if st.session_state.show_string:
             if st.session_state.great_clicked:
                 family_data_Great = format_data_top(df,'Great',st.session_state.top_num)
                 df_display_Great = pd.DataFrame(family_data_Great)
+                df_display_Great = df_display_Great.rename(columns={"Level": "Lvl"}, inplace=True)
                 #df_display_Great.set_index(['Pokemon'], inplace=True)
                 st.table(df_display_Great)
                 #st.table(df_display_Great)  
@@ -418,6 +421,7 @@ if st.session_state.show_string:
             if st.session_state.ultra_clicked:
                 family_data_Ultra = format_data_top(df,'Ultra',st.session_state.top_num)
                 df_display_Ultra = pd.DataFrame(family_data_Ultra)
+                df_display_Ultra = df_display_Ultra.rename(columns={"Level": "Lvl"}, inplace=True)
                 df_display_Ultra.set_index(['Pokemon'], inplace=True)
                #st.table(df_display_Ultra)
                 st.table(df_display_Ultra)
@@ -433,6 +437,7 @@ if st.session_state.show_string:
                 family_data_master = format_data_top(df,'Master',st.session_state.top_num)
                 df_display_master = pd.DataFrame(family_data_master)
                 df_display_master.set_index(['Pokemon'], inplace=True)
+                df_display_master = df_display_master.rename(columns={"Level": "Lvl"}, inplace=True)
                 #st.table(df_display_master)
                 st.table(df_display_master)
                 query_params = st.experimental_get_query_params()
