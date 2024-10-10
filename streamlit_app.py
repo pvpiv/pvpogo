@@ -181,6 +181,9 @@ if 1 != 0:
                         entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''        
                 #entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
                 formatted_data.append(entry)
+                formatted_data['MoveSet'] = formatted_data['MoveSet'].str.replace(',', '\n', regex=False)
+                formatted_data['Pokemon'] = formatted_data['Pokemon'].str.replace(r' \((Shadow)\)', r'\n(Shadow)', regex=True)
+
         return formatted_data
     
     def calculate_days_since(xDate):
@@ -239,8 +242,6 @@ query_params = st.experimental_get_query_params()
 #if is_num != 50:
     #st.session_state.top_num = int(is_num)
 
-df['MoveSet'] = df['MoveSet'].str.replace(',', '\n', regex=False)
-df['Pokemon'] = df['Pokemon'].str.replace(r' \((Shadow)\)', r'\n(Shadow)', regex=True)
 
 st.markdown(
     """
@@ -307,6 +308,10 @@ if pokemon_list:
                     st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
                     df_display = pd.DataFrame(family_data)
                     df_display.set_index(['Pokemon'], inplace=True)
+
+                    df_display['MoveSet'] = df_display['MoveSet'].str.replace(',', '\n', regex=False)
+                    df_display['Pokemon'] = df_display['Pokemon'].str.replace(r' \((Shadow)\)', r'\n(Shadow)', regex=True)
+
                     #st.table(df_display)
                     st.table(df_display)
                     
@@ -374,9 +379,8 @@ if st.session_state.show_string:
                               column_config={
         "Pokemon": st.column_config.Column(
             "Pokemon",
-            width="small",),"MoveSet": st.column_config.Column(
-            "MoveSet",
-            width="small")})
+            width="small",)
+          })
             st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
