@@ -62,6 +62,7 @@ if 1 != 0:
                     #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
                     entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
                 formatted_data.append(entry)
+        formatted_data = formatted_data.rename(columns={"Level": "Lvl"}, inplace=True)
         return formatted_data
         #pvpogo.streamlit.app 
     def filter_ids(row):
@@ -165,7 +166,7 @@ if 1 != 0:
         family_data = pokes_df
         family_data = family_data.sort_values(by=[f'{league}_Rank'])
         formatted_data = []
-        attributes = ['Rank','IVs','CP', 'Level', 'MoveSet']
+        attributes = ['Rank','IVs','Level', 'MoveSet']
         
         for _, row in family_data.iterrows():
             #for attr in attributes:
@@ -181,7 +182,7 @@ if 1 != 0:
                         entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''        
                 #entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
                 formatted_data.append(entry)
-
+        formatted_data = formatted_data.rename(columns={"Level": "Lvl"}, inplace=True)
         return formatted_data
     
     def calculate_days_since(xDate):
@@ -236,11 +237,11 @@ if st.session_state['show_custom']:
 else:
     df = pd.read_csv('pvp_data.csv')
 
-df['Pokemon'] = df['Pokemon'].str.replace(r' \((Shadow)\)', r'\n(Shadow)', regex=True)
-df['Little_MoveSet'] = df['Little_MoveSet'].str.replace(',', '\n', regex=False)
-df['Great_MoveSet'] = df['Great_MoveSet'].str.replace(',', '\n', regex=False)
-df['Ultra_MoveSet'] = df['Ultra_MoveSet'].str.replace(',', '\n', regex=False)
-df['Master_MoveSet'] = df['Master_MoveSet'].str.replace(',', '\n', regex=False)
+#df['Pokemon'] = df['Pokemon'].str.replace(r' \((Shadow)\)', r'\n(Shadow)', regex=True)
+#df['Little_MoveSet'] = df['Little_MoveSet'].str.replace(',', '\n', regex=False)
+#df['Great_MoveSet'] = df['Great_MoveSet'].str.replace(',', '\n', regex=False)
+#df['Ultra_MoveSet'] = df['Ultra_MoveSet'].str.replace(',', '\n', regex=False)
+#df['Master_MoveSet'] = df['Master_MoveSet'].str.replace(',', '\n', regex=False)
 
 query_params = st.experimental_get_query_params()
 #is_num = query_params.get("show_top", [50])[0]
@@ -259,6 +260,14 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+st.markdown("""
+    <style>
+        .stTable tr {
+            height: 50px; # use this to adjust the height
+        }
+    </style>
+""", unsafe_allow_html=True)
 
 col1 = st.columns([1])
 popover = st.popover("Settings")
