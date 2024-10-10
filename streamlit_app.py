@@ -358,7 +358,9 @@ if st.session_state.show_string:
             st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
 
             tables_pop.button("Show Little Table", key='little_table',on_click = little_but)
-
+            tables_pop.button("Show Great Table", key='great_table',on_click = great_but)
+            tables_pop.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
+            tables_pop.button("Show Master Table", key='master_table',on_click = master_but)
 
             #st.write(st.session_state.little_clicked)
     
@@ -375,7 +377,7 @@ if st.session_state.show_string:
 
         try:
             st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
-            tables_pop.button("Show Great Table", key='great_table',on_click = great_but)
+          #  tables_pop.button("Show Great Table", key='great_table',on_click = great_but)
 
            
             if st.session_state.great_clicked:
@@ -389,7 +391,7 @@ if st.session_state.show_string:
            pass
         try:
             st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
-            tables_pop.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
+           #tables_pop.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
 
             
             if st.session_state.ultra_clicked:
@@ -403,7 +405,7 @@ if st.session_state.show_string:
             pass
         try:
             st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
-            tables_pop.button("Show Master Table", key='master_table',on_click = master_but)
+         #   tables_pop.button("Show Master Table", key='master_table',on_click = master_but)
             
             #st.write(st.session_state.master_clicked)
             if st.session_state.master_clicked:
