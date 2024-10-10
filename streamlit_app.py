@@ -351,13 +351,15 @@ if st.session_state.show_string:
     
 
     if not st.session_state['show_custom']:    
-        try:
-            st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
-
             tables_pop.button("Show Little Table", key='little_table',on_click = little_but)
             tables_pop.button("Show Great Table", key='great_table',on_click = great_but)
             tables_pop.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
             tables_pop.button("Show Master Table", key='master_table',on_click = master_but)
+        
+        try:
+            st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
+
+
 
             #st.write(st.session_state.little_clicked)
     
@@ -412,6 +414,7 @@ if st.session_state.show_string:
         try:            
             st.write('All Leagues Top ' + str(st.session_state.top_num) + ' Search String:')
             st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box,inv_box,True))    
+            
         except:
             pass
         #is_all = query_params.get("all", [False])[0]
@@ -420,10 +423,19 @@ if st.session_state.show_string:
 
     else:
         try:
+            tables_pop.button("Show Sunshine Cup Table", key='sun_table',on_click = great_but)
             days_since_date = calculate_days_since(season_start)
             age_string = f"age0-{days_since_date}&"
             st.write('Sunshine Cup Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
-            st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
+            
+            if st.session_state.great_clicked:
+                family_data_Great = format_data_top(df,'Great',st.session_state.top_num)
+                df_display_Great = pd.DataFrame(family_data_Great)
+                df_display_Great.set_index(['Pokemon'], inplace=True)
+                st.table(df_display_Great)
+            st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))Q    
+
+        
         except:
             pass
             
