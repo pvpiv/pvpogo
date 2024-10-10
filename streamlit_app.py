@@ -239,6 +239,20 @@ query_params = st.experimental_get_query_params()
 #if is_num != 50:
     #st.session_state.top_num = int(is_num)
 
+df['MoveSet'] = df['MoveSet'].str.replace(',', '\n', regex=False)
+df['Pokemon'] = df['Pokemon'].str.replace(r' \((Shadow)\)', r'\n(Shadow)', regex=True)
+
+st.markdown(
+    """
+    <style>
+    .dataframe td {
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 col1 = st.columns([1])
 popover = st.popover("Settings")
