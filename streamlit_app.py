@@ -294,7 +294,7 @@ if pokemon_list:
                     df_display = pd.DataFrame(family_data)
                     df_display.set_index(['Pokemon'], inplace=True)
                     #st.table(df_display)
-                    st.dataframe(df_display)
+                    st.tableame(df_display)
                     
                     #if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     try:
@@ -356,7 +356,7 @@ if st.session_state.show_string:
                 df_display_Little = pd.DataFrame(family_data_Little)
                 df_display_Little.set_index(['Pokemon'], inplace=True)
                 #st.table(df_display_Little)
-                st.dataframe(df_display_Little)
+                st.tableame(df_display_Little)
             st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
@@ -370,8 +370,8 @@ if st.session_state.show_string:
                 family_data_Great = format_data_top(df,'Great',st.session_state.top_num)
                 df_display_Great = pd.DataFrame(family_data_Great)
                 df_display_Great.set_index(['Pokemon'], inplace=True)
-                st.dataframe(df_display_Great)
-                #st.dataframe(df_display_Great)  
+                st.tableame(df_display_Great)
+                #st.tableame(df_display_Great)  
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
            pass
@@ -385,7 +385,7 @@ if st.session_state.show_string:
                 df_display_Ultra = pd.DataFrame(family_data_Ultra)
                 df_display_Ultra.set_index(['Pokemon'], inplace=True)
                #st.table(df_display_Ultra)
-                st.dataframe(df_display_Ultra)
+                st.tableame(df_display_Ultra)
             st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
@@ -399,7 +399,7 @@ if st.session_state.show_string:
                 df_display_master = pd.DataFrame(family_data_master)
                 df_display_master.set_index(['Pokemon'], inplace=True)
                 #st.table(df_display_master)
-                st.dataframe(df_display_master)
+                st.tableame(df_display_master)
                 query_params = st.experimental_get_query_params()
             st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
@@ -426,7 +426,7 @@ if st.session_state.show_string:
                 df_display_Great = pd.DataFrame(family_data_Great)
                 df_display_Great.set_index(['Pokemon'], inplace=True)
                 #st.table(df_display_Great)
-                st.dataframe(df_display_Great)
+                st.tableame(df_display_Great)
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))    
 
         
