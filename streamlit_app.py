@@ -14,7 +14,7 @@ import pytz
 
 #from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode,GridUpdateMode
 
-st.set_page_config(layout = "wide")
+#st.set_page_config(layout = "wide")
 
 
 if 1 != 0:
