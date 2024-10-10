@@ -356,7 +356,13 @@ if st.session_state.show_string:
                 df_display_Little = pd.DataFrame(family_data_Little)
                 #df_display_Little.set_index(['Pokemon'], inplace=True)
                 #st.table(df_display_Little)
-                st.dataframe(df_display_Little,on_select="ignore",use_container_width = True)
+                st.dataframe(df_display_Little,on_select="ignore",use_container_width = True,hide_index = True,
+                              column_config={
+        "Pokemon": st.column_config.Column(
+            "Pokemon",
+            width="small",),"MoveSet": st.column_config.Column(
+            "MoveSet",
+            width="small")}
             st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
