@@ -356,7 +356,7 @@ if st.session_state.show_string:
                 df_display_Little = pd.DataFrame(family_data_Little)
                 df_display_Little.set_index(['Pokemon'], inplace=True)
                 #st.table(df_display_Little)
-                st.table(df_display_Little)
+                st.dataframe(df_display_Little)
             st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
