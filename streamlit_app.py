@@ -307,8 +307,8 @@ if pokemon_list:
                     st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
                     df_display = pd.DataFrame(family_data)
                     df_display.set_index(['Pokemon'], inplace=True)
-                    st.table(df_display)
-
+                    #st.table(df_display)
+                    st.dataframe(df_display)
                     
                     #if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     try:
@@ -368,7 +368,8 @@ if st.session_state.show_string:
                 family_data_Little = format_data_top(df,'Little',st.session_state.top_num)
                 df_display_Little = pd.DataFrame(family_data_Little)
                 df_display_Little.set_index(['Pokemon'], inplace=True)
-                st.table(df_display_Little)
+                #st.table(df_display_Little)
+                st.dataframe(df_display_Little)
             st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
@@ -381,7 +382,8 @@ if st.session_state.show_string:
                 family_data_Great = format_data_top(df,'Great',st.session_state.top_num)
                 df_display_Great = pd.DataFrame(family_data_Great)
                 df_display_Great.set_index(['Pokemon'], inplace=True)
-                st.table(df_display_Great)
+                #st.table(df_display_Great)
+                st.dataframe(df_display_Great)    st.dataframe
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
            pass
@@ -393,7 +395,8 @@ if st.session_state.show_string:
                 family_data_Ultra = format_data_top(df,'Ultra',st.session_state.top_num)
                 df_display_Ultra = pd.DataFrame(family_data_Ultra)
                 df_display_Ultra.set_index(['Pokemon'], inplace=True)
-                st.table(df_display_Ultra)
+               #st.table(df_display_Ultra)
+                st.dataframe(df_display_Ultra)
             st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
@@ -406,7 +409,8 @@ if st.session_state.show_string:
                 family_data_master = format_data_top(df,'Master',st.session_state.top_num)
                 df_display_master = pd.DataFrame(family_data_master)
                 df_display_master.set_index(['Pokemon'], inplace=True)
-                st.table(df_display_master)
+                #st.table(df_display_master)
+                st.dataframe(df_display_master)
                 query_params = st.experimental_get_query_params()
             st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
@@ -432,7 +436,8 @@ if st.session_state.show_string:
                 family_data_Great = format_data_top(df,'Great',st.session_state.top_num)
                 df_display_Great = pd.DataFrame(family_data_Great)
                 df_display_Great.set_index(['Pokemon'], inplace=True)
-                st.table(df_display_Great)
+                #st.table(df_display_Great)
+                st.dataframe(df_display_Great)
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))    
 
         
