@@ -59,6 +59,7 @@ if 1 != 0:
                 #for league in leagues:
                 for attr in attributes:
                     value = row[f'{league}_{attr}']
+                    attr = attr.replace("Level","Lvl")
                     #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
                     entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
                 formatted_data.append(entry)
@@ -178,6 +179,7 @@ if 1 != 0:
                 #for league in leagues:
                 for attr in attributes:
                         value = row[f'{league}_{attr}']
+                        attr = attr.replace("Level","Lvl")
                         #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
                         entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''        
                 #entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
