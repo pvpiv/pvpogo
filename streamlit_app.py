@@ -362,7 +362,7 @@ if st.session_state.show_string:
             "Pokemon",
             width="small",),"MoveSet": st.column_config.Column(
             "MoveSet",
-            width="small")}
+            width="small")})
             st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
@@ -468,37 +468,4 @@ if st.session_state.show_string:
         pass 
 
 # Custom CSS for mobile view and table fit
-st.markdown(
-    """
-    <style>
-    @media (max-width: 2000px) {
-        .css-18e3th9 {
-            padding: 1rem 1rem;
-    }
-    .stNumberInput [data-baseweb=input]{
-        width: 100%;
-    }
-        .css-18e3th9 {
-            padding: 0.5rem 1rem;
-        }
-        .css-1d391kg {
-            font-size: 1rem;
-        }
-        .css-1i0h2kc {
-            width: 100% !important;
-            display: block;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        .css-1i0h2kc table {
-            width: 100%;
-        }
-        .css-1i0h2kc table th,
-        .css-1i0h2kc table td {
-            padding: 0.25rem;
-        }
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+
