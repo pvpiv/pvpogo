@@ -382,8 +382,8 @@ if st.session_state.show_string:
                 family_data_Great = format_data_top(df,'Great',st.session_state.top_num)
                 df_display_Great = pd.DataFrame(family_data_Great)
                 df_display_Great.set_index(['Pokemon'], inplace=True)
-                #st.table(df_display_Great)
-                st.dataframe(df_display_Great)  
+                st.table(df_display_Great)
+                #st.dataframe(df_display_Great)  
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
            pass
