@@ -370,7 +370,7 @@ if st.session_state.show_string:
                 family_data_Great = format_data_top(df,'Great',st.session_state.top_num)
                 df_display_Great = pd.DataFrame(family_data_Great)
                 df_display_Great.set_index(['Pokemon'], inplace=True)
-                st.table(df_display_Great)
+                st.dataframe(df_display_Great)
                 #st.dataframe(df_display_Great)  
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
@@ -448,7 +448,7 @@ if st.session_state.show_string:
 
         load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
         streamlit_analytics.start_tracking()
-         if st.session_state["little_clicked"]:
+        if st.session_state["little_clicked"]:
             st.text_input(label=today.strftime("%m/%d/%y"), value='Little Table', label_visibility='hidden', disabled=True, key = "little_text")
         if st.session_state["great_clicked"]:
             st.text_input(label=today.strftime("%m/%d/%y"), value='Great Table', label_visibility='hidden', disabled=True, key = "great_text")
