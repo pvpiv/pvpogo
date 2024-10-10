@@ -1,4 +1,4 @@
-import streamlit as st
+aimport streamlit as st
 import pandas as pd
 import streamlit_analytics
 import json
@@ -439,7 +439,7 @@ if st.session_state.show_string:
                 df_display_Ultra = df_display_Ultra.rename(columns={"Level": "Lvl"})
                 df_display_Ultra.set_index(['Pokemon'], inplace=True)
                #st.table(df_display_Ultra)
-                st.dataframe(df_display_master,on_select="ignore",hide_index = True,
+                st.dataframe(df_display_Ultra,on_select="ignore",hide_index = True,
                           column_config={
           "Pokemon": st.column_config.Column(
             "Pokemon",
