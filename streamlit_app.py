@@ -181,8 +181,6 @@ if 1 != 0:
                         entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''        
                 #entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
                 formatted_data.append(entry)
-                formatted_data['MoveSet'] = formatted_data['MoveSet'].str.replace(',', '\n', regex=False)
-                formatted_data['Pokemon'] = formatted_data['Pokemon'].str.replace(r' \((Shadow)\)', r'\n(Shadow)', regex=True)
 
         return formatted_data
     
@@ -237,6 +235,13 @@ if st.session_state['show_custom']:
     df = pd.read_csv('pvp_data_fossil.csv')
 else:
     df = pd.read_csv('pvp_data.csv')
+
+df['Pokemon'] = df['Pokemon'].str.replace(r' \((Shadow)\)', r'\n(Shadow)', regex=True)
+df['Little_MoveSet'] = df['Little_MoveSet'].str.replace(',', '\n', regex=False)
+df['Great_MoveSet'] = df['Great_MoveSet'].str.replace(',', '\n', regex=False)
+df['Ultra_MoveSet'] = df['Ultra_MoveSet'].str.replace(',', '\n', regex=False)
+df['Master_MoveSet'] = df['Master_MoveSet'].str.replace(',', '\n', regex=False)
+
 query_params = st.experimental_get_query_params()
 #is_num = query_params.get("show_top", [50])[0]
 #if is_num != 50:
@@ -308,9 +313,6 @@ if pokemon_list:
                     st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
                     df_display = pd.DataFrame(family_data)
                     df_display.set_index(['Pokemon'], inplace=True)
-
-                    df_display['MoveSet'] = df_display['MoveSet'].str.replace(',', '\n', regex=False)
-                    df_display['Pokemon'] = df_display['Pokemon'].str.replace(r' \((Shadow)\)', r'\n(Shadow)', regex=True)
 
                     #st.table(df_display)
                     st.table(df_display)
