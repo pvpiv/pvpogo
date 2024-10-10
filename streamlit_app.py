@@ -14,7 +14,7 @@ import pytz
 
 #from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode,GridUpdateMode
 
-
+#st.set_page_config(layout = "wide")
 
 
 if 1 != 0:
@@ -136,6 +136,53 @@ if 1 != 0:
         st.session_state.show_custom = st.session_state.sho_cust
     def upd_inv():
         st.session_state.show_inverse = st.session_state.sho_inv
+
+      
+    if "little_clicked" not in st.session_state:
+        st.session_state["little_clicked"] = False
+    if "great_clicked" not in st.session_state:
+        st.session_state["great_clicked"] = False
+    if "ultra_clicked" not in st.session_state:
+        st.session_state["ultra_clicked"] = False
+    if "master_clicked" not in st.session_state:
+        st.session_state["master_clicked"] = False
+    if "table_gen" not in st.session_state:
+        st.session_state["table_gen"] = ""
+        
+    def little_but():
+        st.session_state["little_clicked"] =  not st.session_state["little_clicked"]
+      
+    def great_but():
+        st.session_state["great_clicked"] = not st.session_state["great_clicked"]
+
+    def ultra_but():
+        st.session_state["ultra_clicked"] = not st.session_state["ultra_clicked"]
+        
+    def master_but():
+        st.session_state["master_clicked"] = not st.session_state["master_clicked"]
+
+    def format_data_top(pokes_df, league,num_rank):
+        family_data = pokes_df
+        family_data = family_data.sort_values(by=[f'{league}_Rank'])
+        formatted_data = []
+        attributes = ['Rank','IVs','CP', 'Level', 'MoveSet']
+        
+        for _, row in family_data.iterrows():
+            #for attr in attributes:
+            
+            rank_value =  row[f'{league}_Rank'] if pd.notna(row[f'{league}_Rank']) and isinstance(row[f'{league}_Rank'], (int, float)) else row[f'{league}_Rank'] if pd.notna(row[f'{league}_Rank']) else 201
+            #entry = {'Pokemon': row['Pokemon'], 'Attribute': attr}
+            if num_rank >= int(rank_value):
+                entry = {'Pokemon': row['Pokemon']}
+                #for league in leagues:
+                for attr in attributes:
+                        value = row[f'{league}_{attr}']
+                        #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
+                        entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''        
+                #entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
+                formatted_data.append(entry)
+        return formatted_data
+    
     def calculate_days_since(xDate):
         # Define the date range
         start_date = xDate
@@ -187,24 +234,45 @@ if st.session_state['show_custom']:
     df = pd.read_csv('pvp_data_fossil.csv')
 else:
     df = pd.read_csv('pvp_data.csv')
+query_params = st.experimental_get_query_params()
+#is_num = query_params.get("show_top", [50])[0]
+#if is_num != 50:
+    #st.session_state.top_num = int(is_num)
+
+
+col1 = st.columns([1])
+popover = st.popover("Settings")
+popover.subheader("Data Settings")
+show_custom_boxz = popover.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
+show_shadow_boxz = popover.checkbox('Include Shadow Pokémon',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow'])
+popover.divider()
+popover.subheader("Search String Settings")
+#is_string = bool(show_string)
+#st.query_params.string = bool(show_string)
+
+topstrin = str(st.session_state.top_num)    
+fam_box = popover.checkbox('Include pre-evolutions',value=True)
+iv_box = popover.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
 
 
 today = date.today()
-query_params = st.experimental_get_query_params()
+
 
 #Section 1 - PVP Pokemon Search Table
 show_shadow = st.session_state['get_shadow']
 #pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
 pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique())
 #pokemon_list = MyList(pokemon_list)
-show_custom_box = st.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
-show_shadow_box = st.checkbox('Include Shadow Pokémon in Rankings Table',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow'])
+#show_custom_box = st.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
+#show_shadow_box = st.checkbox('Include Shadow Pokémon in Rankings Table',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow'])
 st.divider()
+
 if pokemon_list:
     if not st.session_state['show_custom']:
         poke_label = 'All League Rankings, IVs, & Moves Table'
     else:
         poke_label = 'Sunshine Cup Rankings, IVs, & Moves Table'
+    st.subheader(poke_label)
     pokemon_choice = st.selectbox(poke_label, pokemon_list, index=pokemon_list.last_index(), key="poke_choice", on_change=lambda: st.session_state.update({'get_dat': True}))
      
     #show_season_box = st.checkbox('New Season Rankings (Sept 3)',on_change=upd_seas,key='sho_seas',value=True) 
@@ -225,8 +293,8 @@ if pokemon_list:
                     st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
                     df_display = pd.DataFrame(family_data)
                     df_display.set_index(['Pokemon'], inplace=True)
-                    st.table(df_display)
-
+                    #st.table(df_display)
+                    st.dataframe(df_display)
                     
                     #if pokemon_choice != "Select a Pokemon" and pokemon_choice != "Select a Shadow Pokemon":
                     try:
@@ -247,49 +315,99 @@ else:
     except:
         pass
 
-st.divider()      
+st.divider()  
+   
 
 
-
+st.subheader("PVP Pokemon Search Strings")
 #Section 2 - PVP Pokemon Search String
 if st.session_state.show_string:
-    is_num = query_params.get("show_top", [50])[0]
-    if is_num != 50:
-        st.session_state.top_num = int(is_num)
+    top_nbox = st.number_input('Showing Top:', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+    inv_box = st.checkbox('Invert strings',value=st.session_state.show_inverse,key='show_inv')
+    tables_pop = st.popover("League Tables")
+    #if is_num != 50:
+        #st.session_state.top_num = int(is_num)
         #is_string = bool(show_string)
         #st.query_params.string = bool(show_string)
-    top_nbox = st.number_input('PVP Pokemon Search Strings | Showing Top:', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
-    topstrin = str(st.session_state.top_num)    
-    fam_box = st.checkbox('Include pre-evolutions',value=True)
-    iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
-    inv_box = st.checkbox('Invert strings',value=st.session_state.show_inverse,key='show_inv')
+   # top_nbox = st.number_input('PVP Pokemon Search Strings | Showing Top:', value=st.session_state.top_num, key='top_no', on_change=update_top_num, min_value=5, max_value=200, step=5)
+   # topstrin = str(st.session_state.top_num)    
+    #fam_box = st.checkbox('Include pre-evolutions',value=True)
+   # iv_box = st.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
+   # inv_box = st.checkbox('Invert strings',value=st.session_state.show_inverse,key='show_inv')
     
 
     if not st.session_state['show_custom']:    
+    
+        
         try:
+           
             st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
+
+            tables_pop.button("Show Little Table", key='little_table',on_click = little_but)
+            tables_pop.button("Show Great Table", key='great_table',on_click = great_but)
+            tables_pop.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
+            tables_pop.button("Show Master Table", key='master_table',on_click = master_but)
+
+            #st.write(st.session_state.little_clicked)
+    
+            if st.session_state.little_clicked:
+                
+                family_data_Little = format_data_top(df,'Little',st.session_state.top_num)
+                df_display_Little = pd.DataFrame(family_data_Little)
+                df_display_Little.set_index(['Pokemon'], inplace=True)
+                #st.table(df_display_Little)
+                st.dataframe(df_display_Little)
             st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
+
         try:
             st.write('Great League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
+          #  tables_pop.button("Show Great Table", key='great_table',on_click = great_but)
+
+           
+            if st.session_state.great_clicked:
+                family_data_Great = format_data_top(df,'Great',st.session_state.top_num)
+                df_display_Great = pd.DataFrame(family_data_Great)
+                df_display_Great.set_index(['Pokemon'], inplace=True)
+                st.dataframe(df_display_Great)
+                #st.dataframe(df_display_Great)  
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
-            pass
+           pass
         try:
             st.write('Ultra League Top ' + str(st.session_state.top_num) + ' Search String:')#:: (For most PVP IVs add &0-1attack)')
+           #tables_pop.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
+
+            
+            if st.session_state.ultra_clicked:
+                family_data_Ultra = format_data_top(df,'Ultra',st.session_state.top_num)
+                df_display_Ultra = pd.DataFrame(family_data_Ultra)
+                df_display_Ultra.set_index(['Pokemon'], inplace=True)
+               #st.table(df_display_Ultra)
+                st.dataframe(df_display_Ultra)
             st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box,inv_box))
         except:
             pass
         try:
             st.write('Master League Top ' + str(st.session_state.top_num) + ' Search String:')#: (For BEST PVP IVs add &3*,4*)')
+         #   tables_pop.button("Show Master Table", key='master_table',on_click = master_but)
+            
+            #st.write(st.session_state.master_clicked)
+            if st.session_state.master_clicked:
+                family_data_master = format_data_top(df,'Master',st.session_state.top_num)
+                df_display_master = pd.DataFrame(family_data_master)
+                df_display_master.set_index(['Pokemon'], inplace=True)
+                #st.table(df_display_master)
+                st.dataframe(df_display_master)
+                query_params = st.experimental_get_query_params()
             st.code(make_search_string("master", st.session_state.top_num,fam_box,iv_box,inv_box))
-            query_params = st.experimental_get_query_params()
         except:
             pass
         try:            
             st.write('All Leagues Top ' + str(st.session_state.top_num) + ' Search String:')
             st.code(make_search_string("all", st.session_state.top_num,fam_box,iv_box,inv_box,True))    
+            
         except:
             pass
         #is_all = query_params.get("all", [False])[0]
@@ -298,10 +416,20 @@ if st.session_state.show_string:
 
     else:
         try:
+            tables_pop.button("Show Sunshine Cup Table", key='sun_table',on_click = great_but)
             days_since_date = calculate_days_since(season_start)
             age_string = f"age0-{days_since_date}&"
             st.write('Sunshine Cup Top ' + str(st.session_state.top_num) + ' Search String:')#: (For most PVP IVs add &0-1attack)')
-            st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))
+            
+            if st.session_state.great_clicked:
+                family_data_Great = format_data_top(df,'Great',st.session_state.top_num)
+                df_display_Great = pd.DataFrame(family_data_Great)
+                df_display_Great.set_index(['Pokemon'], inplace=True)
+                #st.table(df_display_Great)
+                st.dataframe(df_display_Great)
+            st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))    
+
+        
         except:
             pass
             
@@ -317,9 +445,21 @@ if st.session_state.show_string:
         save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
             # Get the last updated date
+
+        load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
+        streamlit_analytics.start_tracking()
+        if st.session_state["little_clicked"]:
+            st.text_input(label=today.strftime("%m/%d/%y"), value='Little Table', label_visibility='hidden', disabled=True, key = "little_text")
+        if st.session_state["great_clicked"]:
+            st.text_input(label=today.strftime("%m/%d/%y"), value='Great Table', label_visibility='hidden', disabled=True, key = "great_text")
+        if st.session_state["ultra_clicked"]:
+            st.text_input(label=today.strftime("%m/%d/%y"), value='Ultra Table', label_visibility='hidden', disabled=True, key = "ultra_text")
+        if st.session_state["master_clicked"]:
+            st.text_input(label=today.strftime("%m/%d/%y"), value='Master Table', label_visibility='hidden', disabled=True, key = "master_text")
+        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
         last_updated = get_last_updated_date()
     except:
-        pass  
+        pass 
 
 # Custom CSS for mobile view and table fit
 st.markdown(
