@@ -146,35 +146,21 @@ if 1 != 0:
         st.session_state["ultra_clicked"] = False
     if "master_clicked" not in st.session_state:
         st.session_state["master_clicked"] = False
-          
+    if "table_gen" not in st.session_state:
+        st.session_state["table_gen"] = ""
+        
     def little_but():
         st.session_state["little_clicked"] =  not st.session_state["little_clicked"]
-        load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
-        streamlit_analytics.start_tracking()
-        if st.session_state["little_clicked"]:
-            st.text_input(label=today.strftime("%m/%d/%y"), value='Little Table: ', label_visibility='hidden', disabled=True, key = "lil_text")
-        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+      
     def great_but():
         st.session_state["great_clicked"] = not st.session_state["great_clicked"]
-        load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
-        streamlit_analytics.start_tracking()
-        if st.session_state["great_clicked"]:
-            st.text_input(label=today.strftime("%m/%d/%y"), value='Great Table: ', label_visibility='hidden', disabled=True, key = "great_text")
-        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+
     def ultra_but():
         st.session_state["ultra_clicked"] = not st.session_state["ultra_clicked"]
-        load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
-        streamlit_analytics.start_tracking()
-        if st.session_state["ultra_clicked"]:
-            st.text_input(label=today.strftime("%m/%d/%y"), value='Ultra Table: ', label_visibility='hidden', disabled=True, key = "ultra_text")
-        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+        
     def master_but():
         st.session_state["master_clicked"] = not st.session_state["master_clicked"]
-        load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
-        streamlit_analytics.start_tracking()
-        if st.session_state["master_clicked"]:
-            st.text_input(label=today.strftime("%m/%d/%y"), value='Master Table: ', label_visibility='hidden', disabled=True, key = "master_text")
-        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+
     def format_data_top(pokes_df, league,num_rank):
         family_data = pokes_df
         family_data = family_data.sort_values(by=[f'{league}_Rank'])
@@ -459,6 +445,18 @@ if st.session_state.show_string:
         save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
         streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
             # Get the last updated date
+
+        load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
+        streamlit_analytics.start_tracking()
+         if st.session_state["little_clicked"]:
+            st.text_input(label=today.strftime("%m/%d/%y"), value='Little Table', label_visibility='hidden', disabled=True, key = "little_text")
+        if st.session_state["great_clicked"]:
+            st.text_input(label=today.strftime("%m/%d/%y"), value='Great Table', label_visibility='hidden', disabled=True, key = "great_text")
+        if st.session_state["ultra_clicked"]:
+            st.text_input(label=today.strftime("%m/%d/%y"), value='Ultra Table', label_visibility='hidden', disabled=True, key = "ultra_text")
+        if st.session_state["master_clicked"]:
+            st.text_input(label=today.strftime("%m/%d/%y"), value='Master Table', label_visibility='hidden', disabled=True, key = "master_text")
+        streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
         last_updated = get_last_updated_date()
     except:
         pass 
