@@ -321,7 +321,7 @@ if pokemon_list:
  
                     st.text_input(label=today.strftime("%m/%d/%y"), value=pokemon_choice, disabled=True, label_visibility='hidden')
                     df_display = pd.DataFrame(family_data)
-                    df_display = df_display.rename(columns={"Level": "Lvl"})
+                    #df_display = df_display.rename(columns={"Level": "Lvl"})
                     df_display.set_index(['Pokemon'], inplace=True)
 
                     #st.table(df_display)
