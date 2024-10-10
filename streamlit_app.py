@@ -392,8 +392,8 @@ if st.session_state.show_string:
                 df_display_Little = df_display_Little.rename(columns={"Level": "Lvl"})
                 st.dataframe(df_display_Little,on_select="ignore",hide_index = True,
                               column_config={
-        "Moveset": st.column_config.Column(
-            "Moveset",
+        "MoveSet": st.column_config.Column(
+            "MoveSet",
             width="small")
           })
             st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
@@ -412,8 +412,8 @@ if st.session_state.show_string:
                 #df_display_Great.set_index(['Pokemon'], inplace=True)
                 st.dataframe(df_display_Great,on_select="ignore",hide_index = True,
                               column_config={
-        "Moveset": st.column_config.Column(
-            "Moveset",
+        "MoveSet": st.column_config.Column(
+            "MoveSet",
             width="small")
           })
                 #st.table(df_display_Great)  
@@ -433,8 +433,8 @@ if st.session_state.show_string:
                #st.table(df_display_Ultra)
                 st.dataframe(df_display_master,on_select="ignore",hide_index = True,
                               column_config={
-        "Moveset": st.column_config.Column(
-            "Moveset",
+        "MoveSet": st.column_config.Column(
+            "MoveSet",
             width="small")
           })
             st.code(make_search_string("ultra", st.session_state.top_num,fam_box,iv_box,inv_box))
@@ -453,8 +453,8 @@ if st.session_state.show_string:
                 #st.table(df_display_master)
                 st.dataframe(df_display_master,on_select="ignore",hide_index = True,
                               column_config={
-        "Moveset": st.column_config.Column(
-            "Moveset",
+        "MoveSet": st.column_config.Column(
+            "MoveSet",
             width="small")
           })
                 query_params = st.experimental_get_query_params()
@@ -483,7 +483,13 @@ if st.session_state.show_string:
                 df_display_Great = pd.DataFrame(family_data_Great)
                 df_display_Great.set_index(['Pokemon'], inplace=True)
                 #st.table(df_display_Great)
-                st.table(df_display_Great)
+                st.dataframe(df_display_Great,on_select="ignore",hide_index = True,
+                              column_config={
+        "MoveSet": st.column_config.Column(
+            "MoveSet",
+            width="small")
+          })
+               # st.table(df_display_Great)
             st.code(make_search_string("great", st.session_state.top_num,fam_box,iv_box,inv_box))    
 
         
