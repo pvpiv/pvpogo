@@ -351,10 +351,10 @@ if st.session_state.show_string:
     
 
     if not st.session_state['show_custom']:    
-            tables_pop.button("Show Little Table", key='little_table',on_click = little_but)
-            tables_pop.button("Show Great Table", key='great_table',on_click = great_but)
-            tables_pop.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
-            tables_pop.button("Show Master Table", key='master_table',on_click = master_but)
+        tables_pop.button("Show Little Table", key='little_table',on_click = little_but)
+        tables_pop.button("Show Great Table", key='great_table',on_click = great_but)
+        tables_pop.button("Show Ultra Table", key='ultra_table',on_click =  ultra_but)
+        tables_pop.button("Show Master Table", key='master_table',on_click = master_but)
         
         try:
             st.write('Little League Top ' + str(st.session_state.top_num) + ' Search String:')#:')
