@@ -223,7 +223,7 @@ with cols[1]:
                         st.button(lab_ult,on_click = ultra_but)
                         st.table(df_display_Ultra)
                     else:
-                        st.button(lab_ult,on_click = ult_but)
+                        st.button(lab_ult,on_click = ultra_but)
                     st.code(make_search_string(df, "ultra", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
                 except:
                     pass
