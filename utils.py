@@ -112,7 +112,7 @@ def get_top_50_ids(df, rank_column, league, top_n, fam, iv_bool, inv_bool, xl_va
 
     return ids_string.replace("&,", "&")
 
-def make_search_string(df, league, top_n, fam, iv_b, inv_b, all_pre=False,sho_xl_val):
+def make_search_string(df, league, top_n, fam, iv_b, inv_b,sho_xl_val, all_pre=False):
     if league == 'little':
         return get_top_50_ids(df, 'Little_Rank', 'little', top_n, fam, iv_b, inv_b,sho_xl_val)
     elif league == 'great':
