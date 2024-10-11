@@ -77,26 +77,26 @@ with cols[0]:
         """,
 ):
         popover = st.popover('Settings' ,use_container_width =True)
-           if not st.session_state['table_string_butt']:
-            
-            
-                show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
-                show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
-    
-            else:
+        if not st.session_state['table_string_butt']:
 
-                show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
-                topstrin = str(st.session_state.top_num)
-                fam_box = popover.checkbox('Include pre-evolutions', value=True)
-                show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
-                iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
-                popover.divider()
-                tables_pop.button("Show Little Table", key='little_table', on_click=little_but)
-                tables_pop.button("Show Great Table", key='great_table', on_click=great_but)
-                tables_pop.button("Show Ultra Table", key='ultra_table', on_click=ultra_but)
-                tables_pop.button("Show Master Table", key='master_table', on_click=master_but)
-               # tables_pop = st.popover("League Tables")
-                
+
+            show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
+            show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
+
+        else:
+
+            show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
+            topstrin = str(st.session_state.top_num)
+            fam_box = popover.checkbox('Include pre-evolutions', value=True)
+            show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
+            iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
+            popover.divider()
+            tables_pop.button("Show Little Table", key='little_table', on_click=little_but)
+            tables_pop.button("Show Great Table", key='great_table', on_click=great_but)
+            tables_pop.button("Show Ultra Table", key='ultra_table', on_click=ultra_but)
+            tables_pop.button("Show Master Table", key='master_table', on_click=master_but)
+            # tables_pop = st.popover("League Tables")
+            
         
     if st.session_state['table_string_butt']:
         butt_label = "Switch to Pokémon Lookup"
