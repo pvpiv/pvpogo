@@ -54,7 +54,15 @@ if st.session_state['show_custom']:
     df = pd.read_csv('pvp_data_fossil.csv')
 else:
     df = pd.read_csv('pvp_data.csv')
-
+st.markdown("""
+<style>
+button {
+    height: 50px;
+    width: 200px;
+    color: blue;
+}
+</style>
+""", unsafe_allow_html=True)
 query_params = st.experimental_get_query_params()
 st.set_page_config(layout = "wide")
 cols = st.columns((3,8,2))
