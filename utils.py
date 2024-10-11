@@ -44,7 +44,7 @@ def format_data(pokemon_family, shadow_only, df,xl_var = False):
     for _, row in family_data.iterrows():
         for league in leagues:
             entry = {'Pokemon': row['Pokemon'], 'League': league}
-            if xl_var and row['Level'] > 40:
+            if xl_var and row[f'{league}_Level'] <= 40:
                 continue
             else:
                 for attr in attributes:
@@ -133,9 +133,7 @@ def format_data_top(df, league, num_rank,xl_var = False):
     family_data = df.sort_values(by=[f'{league}_Rank'])
     formatted_data = []
     attributes = ['Rank', 'IVs', 'CP', 'Level', 'MoveSet']
-    if xl_var and row['Level'] > 40:
-        continue
-    else:
+    if (xl_var and row['Level'] <= 40) or not xl_var:
         for _, row in family_data.iterrows():
             rank_value = (
                 row[f'{league}_Rank']
