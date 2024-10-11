@@ -61,7 +61,7 @@ st.set_page_config(layout = "wide")
 cols = st.columns((1,1,8))
 
 with cols[0]:
-    if st.session_state['table_string_butt']:
+    if not st.session_state['table_string_butt']:
   
         with stylable_container(
         key= "Poké_Settings" ,
