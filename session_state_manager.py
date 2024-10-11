@@ -7,6 +7,8 @@ def initialize_session_state():
         st.session_state['get_dat'] = False
     if 'get_shadow' not in st.session_state:
         st.session_state['get_shadow'] = True
+    if 'show_xl' not in st.session_state:
+        st.session_state['show_xl'] = False
     if 'get_season' not in st.session_state:
         st.session_state['get_season'] = True
     if 'last_sel' not in st.session_state:
@@ -37,7 +39,8 @@ def update_top_num():
 
 def upd_shadow():
     st.session_state.get_shadow = st.session_state.sho_shad
-
+def upd_xl():
+    st.session_state.show_xl = st.session_state.sho_xl
 def upd_seas():
     st.session_state.get_season = st.session_state.sho_seas
 
