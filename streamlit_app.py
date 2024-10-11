@@ -110,7 +110,7 @@ with cols[1]:
     show_shadow = st.session_state['get_shadow']
     pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique())
 
-    if not st.session_state['tab_str_butt']:
+    if st.session_state['tab_str_butt']:
         if pokemon_list:
             poke_label = 'All League Rankings, IVs, & Moves Table' if not st.session_state['show_custom'] else 'Sunshine Cup Rankings, IVs, & Moves Table'
             st.subheader(poke_label)
