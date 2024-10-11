@@ -58,15 +58,7 @@ else:
 query_params = st.experimental_get_query_params()
 st.set_page_config(layout = "wide")
 cols = st.columns((3,8,2))
-st.markdown("""
-<style>
-button {
-    height: 50px;
-    width: 200px;
-    color: blue;
-}
-</style>
-""", unsafe_allow_html=True)
+
 with cols[0]:
     st.divider()
     popover = st.popover("Settings")
@@ -290,6 +282,15 @@ with cols[1]:
     last_updated = get_last_updated_date(GITHUB_API_URL)
     st.write(f"Last updated: {last_updated} (EST)")
 # Custom CSS for mobile view and table fit
+st.markdown("""
+<style>
+button {
+    height: 50px;
+    width: 200px;
+    color: blue;
+}
+</style>
+""", unsafe_allow_html=True)
 st.markdown(
     """
     <style>
