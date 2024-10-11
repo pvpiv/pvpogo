@@ -89,7 +89,7 @@ with cols[0]:
             iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
   
             popover.divider()
-            tables_pop = st.popover("League Tables")
+            tables_pop = popover.popover("League Tables")
             
         else:
             show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
