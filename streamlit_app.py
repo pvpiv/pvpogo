@@ -60,12 +60,25 @@ st.set_page_config(layout = "wide")
 cols = st.columns((2,8,3))
 
 with cols[0]:
- 
-    popover = st.popover("Settings",use_container_width =True)
-    popover.subheader("Data Settings",divider = 'blue')
-    show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
-    show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
-        
+     with stylable_container(
+        key="blue_popover",
+        css_styles="""
+            button {
+                width: 150px;
+                height: 60px;
+                background-color: blue;
+                color: white;
+                border-radius: 5px;
+                white-space: nowrap;
+            }
+            """,
+    ):
+      
+        popover = st.popover("Settings",use_container_width =True,key='blue_popover')
+        popover.subheader("Data Settings",divider = 'blue')
+        show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
+        show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
+            
     #show_which = st.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
 
  
