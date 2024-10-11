@@ -128,7 +128,7 @@ def make_search_string(df, league, top_n, fam, iv_b, inv_b,sho_xl_val, all_pre=F
             + ','
             + get_top_50_ids(df, 'Ultra_Rank', 'ultra', top_n, fam, iv_b, inv_b, sho_xl_val,all_pre)
             + ','
-            + get_top_50_ids(df, 'Master_Rank', 'master', top_n, fam, iv_b, inv_b,True,all_pre)
+            + get_top_50_ids(df, 'Master_Rank', 'master', top_n, fam, iv_b, inv_b, True,all_pre)
         )
 
 def format_data_top(df, league, num_rank,xl_var):
