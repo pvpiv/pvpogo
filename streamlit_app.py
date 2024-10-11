@@ -73,7 +73,7 @@ with cols[0]:
         value = st.session_state['table_string_butt'],
         on_change = upd_tab_str
     )
-     with stylable_container(
+    with stylable_container(
         key="settings",
         css_styles="""
             button {
