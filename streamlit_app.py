@@ -181,7 +181,7 @@ with cols[1]:
             if not st.session_state['show_custom']:
                 try:
                     st.write(f'Little League Top {st.session_state.top_num} Search String:')
-
+                    st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
                     lab_lit = "Show Little Table"
                     if st.session_state['little_clicked']:
                         lab_lit = "Hide Little Table"
@@ -192,12 +192,13 @@ with cols[1]:
                         st.table(df_display_Little)   
                     else: 
                         st.button(lab_lit,on_click = little_but)     
-                    st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    
                 except:
                     pass
         
                 try:
                     st.write(f'Great League Top {st.session_state.top_num} Search String:')
+                    st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz,False))
                     lab_gre = "Show Great Table"
                     if st.session_state['great_clicked']:
                         lab_gre  = "Hide Great Table"
@@ -208,12 +209,13 @@ with cols[1]:
                         st.table(df_display_Great)
                     else:
                         st.button(lab_gre,on_click = great_but)
-                    st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz,False))
+                    
                 except:
                     pass
         
                 try:
                     st.write(f'Ultra League Top {st.session_state.top_num} Search String:')
+                    st.code(make_search_string(df, "ultra", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
                     lab_ult = "Show Ultra Table"
                     if st.session_state['ultra_clicked']:
                         lab_ult  = "Hide Ultra Table"
@@ -224,12 +226,13 @@ with cols[1]:
                         st.table(df_display_Ultra)
                     else:
                         st.button(lab_ult,on_click = ultra_but)
-                    st.code(make_search_string(df, "ultra", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    
                 except:
                     pass
         
                 try:
                     st.write(f'Master League Top {st.session_state.top_num} Search String:')
+                    st.code(make_search_string(df, "master", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
                     lab_mast = "Show Master Table"
                     if st.session_state['master_clicked']:
                         lab_mast  = "Hide Master Table"
@@ -240,7 +243,7 @@ with cols[1]:
                         st.table(df_display_master)
                     else:
                         st.button(lab_mast,on_click = master_but)
-                    st.code(make_search_string(df, "master", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    
                 except:
                     pass
         
@@ -255,6 +258,7 @@ with cols[1]:
                     days_since_date = calculate_days_since(season_start)
                     age_string = f"age0-{days_since_date}&"
                     st.write(f'Sunshine Cup Top {st.session_state.top_num} Search String:')
+                    st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
                     lab_gre = "Show Sunshine Table"
                     if st.session_state['great_clicked']:
                         lab_gre = "Hide Sunshine Table"
@@ -265,7 +269,7 @@ with cols[1]:
                         st.table(df_display_Great)
                     else:
                         st.button(lab_gre,on_click = great_but)
-                    st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    
                 except:
                     pass
         
