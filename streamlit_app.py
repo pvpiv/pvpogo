@@ -101,7 +101,7 @@ with cols[2]:
         value = st.session_state['table_string_butt'],
         on_change = upd_tab_str
     )
-with cols[2]:
+with cols[1]:
     st.divider()
     tables_pop = st.popover("League Tables")
     #str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str,use_container_width =True)
