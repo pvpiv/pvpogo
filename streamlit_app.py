@@ -277,6 +277,7 @@ st.markdown("""
 
 col = st.columns((1, 8, 1))
 with col[0]:
+    st.divider()
     popover = st.popover("Settings")
     popover.subheader("Data Settings")
     show_custom_boxz = popover.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
