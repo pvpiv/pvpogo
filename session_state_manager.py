@@ -34,7 +34,7 @@ def initialize_session_state():
     if 'table_gen' not in st.session_state:
         st.session_state['table_gen'] = ''
     if 'table_string_butt' not in st.session_state:
-        st.session_state['table_string_butt'] = False
+        st.session_state['table_string_butt'] = True
 def update_top_num():
     st.session_state.top_num = st.session_state.top_no
 
