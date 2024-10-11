@@ -178,10 +178,15 @@ if 1 != 0:
                 entry = {'Pokemon': row['Pokemon']}
                 #for league in leagues:
                 for attr in attributes:
+                    value = row[f'{league}_{attr}']
+                    if attr == "Rank":
+                        value = int(row[f'{league}_{attr}'])
+                    else: 
                         value = row[f'{league}_{attr}']
-                        attr = attr.replace("Level","Lvl")
-                        #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
-                        entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''        
+                    attr = attr.replace("Level","Lvl")
+                    attr = attr.replace("Rank","#")
+                    #entry[league] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
+                    entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''        
                 #entry[attr] = f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
                 formatted_data.append(entry)
         #formatted_data = formatted_data.rename(columns={"Level": "Lvl"})
