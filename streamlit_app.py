@@ -57,7 +57,7 @@ else:
 
 query_params = st.experimental_get_query_params()
 st.set_page_config(layout = "wide")
-cols = st.columns((3,8,2))
+cols = st.columns((2,8,3))
 
 with cols[0]:
     st.divider()
