@@ -68,8 +68,9 @@ with cols[1]:
     
     topstrin = str(st.session_state.top_num)
     fam_box = popover.checkbox('Include pre-evolutions', value=True)
-    iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
     show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
+    iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
+    
     today = date.today()
     
     # Section 1 - PVP Pokemon Search Table
@@ -82,10 +83,10 @@ with cols[1]:
         poke_label = 'All League Rankings, IVs, & Moves Table' if not st.session_state['show_custom'] else 'Sunshine Cup Rankings, IVs, & Moves Table'
         st.subheader(poke_label)
         pokemon_choice = st.selectbox(
-            poke_label,
+            "",
             pokemon_list,
             index=pokemon_list.last_index(),
-            key="poke_choice",
+            key="poke_choice",label_visibility='hidden',
             on_change=lambda: st.session_state.update({'get_dat': True})
         )
     
