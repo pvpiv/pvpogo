@@ -240,7 +240,7 @@ with cols[1]:
                         st.table(df_display_master)
                     else:
                         st.button(lab_mast,on_click = master_but)
-                    st.code(make_search_string(df, "master", st.session_state.top_num, fam_box, iv_box, inv_box,False))
+                    st.code(make_search_string(df, "master", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
                 except:
                     pass
         
