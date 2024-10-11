@@ -57,12 +57,22 @@ else:
 query_params = st.experimental_get_query_params()
 st.set_page_config(layout = "wide")
 cols = st.columns((3,8,2))
-with cols[1]:
+with cols[0]:
     popover = st.popover("Settings")
     popover.subheader("Data Settings")
     show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
     show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
-   
+        
+    show_which = st.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
+
+    tab_or_str = st.session_state['table_string_butt']
+    if tab_or_str:
+        butt_label = "Switch to Pokemon Lookup"
+    else: 
+        butt_label = "Switch to Search Strings"
+        
+    st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str)
+with cols[1]:
     popover.divider()
     popover.subheader("Search String Settings")
     
