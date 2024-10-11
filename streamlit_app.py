@@ -66,7 +66,7 @@ with cols[0]:
     else:
         sett_label = "Search String Settings"
     with stylable_container(
-        key="settings",
+        key= sett_label ,
         css_styles="""
             button {
                 width: 150px;
@@ -79,7 +79,7 @@ with cols[0]:
             """,
     ):
       
-        popover = st.popover("Settings",use_container_width =True)
+        popover = st.popover(sett_label ,use_container_width =True)
         popover.subheader("Data Settings",divider = 'blue')
         show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
         
