@@ -89,7 +89,7 @@ with cols[0]:
         iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
         st.divider()
   
-with cols[1]:
+with cols[2]:
     
     if st.session_state['table_string_butt']:
         butt_label = "Switch to Search Strings"
@@ -101,6 +101,7 @@ with cols[1]:
         value = st.session_state['table_string_butt'],
         on_change = upd_tab_str
     )
+with cols[2]:
     st.divider()
     tables_pop = st.popover("League Tables")
     #str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str,use_container_width =True)
