@@ -92,10 +92,9 @@ with cols[0]:
 with cols[1]:
 
     if st.session_state['table_string_butt']:
-        butt_label = "Switch to Pokemon Lookup"
-    else: 
         butt_label = "Switch to Search Strings"
-
+    else: 
+        butt_label = "Switch to Pokemon Lookup"
     st.toggle(
         label=butt_label,
         key= "tab_str_butt",
