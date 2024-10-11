@@ -97,7 +97,7 @@ with cols[1]:
     else: 
         butt_label = "Switch to Search Strings"
 
-    tog.st_toggle_switch(
+    streamlit_toggle.toggle(
         label=butt_label,
         key= "tab_str_butt",
         default_value=True,
