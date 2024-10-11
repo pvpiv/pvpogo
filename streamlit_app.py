@@ -194,6 +194,7 @@ with cols[1]:
                         family_data_Little = format_data_top(df, 'Little', st.session_state.top_num,show_xl_boxz)
                         df_display_Little = pd.DataFrame(family_data_Little)
                         df_display_Little.set_index(['Pokemon'], inplace=True)
+                        st.button("Hide Table",on_click = little_but)
                         st.table(df_display_Little)
                     st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
                 except:
