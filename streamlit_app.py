@@ -98,7 +98,7 @@ with cols[1]:
     if st.session_state['table_string_butt']:
         butt_label = "Switch to Search Strings"
     else: 
-        butt_label = "Switch to Pokemon Lookup"
+        butt_label = "Switch to Pokémon Lookup"
     st.toggle(
         label=butt_label,
         key= "tab_str_butt",
@@ -165,7 +165,7 @@ with cols[2]:
         # Section 2 - PVP Pokemon Search String
         
         
-        st.subheader("PVP Pokemon Search Strings")
+        st.subheader("PVP Poké Search Strings")
         if st.session_state.show_string:
             top_nbox = st.number_input(
                 'Showing Top:',
