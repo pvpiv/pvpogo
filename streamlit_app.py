@@ -62,7 +62,7 @@ cols = st.columns((2,8,3))
 with cols[0]:
  
     popover = st.popover("Settings",use_container_width =True)
-    popover.subheader("Data Settings")
+    popover.subheader("Data Settings",divider = 'blue')
     show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
     show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
         
@@ -74,8 +74,8 @@ with cols[0]:
     else: 
         butt_label = "Switch to Search Strings"
         
-    popover.divider()
-    popover.subheader("Search String Settings")
+    #popover.divider()
+    popover.subheader("Search String Settings",divider = 'blue')
     
     topstrin = str(st.session_state.top_num)
     fam_box = popover.checkbox('Include pre-evolutions', value=True)
