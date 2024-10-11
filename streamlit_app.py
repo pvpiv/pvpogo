@@ -25,6 +25,7 @@ from session_state_manager import (
     initialize_session_state,
     update_top_num,
     upd_shadow,
+    upd_xl,
     upd_seas,
     upd_cust,
     upd_inv,
