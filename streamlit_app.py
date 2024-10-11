@@ -74,7 +74,7 @@ with cols[0]:
     else: 
         butt_label = "Switch to Search Strings"
         
-    str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str)
+    
 with cols[1]:
     popover.divider()
     popover.subheader("Search String Settings")
@@ -91,6 +91,7 @@ with cols[1]:
     pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique())
     
     st.divider()
+    str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str)
     if not st.session_state['table_string_butt']:
         if pokemon_list:
             poke_label = 'All League Rankings, IVs, & Moves Table' if not st.session_state['show_custom'] else 'Sunshine Cup Rankings, IVs, & Moves Table'
