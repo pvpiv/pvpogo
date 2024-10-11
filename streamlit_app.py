@@ -530,12 +530,10 @@ with col[1]:
             #st.text_input(label=today.strftime("%m/%d/%y"), value='Results for Top ' + str(st.session_state.top_num), label_visibility='hidden', disabled=True, key="nstring")
             st.divider()  
             st.text_input(label="Feedback", key="fstring")
-            save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
-            streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
+
                 # Get the last updated date
     
-            load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
-            streamlit_analytics.start_tracking()
+        
             if st.session_state["little_clicked"]:
                 st.text_input(label=today.strftime("%m/%d/%y"), value='Little Table', label_visibility='hidden', disabled=True, key = "little_text")
             if st.session_state["great_clicked"]:
@@ -544,8 +542,8 @@ with col[1]:
                 st.text_input(label=today.strftime("%m/%d/%y"), value='Ultra Table', label_visibility='hidden', disabled=True, key = "ultra_text")
             if st.session_state["master_clicked"]:
                 st.text_input(label=today.strftime("%m/%d/%y"), value='Master Table', label_visibility='hidden', disabled=True, key = "master_text")
+            save_to_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
             streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
-            last_updated = get_last_updated_date()
         except:
             pass 
     
