@@ -194,7 +194,11 @@ with cols[1]:
                         family_data_Little = format_data_top(df, 'Little', st.session_state.top_num,show_xl_boxz)
                         df_display_Little = pd.DataFrame(family_data_Little)
                         df_display_Little.set_index(['Pokemon'], inplace=True)
-                        st.button("Hide Table",on_click = little_but)
+                        if little_clicked:
+                            lab_lit = "Show Little Table"
+                        else:
+                            lab_lit = "Hide Little Table"
+                        st.button(lab_lit,on_click = little_but)
                         st.table(df_display_Little)
                     st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
                 except:
@@ -206,7 +210,11 @@ with cols[1]:
                         family_data_Great = format_data_top(df, 'Great', st.session_state.top_num,show_xl_boxz)
                         df_display_Great = pd.DataFrame(family_data_Great)
                         df_display_Great.set_index(['Pokemon'], inplace=True)
-                        st.button("Hide Table",on_click = great_but)
+                        if great_clicked:
+                            lab_gre = "Show Great Table"
+                        else:
+                            lab_gre = "Hide Great Table"
+                        st.button(lab_gre,on_click = little_but)
                         st.table(df_display_Great)
                     st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz,False))
                 except:
@@ -252,6 +260,11 @@ with cols[1]:
                         df_display_Great = pd.DataFrame(family_data_Great)
                         df_display_Great.set_index(['Pokemon'], inplace=True)
                         st.button("Hide Table",on_click = great_but)
+                        if great_clicked:
+                            lab_gre = "Show Great Table"
+                        else:
+                            lab_gre = "Hide Great Table"
+                        st.button(lab_gre,on_click = little_but)
                         st.table(df_display_Great)
                     st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
                 except:
