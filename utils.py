@@ -136,7 +136,7 @@ def format_data_top(df, league, num_rank,xl_var):
     attributes = ['Rank', 'IVs', 'CP', 'Level', 'MoveSet']
 
     for _, row in family_data.iterrows():
-        if (not xl_var and row['Level'] <= 40) or xl_var:
+        if (not xl_var and row[f'{league}_Level'] <= 40) or xl_var:
             rank_value = (
                 row[f'{league}_Rank']
                 if pd.notna(row[f'{league}_Rank']) and isinstance(row[f'{league}_Rank'], (int, float))
