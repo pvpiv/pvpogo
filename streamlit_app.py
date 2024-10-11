@@ -239,7 +239,7 @@ with cols[1]:
                     pass
             else:
                 try:
-                    popover.button("Show Sunshine Cup Table", key='sun_table', on_click=great_but)
+                    #popover.button("Show Sunshine Cup Table", key='sun_table', on_click=great_but)
                     days_since_date = calculate_days_since(season_start)
                     age_string = f"age0-{days_since_date}&"
                     st.write(f'Sunshine Cup Top {st.session_state.top_num} Search String:')
