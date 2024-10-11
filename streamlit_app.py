@@ -148,7 +148,7 @@ with cols[1]:
                 tables_pop.button("Show Master Table", key='master_table', on_click=master_but)
     
                 if st.session_state['little_clicked']:
-                    family_data_Little = format_data_top(df, 'Little', st.session_state.top_num)
+                    family_data_Little = format_data_top(df, 'Little', st.session_state.top_num,show_xl_boxz)
                     df_display_Little = pd.DataFrame(family_data_Little)
                     df_display_Little.set_index(['Pokemon'], inplace=True)
                     st.table(df_display_Little)
@@ -159,7 +159,7 @@ with cols[1]:
            # try:
             st.write(f'Great League Top {st.session_state.top_num} Search String:')
             if st.session_state['great_clicked']:
-                family_data_Great = format_data_top(df, 'Great', st.session_state.top_num)
+                family_data_Great = format_data_top(df, 'Great', st.session_state.top_num,show_xl_boxz)
                 df_display_Great = pd.DataFrame(family_data_Great)
                 df_display_Great.set_index(['Pokemon'], inplace=True)
                 st.table(df_display_Great)
@@ -170,7 +170,7 @@ with cols[1]:
             try:
                 st.write(f'Ultra League Top {st.session_state.top_num} Search String:')
                 if st.session_state['ultra_clicked']:
-                    family_data_Ultra = format_data_top(df, 'Ultra', st.session_state.top_num)
+                    family_data_Ultra = format_data_top(df, 'Ultra', st.session_state.top_num,show_xl_boxz)
                     df_display_Ultra = pd.DataFrame(family_data_Ultra)
                     df_display_Ultra.set_index(['Pokemon'], inplace=True)
                     st.table(df_display_Ultra)
@@ -201,7 +201,7 @@ with cols[1]:
                 age_string = f"age0-{days_since_date}&"
                 st.write(f'Sunshine Cup Top {st.session_state.top_num} Search String:')
                 if st.session_state['great_clicked']:
-                    family_data_Great = format_data_top(df, 'Great', st.session_state.top_num)
+                    family_data_Great = format_data_top(df, 'Great', st.session_state.top_num,show_xl_boxz)
                     df_display_Great = pd.DataFrame(family_data_Great)
                     df_display_Great.set_index(['Pokemon'], inplace=True)
                     st.table(df_display_Great)
