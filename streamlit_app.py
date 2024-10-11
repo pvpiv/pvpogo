@@ -198,7 +198,7 @@ with cols[1]:
         
                 try:
                     st.write(f'Great League Top {st.session_state.top_num} Search String:')
-                    lab_lit = "Show Great Table"
+                    lab_gre = "Show Great Table"
                     if st.session_state['great_clicked']:
                         lab_gre  = "Hide Great Table"
                         st.button(lab_gre,on_click = great_but)
@@ -255,7 +255,7 @@ with cols[1]:
                     days_since_date = calculate_days_since(season_start)
                     age_string = f"age0-{days_since_date}&"
                     st.write(f'Sunshine Cup Top {st.session_state.top_num} Search String:')
-                    lab_lit = "Show Great Table"
+                    lab_gre = "Show Great Table"
                     if st.session_state['great_clicked']:
                         lab_gre = "Hide Great Table"
                         st.button(lab_gre,on_click = great_but)
