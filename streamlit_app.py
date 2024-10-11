@@ -276,8 +276,8 @@ with cols[1]:
         
             # Get the last updated date
 
-        except:
-            pass
+            except:
+                pass
     last_updated = get_last_updated_date(GITHUB_API_URL)
     st.write(f"Last updated: {last_updated} (EST)")
 # Custom CSS for mobile view and table fit
