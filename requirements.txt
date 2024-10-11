@@ -6,3 +6,6 @@ streamlit-aggrid
 requests
 datetime
 pytz
+streamlit_extras
+streamlit_toggle 
+streamlit-toggle-switch
