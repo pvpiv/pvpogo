@@ -102,7 +102,7 @@ with cols[0]:
 
 
         
-        if not st.session_state['table_string_butt']:
+        if st.session_state['table_string_butt']:
             popover.subheader("Search String Settings",divider = 'blue')
             
             topstrin = str(st.session_state.top_num)
