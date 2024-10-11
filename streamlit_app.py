@@ -404,7 +404,7 @@ with col[1]:
               ,
             "MoveSet": st.column_config.Column(
                 "MoveSet",
-                width="small")
+                width="medium")
               })
                 st.code(make_search_string("little", st.session_state.top_num,fam_box,iv_box,inv_box))
             except:
