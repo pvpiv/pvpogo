@@ -91,7 +91,7 @@ with cols[0]:
         fam_box = popover.checkbox('Include pre-evolutions', value=True)
         show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
         iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
-    st.divider()
+        st.divider()
     if st.session_state['table_string_butt']:
         butt_label = "Switch to Pokemon Lookup"
     else: 
