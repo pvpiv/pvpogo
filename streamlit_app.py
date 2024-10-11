@@ -58,7 +58,7 @@ else:
 
 query_params = st.experimental_get_query_params()
 st.set_page_config(layout = "wide")
-cols = st.columns((1,1,8))
+cols = st.columns((1,8,1))
 
 with cols[0]:
     if not st.session_state['table_string_butt']:
@@ -115,7 +115,7 @@ with cols[0]:
             
         else:
             show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
-with cols[1]:
+
     
     if st.session_state['table_string_butt']:
         butt_label = "Switch to Search Strings"
@@ -127,7 +127,7 @@ with cols[1]:
         value = st.session_state['table_string_butt'],
         on_change = upd_tab_str
     )
-with cols[2]:
+with cols[1]:
 
     #str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str,use_container_width =True)
     
