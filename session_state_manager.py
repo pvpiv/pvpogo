@@ -54,6 +54,10 @@ def upd_cust():
 def upd_inv():
     st.session_state.show_inverse = st.session_state.sho_inv
 
+    
+def bool_switcher(y):
+    y = not (y)
+
 def little_but():
     st.session_state['little_clicked'] = not st.session_state['little_clicked']
 
