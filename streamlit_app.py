@@ -196,16 +196,16 @@ with cols[1]:
                 except:
                     pass
         
-               # try:
-                st.write(f'Great League Top {st.session_state.top_num} Search String:')
-                if st.session_state['great_clicked']:
-                    family_data_Great = format_data_top(df, 'Great', st.session_state.top_num,show_xl_boxz)
-                    df_display_Great = pd.DataFrame(family_data_Great)
-                    df_display_Great.set_index(['Pokemon'], inplace=True)
-                    st.table(df_display_Great)
-                st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz,False))
-                #except:
-                   # pass
+                try:
+                    st.write(f'Great League Top {st.session_state.top_num} Search String:')
+                    if st.session_state['great_clicked']:
+                        family_data_Great = format_data_top(df, 'Great', st.session_state.top_num,show_xl_boxz)
+                        df_display_Great = pd.DataFrame(family_data_Great)
+                        df_display_Great.set_index(['Pokemon'], inplace=True)
+                        st.table(df_display_Great)
+                    st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz,False))
+                except:
+                    pass
         
                 try:
                     st.write(f'Ultra League Top {st.session_state.top_num} Search String:')
