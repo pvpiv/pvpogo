@@ -171,7 +171,7 @@ with cols[1]:
                 step=5
             )
             inv_box = st.checkbox('Invert strings', value=st.session_state.show_inverse, key='show_inv')
-            tables_pop = st.popover("League Tables")
+            #tables_pop = st.popover("League Tables")
             
             if not st.session_state['show_custom']:
                 try:
