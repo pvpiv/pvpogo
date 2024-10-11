@@ -62,13 +62,13 @@ with cols[1]:
     popover.subheader("Data Settings")
     show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
     show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
-    show_xl_boxz = popover.checkbox('Include lvl XL (40+) Pokémon', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
+    show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
     popover.divider()
     popover.subheader("Search String Settings")
     
     topstrin = str(st.session_state.top_num)
     fam_box = popover.checkbox('Include pre-evolutions', value=True)
-    iv_box = popover.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)', value=False)
+    iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
     
     today = date.today()
     
