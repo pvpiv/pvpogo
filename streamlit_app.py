@@ -275,11 +275,11 @@ with cols[1]:
                 streamlit_analytics.stop_tracking(unsafe_password=st.secrets['pass'])
         
             # Get the last updated date
-            last_updated = get_last_updated_date(GITHUB_API_URL)
-            st.write(f"Last updated: {last_updated} (EST)")
+
         except:
             pass
-
+    last_updated = get_last_updated_date(GITHUB_API_URL)
+    st.write(f"Last updated: {last_updated} (EST)")
 # Custom CSS for mobile view and table fit
 st.markdown(
     """
