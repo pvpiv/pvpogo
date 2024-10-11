@@ -104,13 +104,17 @@ with cols[0]:
         
         if st.session_state['table_string_butt']:
             popover.subheader("Search String Settings",divider = 'blue')
-            
+            show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
             topstrin = str(st.session_state.top_num)
             fam_box = popover.checkbox('Include pre-evolutions', value=True)
             show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
             iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
-  
-            tables_pop = st.popover("League Tables")
+            popover.divider()
+            tables_pop.button("Show Little Table", key='little_table', on_click=little_but)
+            tables_pop.button("Show Great Table", key='great_table', on_click=great_but)
+            tables_pop.button("Show Ultra Table", key='ultra_table', on_click=ultra_but)
+            tables_pop.button("Show Master Table", key='master_table', on_click=master_but)
+           # tables_pop = st.popover("League Tables")
             
         else:
             show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
@@ -203,10 +207,7 @@ with cols[1]:
             if not st.session_state['show_custom']:
                 try:
                     st.write(f'Little League Top {st.session_state.top_num} Search String:')
-                    tables_pop.button("Show Little Table", key='little_table', on_click=little_but)
-                    tables_pop.button("Show Great Table", key='great_table', on_click=great_but)
-                    tables_pop.button("Show Ultra Table", key='ultra_table', on_click=ultra_but)
-                    tables_pop.button("Show Master Table", key='master_table', on_click=master_but)
+
         
                     if st.session_state['little_clicked']:
                         family_data_Little = format_data_top(df, 'Little', st.session_state.top_num,show_xl_boxz)
