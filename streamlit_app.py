@@ -82,20 +82,20 @@ with cols[0]:
     #show_which = st.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
 
  
+
+        
+    #popover.divider()
+        popover.subheader("Search String Settings",divider = 'blue')
+        
+        topstrin = str(st.session_state.top_num)
+        fam_box = popover.checkbox('Include pre-evolutions', value=True)
+        show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
+        iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
+    st.divider()
     if st.session_state['table_string_butt']:
         butt_label = "Switch to Pokemon Lookup"
     else: 
         butt_label = "Switch to Search Strings"
-        
-    #popover.divider()
-    popover.subheader("Search String Settings",divider = 'blue')
-    
-    topstrin = str(st.session_state.top_num)
-    fam_box = popover.checkbox('Include pre-evolutions', value=True)
-    show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
-    iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
-        
-    st.divider()
     str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str,use_container_width =True)
 with cols[1]:
     today = date.today()
