@@ -134,8 +134,9 @@ def format_data_top(df, league, num_rank,xl_var):
     family_data = df.sort_values(by=[f'{league}_Rank'])
     formatted_data = []
     attributes = ['Rank', 'IVs', 'CP', 'Level', 'MoveSet']
-    if (not xl_var and row['Level'] <= 40) or xl_var:
-        for _, row in family_data.iterrows():
+
+    for _, row in family_data.iterrows():
+        if (not xl_var and row['Level'] <= 40) or xl_var:
             rank_value = (
                 row[f'{league}_Rank']
                 if pd.notna(row[f'{league}_Rank']) and isinstance(row[f'{league}_Rank'], (int, float))
