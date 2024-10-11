@@ -163,7 +163,7 @@ with cols[1]:
                 df_display_Great = pd.DataFrame(family_data_Great)
                 df_display_Great.set_index(['Pokemon'], inplace=True)
                 st.table(df_display_Great)
-            st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+            st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz,False))
             #except:
                # pass
     
