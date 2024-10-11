@@ -32,7 +32,7 @@ def save_to_firestore(counts, collection_name):
     col = db.collection(collection_name)
     col.document(st.secrets["fb_col"]).set(counts)
 
-def format_data(pokemon_family, shadow_only, df,xl_var ):
+def format_data(pokemon_family, shadow_only, df):
     if shadow_only:
         family_data = df[(df['Family'] == pokemon_family)].sort_values(by=['Shadow', 'ID'])
     else:
