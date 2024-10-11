@@ -58,7 +58,7 @@ else:
 
 query_params = st.experimental_get_query_params()
 st.set_page_config(layout = "wide")
-cols = st.columns((1,8,1))
+cols = st.columns((2,8,1))
 
 with cols[0]:
    
