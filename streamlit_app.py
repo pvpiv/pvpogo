@@ -152,7 +152,7 @@ with cols[1]:
                     df_display_Little = pd.DataFrame(family_data_Little)
                     df_display_Little.set_index(['Pokemon'], inplace=True)
                     st.table(df_display_Little)
-                st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box))
+                st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
             except:
                 pass
     
@@ -163,7 +163,7 @@ with cols[1]:
                     df_display_Great = pd.DataFrame(family_data_Great)
                     df_display_Great.set_index(['Pokemon'], inplace=True)
                     st.table(df_display_Great)
-                st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box))
+                st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
             except:
                 pass
     
@@ -174,7 +174,7 @@ with cols[1]:
                     df_display_Ultra = pd.DataFrame(family_data_Ultra)
                     df_display_Ultra.set_index(['Pokemon'], inplace=True)
                     st.table(df_display_Ultra)
-                st.code(make_search_string(df, "ultra", st.session_state.top_num, fam_box, iv_box, inv_box))
+                st.code(make_search_string(df, "ultra", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
             except:
                 pass
     
@@ -185,13 +185,13 @@ with cols[1]:
                     df_display_master = pd.DataFrame(family_data_master)
                     df_display_master.set_index(['Pokemon'], inplace=True)
                     st.table(df_display_master)
-                st.code(make_search_string(df, "master", st.session_state.top_num, fam_box, iv_box, inv_box))
+                st.code(make_search_string(df, "master", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
             except:
                 pass
     
             try:
                 st.write(f'All Leagues Top {st.session_state.top_num} Search String:')
-                st.code(make_search_string(df, "all", st.session_state.top_num, fam_box, iv_box, inv_box, True))
+                st.code(make_search_string(df, "all", st.session_state.top_num, fam_box, iv_box, inv_box, True,show_xl_boxz))
             except:
                 pass
         else:
@@ -205,7 +205,7 @@ with cols[1]:
                     df_display_Great = pd.DataFrame(family_data_Great)
                     df_display_Great.set_index(['Pokemon'], inplace=True)
                     st.table(df_display_Great)
-                st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box))
+                st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
             except:
                 pass
     
