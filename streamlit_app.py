@@ -396,7 +396,7 @@ with col[1]:
                     #df_display_Little.set_index(['Pokemon'], inplace=True)
                     #st.table(df_display_Little)
                     df_display_Little = df_display_Little.rename(columns={"Level": "Lvl"})
-                    st.dataframe(df_display_Little,on_select="ignore",hide_index = True,
+                    st.dataframe(df_display_Little,use_container_width=True,on_select="ignore",hide_index = True,
                                   column_config={
               "Pokemon": st.column_config.Column(
                 "Pokemon",
