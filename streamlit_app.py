@@ -62,14 +62,14 @@ with cols[1]:
     popover.subheader("Data Settings")
     show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
     show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
-    show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
+   
     popover.divider()
     popover.subheader("Search String Settings")
     
     topstrin = str(st.session_state.top_num)
     fam_box = popover.checkbox('Include pre-evolutions', value=True)
     iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
-    
+    show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
     today = date.today()
     
     # Section 1 - PVP Pokemon Search Table
@@ -138,7 +138,7 @@ with cols[1]:
         )
         inv_box = st.checkbox('Invert strings', value=st.session_state.show_inverse, key='show_inv')
         tables_pop = st.popover("League Tables")
-    
+        
         if not st.session_state['show_custom']:
             try:
                 st.write(f'Little League Top {st.session_state.top_num} Search String:')
