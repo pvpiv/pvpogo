@@ -31,7 +31,7 @@ def save_to_firestore(counts, collection_name):
     col = db.collection(collection_name)
     col.document(st.secrets["fb_col"]).set(counts)
 
-def format_data(pokemon_family, shadow_only, df):
+def format_data(pokemon_family, shadow_only, df,xl_var = False):
     if shadow_only:
         family_data = df[(df['Family'] == pokemon_family)].sort_values(by=['Shadow', 'ID'])
     else:
@@ -44,12 +44,17 @@ def format_data(pokemon_family, shadow_only, df):
     for _, row in family_data.iterrows():
         for league in leagues:
             entry = {'Pokemon': row['Pokemon'], 'League': league}
-            for attr in attributes:
-                value = row[f'{league}_{attr}']
-                entry[attr] = (
-                    f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
-                )
-            formatted_data.append(entry)
+            if xl_var and row['Level'] > 40:
+                continue
+            else:
+                for attr in attributes:
+                    value = row[f'{league}_{attr}']
+                    attr = attr.replace("Level","Lvl")
+                    attr = attr.replace("Rank","#")
+                    entry[attr] = (
+                        f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
+                    )
+                formatted_data.append(entry)
     return formatted_data
 
 def filter_ids(row):
@@ -124,27 +129,31 @@ def make_search_string(df, league, top_n, fam, iv_b, inv_b, all_pre=False):
             + get_top_50_ids(df, 'Master_Rank', 'master', top_n, fam, iv_b, inv_b, all_pre)
         )
 
-def format_data_top(df, league, num_rank):
+def format_data_top(df, league, num_rank,xl_var = False):
     family_data = df.sort_values(by=[f'{league}_Rank'])
     formatted_data = []
     attributes = ['Rank', 'IVs', 'CP', 'Level', 'MoveSet']
-
-    for _, row in family_data.iterrows():
-        rank_value = (
-            row[f'{league}_Rank']
-            if pd.notna(row[f'{league}_Rank']) and isinstance(row[f'{league}_Rank'], (int, float))
-            else row[f'{league}_Rank']
-            if pd.notna(row[f'{league}_Rank'])
-            else 201
-        )
-        if num_rank >= int(rank_value):
-            entry = {'Pokemon': row['Pokemon']}
-            for attr in attributes:
-                value = row[f'{league}_{attr}']
-                entry[attr] = (
-                    f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
-                )
-            formatted_data.append(entry)
+    if xl_var and row['Level'] > 40:
+        continue
+    else:
+        for _, row in family_data.iterrows():
+            rank_value = (
+                row[f'{league}_Rank']
+                if pd.notna(row[f'{league}_Rank']) and isinstance(row[f'{league}_Rank'], (int, float))
+                else row[f'{league}_Rank']
+                if pd.notna(row[f'{league}_Rank'])
+                else 201
+            )
+            if num_rank >= int(rank_value):
+                entry = {'Pokemon': row['Pokemon']}
+                for attr in attributes:
+                    value = row[f'{league}_{attr}']
+                    attr = attr.replace("Level","Lvl")
+                    attr = attr.replace("Rank","#")
+                    entry[attr] = (
+                        f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
+                    )
+                formatted_data.append(entry)
     return formatted_data
 
 def calculate_days_since(xDate):
