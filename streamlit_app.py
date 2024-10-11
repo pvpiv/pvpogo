@@ -7,6 +7,8 @@ import json
 from datetime import date, datetime
 import requests
 import pytz
+import  streamlit_toggle as tog
+
 
 # Import utility functions and session state manager
 from utils import (
@@ -88,11 +90,23 @@ with cols[0]:
         st.divider()
 
 with cols[1]:
+
+    
     if st.session_state['table_string_butt']:
         butt_label = "Switch to Pokemon Lookup"
     else: 
         butt_label = "Switch to Search Strings"
-    str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str,use_container_width =True)
+
+    tog.st_toggle_switch(
+        label=butt_label
+        key= "tab_str_butt",
+        default_value=True
+        label_after= False
+        inactive_color="#D3D3D3",  # optional
+        active_color="#11567f",  # optional
+        track_color="#29B5E8",  # optional
+    )
+    #str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str,use_container_width =True)
     
     today = date.today()
     
@@ -100,7 +114,7 @@ with cols[1]:
     show_shadow = st.session_state['get_shadow']
     pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique())
 
-    if not st.session_state['table_string_butt']:
+    if not st.session_state['tab_str_butt']:
         if pokemon_list:
             poke_label = 'All League Rankings, IVs, & Moves Table' if not st.session_state['show_custom'] else 'Sunshine Cup Rankings, IVs, & Moves Table'
             st.subheader(poke_label)
