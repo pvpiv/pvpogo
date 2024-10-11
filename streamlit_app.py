@@ -64,7 +64,7 @@ with cols[0]:
     if st.session_state['table_string_butt']:
         sett_label = "Poké Lookup Settings"
         with stylable_container(
-        key= "PokéSettings" ,
+        key= "Poké.Settings" ,
         css_styles="""
             button {
                 width: 150px;
@@ -77,13 +77,13 @@ with cols[0]:
             """,
     ):
       
-            popover = st.popover("PokéSettings" ,use_container_width =True)
+            popover = st.popover("Poké.Settings" ,use_container_width =True)
             popover.subheader("Data Settings",divider = 'blue')
             show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
-            sett_label = "Search String Settings"
+
     else:
         with stylable_container(
-        key= "StringSettings" ,
+        key= "String.Settings" ,
         css_styles="""
             button {
                 width: 150px;
@@ -96,10 +96,10 @@ with cols[0]:
             """,
     ):
       
-            popover = st.popover("StringSettings" ,use_container_width =True)
+            popover = st.popover("String.Settings" ,use_container_width =True)
             popover.subheader("Data Settings",divider = 'blue')
             show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
-            sett_label = "Search String Settings"
+
 
         
         if not st.session_state['table_string_butt']:
