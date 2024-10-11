@@ -61,7 +61,10 @@ st.set_page_config(layout = "wide")
 cols = st.columns((1,1,8))
 
 with cols[0]:
-    
+    if st.session_state['table_string_butt']:
+        sett_label = "Poké Lookup Settings"
+    else:
+        sett_label = "Search String Settings"
     with stylable_container(
         key="settings",
         css_styles="""
