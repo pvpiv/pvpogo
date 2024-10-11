@@ -25,6 +25,7 @@ from session_state_manager import (
     initialize_session_state,
     update_top_num,
     upd_shadow,
+    upd_tab_str,
     upd_xl,
     upd_seas,
     upd_cust,
@@ -63,7 +64,7 @@ with cols[0]:
     show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
     show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
         
-    show_which = st.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
+    #show_which = st.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
 
     tab_or_str = st.session_state['table_string_butt']
     if tab_or_str:
