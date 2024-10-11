@@ -7,7 +7,6 @@ import json
 from datetime import date, datetime
 import requests
 import pytz
-import streamlit_toggle as tog
 
 
 # Import utility functions and session state manager
@@ -67,7 +66,7 @@ with cols[0]:
     else: 
         butt_label = "Switch to Search Strings"
 
-    tog.toggle(
+    st.toggle(
         label=butt_label,
         key= "tab_str_butt",
         value = st.session_state['table_string_butt'],
