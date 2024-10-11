@@ -275,8 +275,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-col = st.columns((1, 8, 1))
-with col[0]:
+col = st.columns((3, 8, 1))
+with col[1]:
     st.divider()
     popover = st.popover("Settings")
     popover.subheader("Data Settings")
@@ -294,7 +294,6 @@ with col[0]:
     
     today = date.today()
 
-with col[1]:
     #Section 1 - PVP Pokemon Search Table
     show_shadow = st.session_state['get_shadow']
     #pokemon_list = df[df['Shadow']]['Pokemon'].unique() if show_shadow else df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique()
