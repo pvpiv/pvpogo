@@ -90,14 +90,7 @@ with cols[0]:
             fam_box = popover.checkbox('Include pre-evolutions', value=True)
             show_xl_boxz = popover.checkbox('Include XL Pokémon \n\n(No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
             iv_box = popover.checkbox('Include IV Filter \n\n(Works for Non XL Pokémon)', value=False)
-            popover.subheader("Rankings Tables",divider="blue")
-            if not st.session_state['show_custom']:
-                popover.button("Show Little", key='little_table', on_click=little_but)
-                popover.button("Show Great", key='great_table', on_click=great_but)
-                popover.button("Show Ultra", key='ultra_table', on_click=ultra_but)
-                popover.button("Show Master", key='master_table', on_click=master_but)
-            else:
-                popover.button("Show Sunshine", key='great_table', on_click=great_but)
+           
             # tables_pop = st.popover("League Tables")
             
         
@@ -198,48 +191,55 @@ with cols[1]:
                         df_display_Little.set_index(['Pokemon'], inplace=True)
                         st.table(df_display_Little)   
                     else: 
-                        st.button(lab_lit,on_click = little_but)
-                        
+                        st.button(lab_lit,on_click = little_but)     
                     st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
                 except:
                     pass
         
                 try:
                     st.write(f'Great League Top {st.session_state.top_num} Search String:')
+                    lab_lit = "Show Great Table"
                     if st.session_state['great_clicked']:
+                        lab_gre  = "Hide Great Table"
+                        st.button(lab_gre,on_click = great_but)
                         family_data_Great = format_data_top(df, 'Great', st.session_state.top_num,show_xl_boxz)
                         df_display_Great = pd.DataFrame(family_data_Great)
                         df_display_Great.set_index(['Pokemon'], inplace=True)
-                        if great_clicked:
-                            lab_gre = "Show Great Table"
-                        else:
-                            lab_gre = "Hide Great Table"
-                        st.button(lab_gre,on_click = little_but)
                         st.table(df_display_Great)
+                    else:
+                        st.button(lab_gre,on_click = great_but)
                     st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz,False))
                 except:
                     pass
         
                 try:
                     st.write(f'Ultra League Top {st.session_state.top_num} Search String:')
+                    lab_ult = "Show Ultra Table"
                     if st.session_state['ultra_clicked']:
+                        lab_ult  = "Hide Ultra Table"
                         family_data_Ultra = format_data_top(df, 'Ultra', st.session_state.top_num,show_xl_boxz)
                         df_display_Ultra = pd.DataFrame(family_data_Ultra)
                         df_display_Ultra.set_index(['Pokemon'], inplace=True)
-                        st.button("Hide Table",on_click = ultra_but)
+                        st.button(lab_ult,on_click = ultra_but)
                         st.table(df_display_Ultra)
+                    else:
+                        st.button(lab_ult,on_click = ult_but)
                     st.code(make_search_string(df, "ultra", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
                 except:
                     pass
         
                 try:
                     st.write(f'Master League Top {st.session_state.top_num} Search String:')
+                    lab_mast = "Show Master Table"
                     if st.session_state['master_clicked']:
+                        lab_mast  = "Hide Master Table"
                         family_data_master = format_data_top(df, 'Master', st.session_state.top_num)
                         df_display_master = pd.DataFrame(family_data_master)
                         df_display_master.set_index(['Pokemon'], inplace=True)
-                        st.button("Hide Table",on_click = master_but)
+                        st.button(lab_mast, on_click = master_but)
                         st.table(df_display_master)
+                    else:
+                        st.button(lab_mast,on_click = master_but)
                     st.code(make_search_string(df, "master", st.session_state.top_num, fam_box, iv_box, inv_box,True))
                 except:
                     pass
@@ -255,17 +255,17 @@ with cols[1]:
                     days_since_date = calculate_days_since(season_start)
                     age_string = f"age0-{days_since_date}&"
                     st.write(f'Sunshine Cup Top {st.session_state.top_num} Search String:')
+                    lab_lit = "Show Great Table"
                     if st.session_state['great_clicked']:
+                        lab_gre = "Hide Great Table"
+                        st.button(lab_gre,on_click = great_but)
                         family_data_Great = format_data_top(df, 'Great', st.session_state.top_num,show_xl_boxz)
                         df_display_Great = pd.DataFrame(family_data_Great)
                         df_display_Great.set_index(['Pokemon'], inplace=True)
                         st.button("Hide Table",on_click = great_but)
-                        if great_clicked:
-                            lab_gre = "Show Great Table"
-                        else:
-                            lab_gre = "Hide Great Table"
-                        st.button(lab_gre,on_click = little_but)
                         st.table(df_display_Great)
+                    else:
+                        st.button(lab_gre,on_click = great_but)
                     st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
                 except:
                     pass
