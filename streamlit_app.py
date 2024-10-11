@@ -59,7 +59,7 @@ query_params = st.experimental_get_query_params()
 st.set_page_config(layout = "wide")
 cols = st.columns((2,8,3))
 
-with cols[0]:
+with cols[1]:
     st.divider()
     popover = st.popover("Settings")
     popover.subheader("Data Settings")
@@ -74,8 +74,6 @@ with cols[0]:
     else: 
         butt_label = "Switch to Search Strings"
         
-    
-with cols[1]:
     popover.divider()
     popover.subheader("Search String Settings")
     
