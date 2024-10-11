@@ -62,7 +62,7 @@ st.set_page_config(layout = "wide")
 cols = st.columns((2,8,3))
 
 with cols[0]:
-      if st.session_state['table_string_butt']:
+    if st.session_state['table_string_butt']:
         butt_label = "Switch to Pokemon Lookup"
     else: 
         butt_label = "Switch to Search Strings"
