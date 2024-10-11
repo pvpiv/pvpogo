@@ -55,7 +55,7 @@ else:
 
 query_params = st.experimental_get_query_params()
 
-cols = st.columns((3,8,2)
+cols = st.columns((3,8,2))
 with cols[1]:
     popover = st.popover("Settings")
     popover.subheader("Data Settings")
