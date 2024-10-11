@@ -89,7 +89,7 @@ with cols[0]:
             topstrin = str(st.session_state.top_num)
             fam_box = popover.checkbox('Include pre-evolutions', value=True)
             show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
-            iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
+            iv_box = popover.checkbox('Include IV Filter \n\n(Works for Non XL Pokémon)', value=False)
             popover.subheader("Rankings Tables",divider="blue")
             popover.button("Show Little Table", key='little_table', on_click=little_but)
             popover.button("Show Great Table", key='great_table', on_click=great_but)
