@@ -76,7 +76,7 @@ with cols[0]:
         }
         """,
 ):
-        popover = st.popover('Settings" ,use_container_width =True)
+        popover = st.popover('Settings' ,use_container_width =True)
            if not st.session_state['table_string_butt']:
             
             
