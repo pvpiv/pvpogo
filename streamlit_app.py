@@ -62,6 +62,17 @@ st.set_page_config(layout = "wide")
 cols = st.columns((2,8,3))
 
 with cols[0]:
+      if st.session_state['table_string_butt']:
+        butt_label = "Switch to Pokemon Lookup"
+    else: 
+        butt_label = "Switch to Search Strings"
+
+    tog.toggle(
+        label=butt_label,
+        key= "tab_str_butt",
+        value = st.session_state['table_string_butt'],
+        on_change = upd_tab_str
+    )
      with stylable_container(
         key="settings",
         css_styles="""
@@ -88,21 +99,11 @@ with cols[0]:
         show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
         iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
         st.divider()
-
+  
 with cols[1]:
 
     
-    if st.session_state['table_string_butt']:
-        butt_label = "Switch to Pokemon Lookup"
-    else: 
-        butt_label = "Switch to Search Strings"
 
-    tog.toggle(
-        label=butt_label,
-        key= "tab_str_butt",
-        value = st.session_state['table_string_butt'],
-        on_change = upd_tab_str
-    )
     #str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str,use_container_width =True)
     
     today = date.today()
