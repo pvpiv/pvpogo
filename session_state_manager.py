@@ -33,10 +33,14 @@ def initialize_session_state():
         st.session_state['master_clicked'] = False
     if 'table_gen' not in st.session_state:
         st.session_state['table_gen'] = ''
-
+    if 'table_string_butt' not in st.session_state:
+        st.session_state['table_string_butt'] = True
 def update_top_num():
     st.session_state.top_num = st.session_state.top_no
 
+def upd_tab_str():
+    st.session_state['table_string_butt'] = not st.session_state['table_string_butt']
+    
 def upd_shadow():
     st.session_state.get_shadow = st.session_state.sho_shad
 def upd_xl():
