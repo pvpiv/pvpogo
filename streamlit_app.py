@@ -97,7 +97,7 @@ with cols[1]:
     
                 st.session_state['last_sel'] = pokemon_choice
                 pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
-                family_data = format_data(pokemon_family, show_shadow, df)
+                family_data = format_data(pokemon_family, show_shadow, df,show_xl_boxz)
     
                 if family_data:
                     st.text_input(
