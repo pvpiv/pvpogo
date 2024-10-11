@@ -229,8 +229,8 @@ with cols[1]:
                     pass
         
                 try:
-                st.write(f'Master League Top {st.session_state.top_num} Search String:')
-                lab_mast = "Show Master Table"
+                    st.write(f'Master League Top {st.session_state.top_num} Search String:')
+                    lab_mast = "Show Master Table"
                     if st.session_state['master_clicked']:
                         lab_mast  = "Hide Master Table"
                         family_data_master = format_data_top(df, 'Master', st.session_state.top_num,True)
