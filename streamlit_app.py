@@ -189,17 +189,17 @@ with cols[1]:
                 try:
                     st.write(f'Little League Top {st.session_state.top_num} Search String:')
 
-        
+                    lab_lit = "Show Little Table"
                     if st.session_state['little_clicked']:
+                        lab_lit = "Hide Little Table"
+                        st.button(lab_lit,on_click = little_but)
                         family_data_Little = format_data_top(df, 'Little', st.session_state.top_num,show_xl_boxz)
                         df_display_Little = pd.DataFrame(family_data_Little)
                         df_display_Little.set_index(['Pokemon'], inplace=True)
-                        if little_clicked:
-                            lab_lit = "Show Little Table"
-                        else:
-                            lab_lit = "Hide Little Table"
+                        st.table(df_display_Little)   
+                    else: 
                         st.button(lab_lit,on_click = little_but)
-                        st.table(df_display_Little)
+                        
                     st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
                 except:
                     pass
