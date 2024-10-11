@@ -59,7 +59,7 @@ query_params = st.experimental_get_query_params()
 st.set_page_config(layout = "wide")
 cols = st.columns((2,8,3))
 
-with cols[1]:
+with cols[0]:
  
     popover = st.popover("Settings")
     popover.subheader("Data Settings")
@@ -81,15 +81,16 @@ with cols[1]:
     fam_box = popover.checkbox('Include pre-evolutions', value=True)
     show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
     iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
-    
+        
+    st.divider()
+    str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str,use_container_width =True)
+with cols[1]:
     today = date.today()
     
     # Section 1 - PVP Pokemon Search Table
     show_shadow = st.session_state['get_shadow']
     pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique())
-    
-    st.divider()
-    str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str)
+
     if not st.session_state['table_string_butt']:
         if pokemon_list:
             poke_label = 'All League Rankings, IVs, & Moves Table' if not st.session_state['show_custom'] else 'Sunshine Cup Rankings, IVs, & Moves Table'
@@ -290,37 +291,3 @@ button {
 }
 </style>
 """, unsafe_allow_html=True)
-st.markdown(
-    """
-    <style>
-    @media (max-width: 2000px) {
-        .css-18e3th9 {
-            padding: 1rem 1rem;
-        }
-        .stNumberInput [data-baseweb=input]{
-            width: 100%;
-        }
-        .css-18e3th9 {
-            padding: 0.5rem 1rem;
-        }
-        .css-1d391kg {
-            font-size: 1rem;
-        }
-        .css-1i0h2kc {
-            width: 100% !important;
-            display: block;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        .css-1i0h2kc table {
-            width: 100%;
-        }
-        .css-1i0h2kc table th,
-        .css-1i0h2kc table td {
-            padding: 0.25rem;
-        }
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
