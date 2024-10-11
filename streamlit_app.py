@@ -55,7 +55,7 @@ else:
     df = pd.read_csv('pvp_data.csv')
 
 query_params = st.experimental_get_query_params()
-
+st.set_page_config(layout = "wide")
 cols = st.columns((3,8,2))
 with cols[1]:
     popover = st.popover("Settings")
