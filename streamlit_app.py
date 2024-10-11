@@ -61,24 +61,14 @@ st.set_page_config(layout = "wide")
 cols = st.columns((2,8,3))
 
 with cols[0]:
-    if st.session_state['table_string_butt']:
-        butt_label = "Switch to Pokemon Lookup"
-    else: 
-        butt_label = "Switch to Search Strings"
-
-    st.toggle(
-        label=butt_label,
-        key= "tab_str_butt",
-        value = st.session_state['table_string_butt'],
-        on_change = upd_tab_str
-    )
+    
     with stylable_container(
         key="settings",
         css_styles="""
             button {
                 width: 150px;
-                height: 60px;
-                background-color: blue;
+                height: 45px;
+                background-color: green;
                 color: white;
                 border-radius: 5px;
                 white-space: nowrap;
@@ -101,7 +91,17 @@ with cols[0]:
   
 with cols[1]:
 
-    
+    if st.session_state['table_string_butt']:
+        butt_label = "Switch to Pokemon Lookup"
+    else: 
+        butt_label = "Switch to Search Strings"
+
+    st.toggle(
+        label=butt_label,
+        key= "tab_str_butt",
+        value = st.session_state['table_string_butt'],
+        on_change = upd_tab_str
+    )
 
     #str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str,use_container_width =True)
     
