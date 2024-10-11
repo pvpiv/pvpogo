@@ -262,7 +262,6 @@ with cols[1]:
                         family_data_Great = format_data_top(df, 'Great', st.session_state.top_num,show_xl_boxz)
                         df_display_Great = pd.DataFrame(family_data_Great)
                         df_display_Great.set_index(['Pokemon'], inplace=True)
-                        st.button("Hide Table",on_click = great_but)
                         st.table(df_display_Great)
                     else:
                         st.button(lab_gre,on_click = great_but)
