@@ -103,7 +103,6 @@ with cols[1]:
     )
 with cols[2]:
 
-    tables_pop = st.popover("League Tables")
     #str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str,use_container_width =True)
     
     today = date.today()
@@ -160,6 +159,8 @@ with cols[2]:
         st.divider()
     else:
         # Section 2 - PVP Pokemon Search String
+        
+        tables_pop = st.popover("League Tables")
         st.subheader("PVP Pokemon Search Strings")
         if st.session_state.show_string:
             top_nbox = st.number_input(
