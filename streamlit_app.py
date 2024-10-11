@@ -88,13 +88,13 @@ with cols[0]:
             show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
             topstrin = str(st.session_state.top_num)
             fam_box = popover.checkbox('Include pre-evolutions', value=True)
-            show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
+            show_xl_boxz = popover.checkbox('Include XL Pokémon \n\n(No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
             iv_box = popover.checkbox('Include IV Filter \n\n(Works for Non XL Pokémon)', value=False)
             popover.subheader("Rankings Tables",divider="blue")
-            popover.button("Show Little Table", key='little_table', on_click=little_but)
-            popover.button("Show Great Table", key='great_table', on_click=great_but)
-            popover.button("Show Ultra Table", key='ultra_table', on_click=ultra_but)
-            popover.button("Show Master Table", key='master_table', on_click=master_but)
+            popover.button("Show Little", key='little_table', on_click=little_but)
+            popover.button("Show Great", key='great_table', on_click=great_but)
+            popover.button("Show Ultra", key='ultra_table', on_click=ultra_but)
+            popover.button("Show Master", key='master_table', on_click=master_but)
             # tables_pop = st.popover("League Tables")
             
         
