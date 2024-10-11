@@ -91,10 +91,13 @@ with cols[0]:
             show_xl_boxz = popover.checkbox('Include XL Pokémon \n\n(No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
             iv_box = popover.checkbox('Include IV Filter \n\n(Works for Non XL Pokémon)', value=False)
             popover.subheader("Rankings Tables",divider="blue")
-            popover.button("Show Little", key='little_table', on_click=little_but)
-            popover.button("Show Great", key='great_table', on_click=great_but)
-            popover.button("Show Ultra", key='ultra_table', on_click=ultra_but)
-            popover.button("Show Master", key='master_table', on_click=master_but)
+            if not st.session_state['show_custom']:
+                popover.button("Show Little", key='little_table', on_click=little_but)
+                popover.button("Show Great", key='great_table', on_click=great_but)
+                popover.button("Show Ultra", key='ultra_table', on_click=ultra_but)
+                popover.button("Show Master", key='master_table', on_click=master_but)
+            else:
+                popover.button("Show Sunshine", key='great_table', on_click=great_but)
             # tables_pop = st.popover("League Tables")
             
         
