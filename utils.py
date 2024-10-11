@@ -31,7 +31,7 @@ def save_to_firestore(counts, collection_name):
     col = db.collection(collection_name)
     col.document(st.secrets["fb_col"]).set(counts)
 
-def format_data(pokemon_family, shadow_only, df,xl_var = False):
+def format_data(pokemon_family, shadow_only, df,xl_var ):
     if shadow_only:
         family_data = df[(df['Family'] == pokemon_family)].sort_values(by=['Shadow', 'ID'])
     else:
@@ -44,7 +44,7 @@ def format_data(pokemon_family, shadow_only, df,xl_var = False):
     for _, row in family_data.iterrows():
         for league in leagues:
             entry = {'Pokemon': row['Pokemon'], 'League': league}
-            if xl_var and row[f'{league}_Level'] <= 40:
+            if not xl_var and row[f'{league}_Level'] >= 40:
                 continue
             else:
                 for attr in attributes:
@@ -132,11 +132,11 @@ def make_search_string(df, league, top_n, fam, iv_b, inv_b, all_pre=False,sho_xl
             + get_top_50_ids(df, 'Master_Rank', 'master', top_n, fam, iv_b, inv_b, all_pre,sho_xl_val)
         )
 
-def format_data_top(df, league, num_rank,xl_var = False):
+def format_data_top(df, league, num_rank,xl_var):
     family_data = df.sort_values(by=[f'{league}_Rank'])
     formatted_data = []
     attributes = ['Rank', 'IVs', 'CP', 'Level', 'MoveSet']
-    if (xl_var and row['Level'] <= 40) or not xl_var:
+    if (not xl_var and row['Level'] <= 40) or xl_var:
         for _, row in family_data.iterrows():
             rank_value = (
                 row[f'{league}_Rank']
