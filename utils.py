@@ -44,17 +44,15 @@ def format_data(pokemon_family, shadow_only, df,xl_var ):
     for _, row in family_data.iterrows():
         for league in leagues:
             entry = {'Pokemon': row['Pokemon'], 'League': league}
-            if not xl_var and row[f'{league}_Level'] >= 40:
-                continue
-            else:
-                for attr in attributes:
-                    value = row[f'{league}_{attr}']
-                    attr = attr.replace("Level","Lvl")
-                    attr = attr.replace("Rank","#")
-                    entry[attr] = (
-                        f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
-                    )
-                formatted_data.append(entry)
+
+            for attr in attributes:
+                value = row[f'{league}_{attr}']
+                attr = attr.replace("Level","Lvl")
+                attr = attr.replace("Rank","#")
+                entry[attr] = (
+                    f'{int(value):,}' if pd.notna(value) and isinstance(value, (int, float)) else value if pd.notna(value) else ''
+                )
+            formatted_data.append(entry)
     return formatted_data
 
 def filter_ids(row):
