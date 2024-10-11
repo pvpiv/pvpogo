@@ -6,3 +6,4 @@ streamlit-aggrid
 requests
 datetime
 pytz
+streamlit_extras
