@@ -191,7 +191,7 @@ with cols[1]:
     
             try:
                 st.write(f'All Leagues Top {st.session_state.top_num} Search String:')
-                st.code(make_search_string(df, "all", st.session_state.top_num, fam_box, iv_box, inv_box, True,show_xl_boxz))
+                st.code(make_search_string(df, "all", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz ,True))
             except:
                 pass
         else:
