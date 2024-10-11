@@ -100,8 +100,8 @@ with cols[1]:
     tog.st_toggle_switch(
         label=butt_label,
         key= "tab_str_butt",
-        default_value=True
-        label_after= False
+        default_value=True,
+        label_after= False,
         inactive_color="#D3D3D3",  # optional
         active_color="#11567f",  # optional
         track_color="#29B5E8",  # optional
