@@ -7,7 +7,7 @@ import json
 from datetime import date, datetime
 import requests
 import pytz
-import  streamlit_toggle as tog
+import streamlit_toggle as tog
 
 
 # Import utility functions and session state manager
