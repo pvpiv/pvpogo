@@ -100,11 +100,8 @@ with cols[1]:
     tog.toggle(
         label=butt_label,
         key= "tab_str_butt",
-        default_value=True,
-        label_after= False,
-        inactive_color="#D3D3D3",  # optional
-        active_color="#11567f",  # optional
-        track_color="#29B5E8",  # optional
+        value = st.session_state['table_string_butt'],
+        on_change = upd_upd_tab_str
     )
     #str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str,use_container_width =True)
     
