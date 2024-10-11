@@ -67,7 +67,7 @@ def filter_ids(row):
         filtered_list = evo_next_list
     return list(filtered_list)
 
-def get_top_50_ids(df, rank_column, league, top_n, fam, iv_bool, inv_bool, all=False, xl_var = True):
+def get_top_50_ids(df, rank_column, league, top_n, fam, iv_bool, inv_bool, xl_var = True, all=False):
     df_all = df.sort_values(by=rank_column)
     df_filtered = df.dropna(subset=[rank_column])
     df_filtered = df_filtered[df_filtered[rank_column] <= top_n]
