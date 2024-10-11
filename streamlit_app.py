@@ -61,6 +61,7 @@ with cols[1]:
     popover.subheader("Data Settings")
     show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
     show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
+    show_xl_boxz = popover.checkbox('Include XL (40+) Pokémon', on_change=upd_xl, key='sho_xl', value=st.session_state['show_ xl'])
     popover.divider()
     popover.subheader("Search String Settings")
     
