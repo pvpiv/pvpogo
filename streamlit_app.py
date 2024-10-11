@@ -80,7 +80,7 @@ with cols[0]:
         popover.subheader("Data Settings",divider = 'blue')
         show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
         
-        if st.session_state['table_string_butt']:
+        if not st.session_state['table_string_butt']:
             popover.subheader("Search String Settings",divider = 'blue')
             
             topstrin = str(st.session_state.top_num)
