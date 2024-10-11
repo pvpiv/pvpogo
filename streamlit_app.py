@@ -98,7 +98,7 @@ with cols[1]:
         butt_label = "Switch to Search Strings"
 
     tog.st_toggle_switch(
-        label=butt_label
+        label=butt_label,
         key= "tab_str_butt",
         default_value=True
         label_after= False
