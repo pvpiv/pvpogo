@@ -62,12 +62,13 @@ with cols[1]:
     popover.subheader("Data Settings")
     show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
     show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
-    show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
+   
     popover.divider()
     popover.subheader("Search String Settings")
     
     topstrin = str(st.session_state.top_num)
     fam_box = popover.checkbox('Include pre-evolutions', value=True)
+    show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
     iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
     
     today = date.today()
@@ -82,10 +83,10 @@ with cols[1]:
         poke_label = 'All League Rankings, IVs, & Moves Table' if not st.session_state['show_custom'] else 'Sunshine Cup Rankings, IVs, & Moves Table'
         st.subheader(poke_label)
         pokemon_choice = st.selectbox(
-            poke_label,
+            "",
             pokemon_list,
             index=pokemon_list.last_index(),
-            key="poke_choice",
+            key="poke_choice",label_visibility='hidden',
             on_change=lambda: st.session_state.update({'get_dat': True})
         )
     
@@ -97,7 +98,7 @@ with cols[1]:
     
                 st.session_state['last_sel'] = pokemon_choice
                 pokemon_family = df[df['Pokemon'] == pokemon_choice]['Family'].iloc[0]
-                family_data = format_data(pokemon_family, show_shadow, df)
+                family_data = format_data(pokemon_family, show_shadow, df,show_xl_boxz)
     
                 if family_data:
                     st.text_input(
@@ -138,7 +139,7 @@ with cols[1]:
         )
         inv_box = st.checkbox('Invert strings', value=st.session_state.show_inverse, key='show_inv')
         tables_pop = st.popover("League Tables")
-    
+        
         if not st.session_state['show_custom']:
             try:
                 st.write(f'Little League Top {st.session_state.top_num} Search String:')
