@@ -60,7 +60,7 @@ st.set_page_config(layout = "wide")
 cols = st.columns((2,8,3))
 
 with cols[1]:
-    st.divider()
+ 
     popover = st.popover("Settings")
     popover.subheader("Data Settings")
     show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
