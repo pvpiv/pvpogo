@@ -275,23 +275,23 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-col = st.columns((1, 3, 1))
-
-popover = st.popover("Settings")
-popover.subheader("Data Settings")
-show_custom_boxz = popover.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
-show_shadow_boxz = popover.checkbox('Include Shadow Pokémon',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow'])
-popover.divider()
-popover.subheader("Search String Settings")
-#is_string = bool(show_string)
-#st.query_params.string = bool(show_string)
-
-topstrin = str(st.session_state.top_num)    
-fam_box = popover.checkbox('Include pre-evolutions',value=True)
-iv_box = popover.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
-
-
-today = date.today()
+col = st.columns((1, 8, 1))
+with col[0]:
+    popover = st.popover("Settings")
+    popover.subheader("Data Settings")
+    show_custom_boxz = popover.checkbox('Sunshine Cup',on_change=upd_cust,key='sho_cust') 
+    show_shadow_boxz = popover.checkbox('Include Shadow Pokémon',on_change=upd_shadow,key='sho_shad',value = st.session_state['get_shadow'])
+    popover.divider()
+    popover.subheader("Search String Settings")
+    #is_string = bool(show_string)
+    #st.query_params.string = bool(show_string)
+    
+    topstrin = str(st.session_state.top_num)    
+    fam_box = popover.checkbox('Include pre-evolutions',value=True)
+    iv_box = popover.checkbox('Include IV Filter (Finds good IVs for 98% of Top performers)',value =  False)
+    
+    
+    today = date.today()
 
 with col[1]:
     #Section 1 - PVP Pokemon Search Table
