@@ -61,47 +61,29 @@ st.set_page_config(layout = "wide")
 cols = st.columns((1,8,1))
 
 with cols[0]:
-    if not st.session_state['table_string_butt']:
-  
-        with stylable_container(
-        key= "Poké_Settings" ,
-        css_styles="""
-            button {
-                width: 150px;
-                height: 45px;
-                background-color: green;
-                color: white;
-                border-radius: 5px;
-                white-space: nowrap;
-            }
-            """,
-    ):
-      
+   
+
+    with stylable_container(
+    key= "Settings" ,
+    css_styles="""
+        button {
+            width: 150px;
+            height: 45px;
+            background-color: green;
+            color: white;
+            border-radius: 5px;
+            white-space: nowrap;
+        }
+        """,
+):
+       if not st.session_state['table_string_butt']:
             popover = st.popover("Poké_Settings" ,use_container_width =True)
-            popover.subheader("Data Settings",divider = 'blue')
+            popover.subheader("Settings",divider = 'blue')
             show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
+            show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
+    
+       else:
 
-    else:
-        with stylable_container(
-        key= "String_Settings" ,
-        css_styles="""
-            button {
-                width: 150px;
-                height: 45px;
-                background-color: green;
-                color: white;
-                border-radius: 5px;
-                white-space: nowrap;
-            }
-            """,
-    ):
-      
-
-
-
-        popover.subheader("Settings",divider = 'blue')
-        if st.session_state['table_string_butt']:
-            
             show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
             topstrin = str(st.session_state.top_num)
             fam_box = popover.checkbox('Include pre-evolutions', value=True)
@@ -114,11 +96,6 @@ with cols[0]:
             tables_pop.button("Show Master Table", key='master_table', on_click=master_but)
            # tables_pop = st.popover("League Tables")
             
-        else:
-
-            show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
-            show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
-
     
     if st.session_state['table_string_butt']:
         butt_label = "Switch to Pokémon Lookup"
