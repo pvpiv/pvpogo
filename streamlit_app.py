@@ -76,9 +76,11 @@ with cols[0]:
         }
         """,
 ):
+    popover = st.popover('Settings" ,use_container_width =True)
+    popover.subheader("Settings",divider = 'blue')
        if not st.session_state['table_string_butt']:
-            popover = st.popover("Poké_Settings" ,use_container_width =True)
-            popover.subheader("Settings",divider = 'blue')
+            
+            
             show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
             show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
     
