@@ -109,7 +109,7 @@ with cols[1]:
     #str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str,use_container_width =True)
     
     today = date.today()
-    
+    st.write("on vacation until 10/23,will update data then")
     # Section 1 - PVP Pokemon Search Table
     show_shadow = st.session_state['get_shadow']
     pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique())
