@@ -32,7 +32,7 @@ def save_to_firestore(counts, collection_name):
     col = db.collection(collection_name)
     col.document(st.secrets["fb_col"]).set(counts)
 
-def format_data(pokemon_family, shadow_only, df,xl_var ):
+def format_data(pokemon_family, shadow_only, df):
     if shadow_only:
         family_data = df[(df['Family'] == pokemon_family)].sort_values(by=['Shadow', 'ID'])
     else:
@@ -79,7 +79,7 @@ def get_top_50_ids(df, rank_column, league, top_n, fam, iv_bool, inv_bool, xl_va
         top_df['Filtered_Evo_next'] = top_df.apply(filter_ids, axis=1)
         all_ids_set = set([item for sublist in top_df['Filtered_Evo_next'] for item in sublist])
         all_ids = df_all['ID'].astype(str).tolist()
-        all_ids = [element for element in all_ids if element in all_ids_set and not (element in seen or seen.add(element))]
+        all_ids = [element for element in all_ids_set if element in all_ids_set and not (element in seen or seen.add(element))]
     else:
         all_ids = top_df['ID'].astype(str).tolist()
     if all:
@@ -128,7 +128,7 @@ def make_search_string(df, league, top_n, fam, iv_b, inv_b,sho_xl_val, all_pre=F
             + ','
             + get_top_50_ids(df, 'Ultra_Rank', 'ultra', top_n, fam, iv_b, inv_b, sho_xl_val,all_pre)
             + ','
-            + get_top_50_ids(df, 'Master_Rank', 'master', top_n, fam, iv_b, inv_b,True,all_pre)
+            + get_top_50_ids(df, 'Master_Rank', 'master', top_n, fam, iv_b, inv_b, True,all_pre)
         )
 
 def format_data_top(df, league, num_rank,xl_var):
