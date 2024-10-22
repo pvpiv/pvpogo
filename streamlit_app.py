@@ -52,7 +52,9 @@ else:
 
 # Load data
 if st.session_state['show_custom']:
-    df = pd.read_csv('pvp_data_fossil.csv')
+    df = pd.read_csv('pvp_data_remix.csv')
+elif st.session_state['show_custom1']:
+    df = pd.read_csv('pvp_data_halloween.csv')
 else:
     df = pd.read_csv('pvp_data.csv')
 
@@ -118,7 +120,7 @@ with cols[1]:
 
     if not st.session_state['table_string_butt']:
         if pokemon_list:
-            poke_label = 'All League Rankings, IVs, & Moves Table' if not st.session_state['show_custom'] else 'Sunshine Cup Rankings, IVs, & Moves Table'
+            poke_label = 'All League Rankings, IVs, & Moves Table' if not st.session_state['show_custom'] else 'Custom Cup Rankings, IVs, & Moves Table'
             st.subheader(poke_label)
             pokemon_choice = st.selectbox(
                 "",
@@ -180,7 +182,7 @@ with cols[1]:
             inv_box = st.checkbox('Invert strings', value=st.session_state.show_inverse, key='show_inv')
             #tables_pop = st.popover("League Tables")
             
-            if not st.session_state['show_custom']:
+            if not (st.session_state['show_custom'] and st.session_state['show_custom1']):
                 try:
                     st.write(f'Little League Top {st.session_state.top_num} Search String:')
                     st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
@@ -259,11 +261,11 @@ with cols[1]:
                     #popover.button("Show Sunshine Cup Table", key='sun_table', on_click=great_but)
                     days_since_date = calculate_days_since(season_start)
                     age_string = f"age0-{days_since_date}&"
-                    st.write(f'Sunshine Cup Top {st.session_state.top_num} Search String:')
+                    st.write(f'Custom Cup Top {st.session_state.top_num} Search String:')
                     st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
-                    lab_gre = "Show Sunshine Table"
+                    lab_gre = "Show Custom Table"
                     if st.session_state['great_clicked']:
-                        lab_gre = "Hide Sunshine Table"
+                        lab_gre = "Hide Custom Table"
                         st.button(lab_gre,on_click = great_but)
                         family_data_Great = format_data_top(df, 'Great', st.session_state.top_num,show_xl_boxz)
                         df_display_Great = pd.DataFrame(family_data_Great)
