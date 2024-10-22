@@ -30,6 +30,7 @@ from session_state_manager import (
     upd_xl,
     upd_seas,
     upd_cust,
+    upd_cust1,
     upd_inv,
     little_but,
     great_but,
@@ -83,7 +84,7 @@ with cols[0]:
 
 
             show_custom_boxz = popover.checkbox('Great Remix Cup', on_change=upd_cust, key='sho_cust')
-            show_custom_boxz2 = popover.checkbox('Halloween Cup', on_change=upd_cust, key='sho_cust2')
+            show_custom_boxz2 = popover.checkbox('Halloween Cup', on_change=upd_cust1, key='sho_cust1')
             show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
 
         else:
