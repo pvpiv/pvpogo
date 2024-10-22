@@ -21,6 +21,8 @@ def initialize_session_state():
         st.session_state['show_string'] = True
     if 'show_custom' not in st.session_state:
         st.session_state['show_custom'] = False
+    if 'show_custom1' not in st.session_state:
+        st.session_state['show_custom1'] = False
     if 'show_inverse' not in st.session_state:
         st.session_state['show_inverse'] = False
     if 'little_clicked' not in st.session_state:
@@ -50,7 +52,8 @@ def upd_seas():
 
 def upd_cust():
     st.session_state.show_custom = st.session_state.sho_cust
-
+def upd_cust1():
+    st.session_state.show_custom1 = st.session_state.sho_cust1
 def upd_inv():
     st.session_state.show_inverse = st.session_state.sho_inv
 
