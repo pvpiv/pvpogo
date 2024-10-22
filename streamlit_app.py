@@ -280,10 +280,15 @@ with cols[1]:
             try:
                 load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
                 streamlit_analytics.start_tracking()
-        
+                if st.session_state['show_custom']:
+                    copy_val = f'*Click string to show Copy button and Paste Top {topstrin} Remix Cup into PokeGO*'
+                elif st.session_state['show_custom1']:
+                    copy_val = f'*Click string to show Copy button and Paste Top {topstrin} Halloween Cup into PokeGO*'
+                else:
+                    copy_val = f'*Click string to show Copy button and Paste Top {topstrin} into PokeGO*'
                 st.text_input(
                     label=today.strftime("%m/%d/%y"),
-                    value=f'*Click string to show Copy button and Paste Top {topstrin} into PokeGO*',
+                    value= copy_val,
                     label_visibility='hidden',
                     disabled=True,
                     key="sstring"
