@@ -184,7 +184,7 @@ with cols[1]:
             inv_box = st.checkbox('Invert strings', value=st.session_state.show_inverse, key='show_inv')
             #tables_pop = st.popover("League Tables")
             
-            if not (st.session_state['show_custom']) and not(st.session_state['show_custom1']) and not(st.session_state['gym_bool_box']):
+            if not (st.session_state['show_custom'] or st.session_state['show_custom1'] or st.session_state['gym_bool_box']):
                 try:
                     st.write(f'Little League Top {st.session_state.top_num} Search String:')
                     st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
