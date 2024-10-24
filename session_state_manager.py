@@ -42,7 +42,7 @@ def initialize_session_state():
 
         
 def update_gym_bool():
-    st.session_state['gym_bool'] = st.session_state['gym_bool_box']
+    st.session_state['gym_bool'] = st.session_state['sho_gym']
 def upd_string_sel():
     
     if st.session_state.sho_cust:
