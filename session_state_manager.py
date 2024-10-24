@@ -35,6 +35,12 @@ def initialize_session_state():
         st.session_state['table_gen'] = ''
     if 'table_string_butt' not in st.session_state:
         st.session_state['table_string_butt'] = False
+    if 'gym_bool' not in st.session_state:
+        st.session_state['gym_bool'] = False
+
+def update_gym_bool():
+    st.session_state['gym_bool'] = st.session_state['gym_bool_box']
+    
 def update_top_num():
     st.session_state.top_num = st.session_state.top_no
 
