@@ -51,18 +51,21 @@ def update_gym_bool():
 def upd_string_sel(sel):
     if sel == 0:
         st.session_state['sho_cust'] = True
+        upd_cust()
         st.session_state['sho_cust1'] = False
         upd_cust1()
         st.session_state['gym_bool_box'] = False
         update_gym_bool()
     elif sel == 1:
         st.session_state['sho_cust1'] = True
+        upd_cust1()
         st.session_state['sho_cust'] = False
         upd_cust()
         st.session_state['gym_bool_box'] = False
         update_gym_bool()
     elif sel == 2:
         st.session_state['gym_bool_box'] = True
+        update_gym_bool()
         st.session_state['sho_cust'] = False
         upd_cust()
         st.session_state['sho_cust1'] = False
