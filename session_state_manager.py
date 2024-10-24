@@ -40,9 +40,25 @@ def initialize_session_state():
     if 'gym_bool' not in st.session_state:
         st.session_state['gym_bool'] = False
 
+
 def update_gym_bool():
     st.session_state['gym_bool'] = st.session_state['gym_bool_box']
-    
+def upd_string_sel(sel):
+    if sel == 0:
+        st.session_state['sho_cust1'] = False
+        upd_cust1()
+        st.session_state['gym_bool_box'] = False
+        update_gym_bool()
+    elif sel == 1:
+        st.session_state['sho_cust'] = False
+        upd_cust()
+        st.session_state['gym_bool_box'] = False
+        update_gym_bool()
+    elif sel == 2:
+        st.session_state['sho_cust'] = False
+        upd_cust()
+        st.session_state['sho_cust1'] = False
+        upd_cust1()
 def update_top_num():
     st.session_state.top_num = st.session_state.top_no
 
