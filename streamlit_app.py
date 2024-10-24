@@ -115,7 +115,7 @@ with cols[0]:
                 #upd_cust()
                 st.session_state['gym_bool'] = False
               #  update_gym_bool()
-            elif st.session_state['show_custom'] = False
+            elif st.session_state['show_custom'] = False:
                 #upd_cust()
                 st.session_state['show_custom1'] = False
                # upd_cust1()
