@@ -98,16 +98,6 @@ with cols[0]:
             fam_box = popover.checkbox('Include pre-evolutions', value=True)
             show_xl_boxz = popover.checkbox('Include XL Pokémon \n\n(XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
             iv_box = popover.checkbox('Include IV Filter \n\n(Works for Non XL Pokémon)', value=False)
-
-            if show_custom_boxz:
-                st.session_state['sho_cust1'] = False
-                st.session_state['gym_bool_box'] = False
-            elif show_custom_boxz2:
-                st.session_state['sho_cust'] = False
-                st.session_state['gym_bool_box'] = False
-            elif show_gym_box:
-                st.session_state['sho_cust'] = False
-                st.session_state['sho_cust1'] = False
             # tables_pop = st.popover("League Tables")
             
         
