@@ -30,6 +30,7 @@ from session_state_manager import (
     upd_xl,
     upd_seas,
     upd_cust,
+    upd_cust1,
     upd_inv,
     little_but,
     great_but,
@@ -48,71 +49,78 @@ season_start = date(2024, 9, 3)
 if not st.session_state['show_custom']:
     GITHUB_API_URL = "https://api.github.com/repos/pvpiv/pvpogo/commits?path=pvp_data.csv"
 else:
-    GITHUB_API_URL = "https://api.github.com/repos/pvpiv/pvpogo/commits?path=pvp_data_fossil.csv"
+    GITHUB_API_URL = "https://api.github.com/repos/pvpiv/pvpogo/commits?path=pvp_data_halloween.csv"
 
 # Load data
-if st.session_state['show_custom']:
-    df = pd.read_csv('pvp_data_fossil.csv')
+if st.session_state['show_custom'] and not st.session_state['show_custom1']:
+    df = pd.read_csv('pvp_data_remix.csv')
+elif st.session_state['show_custom1']:
+    df = pd.read_csv('pvp_data_halloween.csv')
 else:
     df = pd.read_csv('pvp_data.csv')
 
 query_params = st.experimental_get_query_params()
 st.set_page_config(layout = "wide")
-cols = st.columns((2,8,3))
+cols = st.columns((2,8,1))
 
 with cols[0]:
-    
-    with stylable_container(
-        key="settings",
-        css_styles="""
-            button {
-                width: 150px;
-                height: 45px;
-                background-color: green;
-                color: white;
-                border-radius: 5px;
-                white-space: nowrap;
-            }
-            """,
-    ):
-      
-        popover = st.popover("Settings",use_container_width =True)
-        popover.subheader("Data Settings",divider = 'blue')
-        show_custom_boxz = popover.checkbox('Sunshine Cup', on_change=upd_cust, key='sho_cust')
-        show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
-            
-        popover.subheader("Search String Settings",divider = 'blue')
-        
-        topstrin = str(st.session_state.top_num)
-        fam_box = popover.checkbox('Include pre-evolutions', value=True)
-        show_xl_boxz = popover.checkbox('Include XL Pokémon (No XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
-        iv_box = popover.checkbox('Include IV Filter (Works for Non XL Pokémon)', value=False)
-        st.divider()
-  
-with cols[1]:
+   
 
+    with stylable_container(
+    key= "Settings" ,
+    css_styles="""
+        button {
+            width: 150px;
+            height: 45px;
+            background-color: green;
+            color: white;
+            border-radius: 5px;
+            white-space: nowrap;
+        }
+        """,
+):
+        popover = st.popover('Settings' ,use_container_width =True)
+        if not st.session_state['table_string_butt']:
+
+
+            show_custom_boxz = popover.checkbox('Great Remix Cup', on_change=upd_cust, key='sho_cust')
+            show_custom_boxz2 = popover.checkbox('Halloween Cup', on_change=upd_cust1, key='sho_cust1')
+            show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
+
+        else:
+
+            show_custom_boxz = popover.checkbox('Great Remix Cup', on_change=upd_cust, key='sho_cust')
+            show_custom_boxz2 = popover.checkbox('Halloween Cup', on_change=upd_cust1, key='sho_cust1')
+            topstrin = str(st.session_state.top_num)
+            fam_box = popover.checkbox('Include pre-evolutions', value=True)
+            show_xl_boxz = popover.checkbox('Include XL Pokémon \n\n(XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
+            iv_box = popover.checkbox('Include IV Filter \n\n(Works for Non XL Pokémon)', value=False)
+           
+            # tables_pop = st.popover("League Tables")
+            
+        
     if st.session_state['table_string_butt']:
-        butt_label = "Switch to Search Strings"
+        butt_label = "Switch to Pokémon Lookup"
     else: 
-        butt_label = "Switch to Pokemon Lookup"
+        butt_label = "Switch to Search Strings"
     st.toggle(
         label=butt_label,
         key= "tab_str_butt",
         value = st.session_state['table_string_butt'],
         on_change = upd_tab_str
     )
+with cols[1]:
 
     #str_tab_but = st.button(butt_label,key="tab_str_butt",on_click=upd_tab_str,use_container_width =True)
     
     today = date.today()
-    
     # Section 1 - PVP Pokemon Search Table
     show_shadow = st.session_state['get_shadow']
     pokemon_list = MyList(df[~df['Pokemon'].str.contains("Shadow", na=False)]['Pokemon'].unique())
 
-    if st.session_state['tab_str_butt']:
+    if not st.session_state['table_string_butt']:
         if pokemon_list:
-            poke_label = 'All League Rankings, IVs, & Moves Table' if not st.session_state['show_custom'] else 'Sunshine Cup Rankings, IVs, & Moves Table'
+            poke_label = 'All League Rankings, IVs, & Moves Table' if not st.session_state['show_custom'] else 'Custom Cup Rankings, IVs, & Moves Table'
             st.subheader(poke_label)
             pokemon_choice = st.selectbox(
                 "",
@@ -158,7 +166,9 @@ with cols[1]:
         st.divider()
     else:
         # Section 2 - PVP Pokemon Search String
-        st.subheader("PVP Pokemon Search Strings")
+        
+        
+        st.subheader("PVP Poké Search Strings")
         if st.session_state.show_string:
             top_nbox = st.number_input(
                 'Showing Top:',
@@ -170,85 +180,115 @@ with cols[1]:
                 step=5
             )
             inv_box = st.checkbox('Invert strings', value=st.session_state.show_inverse, key='show_inv')
-            tables_pop = st.popover("League Tables")
+            #tables_pop = st.popover("League Tables")
             
-            if not st.session_state['show_custom']:
+            if not (st.session_state['show_custom'] or st.session_state['show_custom1']):
                 try:
                     st.write(f'Little League Top {st.session_state.top_num} Search String:')
-                    tables_pop.button("Show Little Table", key='little_table', on_click=little_but)
-                    tables_pop.button("Show Great Table", key='great_table', on_click=great_but)
-                    tables_pop.button("Show Ultra Table", key='ultra_table', on_click=ultra_but)
-                    tables_pop.button("Show Master Table", key='master_table', on_click=master_but)
-        
+                    st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    lab_lit = "Show Little Table"
                     if st.session_state['little_clicked']:
+                        lab_lit = "Hide Little Table"
+                        st.button(lab_lit,on_click = little_but)
                         family_data_Little = format_data_top(df, 'Little', st.session_state.top_num,show_xl_boxz)
                         df_display_Little = pd.DataFrame(family_data_Little)
                         df_display_Little.set_index(['Pokemon'], inplace=True)
-                        st.table(df_display_Little)
-                    st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                        st.table(df_display_Little)   
+                    else: 
+                        st.button(lab_lit,on_click = little_but)     
+                    
                 except:
                     pass
         
-               # try:
-                st.write(f'Great League Top {st.session_state.top_num} Search String:')
-                if st.session_state['great_clicked']:
-                    family_data_Great = format_data_top(df, 'Great', st.session_state.top_num,show_xl_boxz)
-                    df_display_Great = pd.DataFrame(family_data_Great)
-                    df_display_Great.set_index(['Pokemon'], inplace=True)
-                    st.table(df_display_Great)
-                st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz,False))
-                #except:
-                   # pass
+                try:
+                    st.write(f'Great League Top {st.session_state.top_num} Search String:')
+                    st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz,False))
+                    lab_gre = "Show Great Table"
+                    if st.session_state['great_clicked']:
+                        lab_gre  = "Hide Great Table"
+                        st.button(lab_gre,on_click = great_but)
+                        family_data_Great = format_data_top(df, 'Great', st.session_state.top_num,show_xl_boxz)
+                        df_display_Great = pd.DataFrame(family_data_Great)
+                        df_display_Great.set_index(['Pokemon'], inplace=True)
+                        st.table(df_display_Great)
+                    else:
+                        st.button(lab_gre,on_click = great_but)
+                    
+                except:
+                    pass
         
                 try:
                     st.write(f'Ultra League Top {st.session_state.top_num} Search String:')
+                    st.code(make_search_string(df, "ultra", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    lab_ult = "Show Ultra Table"
                     if st.session_state['ultra_clicked']:
+                        lab_ult  = "Hide Ultra Table"
                         family_data_Ultra = format_data_top(df, 'Ultra', st.session_state.top_num,show_xl_boxz)
                         df_display_Ultra = pd.DataFrame(family_data_Ultra)
                         df_display_Ultra.set_index(['Pokemon'], inplace=True)
+                        st.button(lab_ult,on_click = ultra_but)
                         st.table(df_display_Ultra)
-                    st.code(make_search_string(df, "ultra", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    else:
+                        st.button(lab_ult,on_click = ultra_but)
+                    
                 except:
                     pass
         
                 try:
                     st.write(f'Master League Top {st.session_state.top_num} Search String:')
+                    st.code(make_search_string(df, "master", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    lab_mast = "Show Master Table"
                     if st.session_state['master_clicked']:
-                        family_data_master = format_data_top(df, 'Master', st.session_state.top_num)
+                        lab_mast  = "Hide Master Table"
+                        family_data_master = format_data_top(df, 'Master', st.session_state.top_num,True)
                         df_display_master = pd.DataFrame(family_data_master)
                         df_display_master.set_index(['Pokemon'], inplace=True)
+                        st.button(lab_mast, on_click = master_but)
                         st.table(df_display_master)
-                    st.code(make_search_string(df, "master", st.session_state.top_num, fam_box, iv_box, inv_box,True))
+                    else:
+                        st.button(lab_mast,on_click = master_but)
+                    
                 except:
                     pass
         
                 try:
                     st.write(f'All Leagues Top {st.session_state.top_num} Search String:')
-                    st.code(make_search_string(df, "all", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    st.code(make_search_string(df, "all", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz,True))
                 except:
                     pass
             else:
                 try:
-                    tables_pop.button("Show Sunshine Cup Table", key='sun_table', on_click=great_but)
+                    #popover.button("Show Sunshine Cup Table", key='sun_table', on_click=great_but)
                     days_since_date = calculate_days_since(season_start)
                     age_string = f"age0-{days_since_date}&"
-                    st.write(f'Sunshine Cup Top {st.session_state.top_num} Search String:')
+                    st.write(f'Custom Cup Top {st.session_state.top_num} Search String:')
+                    st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    lab_gre = "Show Custom Table"
                     if st.session_state['great_clicked']:
+                        lab_gre = "Hide Custom Table"
+                        st.button(lab_gre,on_click = great_but)
                         family_data_Great = format_data_top(df, 'Great', st.session_state.top_num,show_xl_boxz)
                         df_display_Great = pd.DataFrame(family_data_Great)
                         df_display_Great.set_index(['Pokemon'], inplace=True)
                         st.table(df_display_Great)
-                    st.code(make_search_string(df, "great", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    else:
+                        st.button(lab_gre,on_click = great_but)
+                    
                 except:
                     pass
         
             try:
                 load_from_firestore(streamlit_analytics.counts, st.secrets["fb_col"])
                 streamlit_analytics.start_tracking()
-        
+                if st.session_state['show_custom']:
+                    copy_val = f'*Click string to show Copy button and Paste Top {topstrin} Remix Cup into PokeGO*'
+                elif st.session_state['show_custom1']:
+                    copy_val = f'*Click string to show Copy button and Paste Top {topstrin} Halloween Cup into PokeGO*'
+                else:
+                    copy_val = f'*Click string to show Copy button and Paste Top {topstrin} into PokeGO*'
                 st.text_input(
                     label=today.strftime("%m/%d/%y"),
-                    value=f'*Click string to show Copy button and Paste Top {topstrin} into PokeGO*',
+                    value= copy_val,
                     label_visibility='hidden',
                     disabled=True,
                     key="sstring"
