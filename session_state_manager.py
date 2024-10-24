@@ -56,9 +56,14 @@ def upd_seas():
 
 def upd_cust():
     st.session_state.show_custom = st.session_state.sho_cust
-
+def upd_cust1():
+    st.session_state.show_custom1 = st.session_state.sho_cust1
 def upd_inv():
     st.session_state.show_inverse = st.session_state.sho_inv
+
+    
+def bool_switcher(y):
+    y = not (y)
 
 def little_but():
     st.session_state['little_clicked'] = not st.session_state['little_clicked']
