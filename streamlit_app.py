@@ -32,6 +32,7 @@ from session_state_manager import (
     upd_cust,
     upd_cust1,
     upd_inv,
+    upd_gym_bool,
     little_but,
     great_but,
     ultra_but,
