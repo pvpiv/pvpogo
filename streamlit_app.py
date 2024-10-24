@@ -103,19 +103,22 @@ with cols[0]:
             show_xl_boxz = popover.checkbox('Include XL Pokémon \n\n(XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
             iv_box = popover.checkbox('Include IV Filter \n\n(Works for Non XL Pokémon)', value=False)
             # tables_pop = st.popover("League Tables")
-            if st.session_state['gym_bool']:
+            if st.session_state['show_gym']:
+                st.session_state['gym_bool'] = True
               #  update_gym_bool()
                 st.session_state['show_custom'] = False
                # upd_cust()
                 st.session_state['show_custom1'] = False
                # upd_cust1()
-            elif st.session_state['show_custom1']:
+            elif st.session_state['show_cust1']:
+                st.session_state['show_custom1'] = True
                # upd_cust1()
                 st.session_state['show_custom'] = False
                 #upd_cust()
                 st.session_state['gym_bool'] = False
               #  update_gym_bool()
-            elif st.session_state['show_custom'] = False:
+            elif st.session_state['show_cust']:
+                st.session_state['show_custom'] = True
                 #upd_cust()
                 st.session_state['show_custom1'] = False
                # upd_cust1()
