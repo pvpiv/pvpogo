@@ -39,8 +39,13 @@ def initialize_session_state():
         st.session_state['table_string_butt'] = True
     if 'gym_bool' not in st.session_state:
         st.session_state['gym_bool'] = False
-
-
+    if 'sho_cust' not in st.session_state:
+        st.session_state.sho_cust = False
+    if 'sho_cust1' not in st.session_state:
+        st.session_state.sho_cust1 = False
+    if 'gym_bool_box' not in st.session_state:
+        st.session_state.gym_bool_box = False
+        
 def update_gym_bool():
     st.session_state['gym_bool'] = st.session_state['gym_bool_box']
 def upd_string_sel(sel):
