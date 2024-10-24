@@ -21,6 +21,8 @@ def initialize_session_state():
         st.session_state['show_string'] = True
     if 'show_custom' not in st.session_state:
         st.session_state['show_custom'] = False
+    if 'show_custom1' not in st.session_state:
+        st.session_state['show_custom1'] = False
     if 'show_inverse' not in st.session_state:
         st.session_state['show_inverse'] = False
     if 'little_clicked' not in st.session_state:
@@ -34,7 +36,7 @@ def initialize_session_state():
     if 'table_gen' not in st.session_state:
         st.session_state['table_gen'] = ''
     if 'table_string_butt' not in st.session_state:
-        st.session_state['table_string_butt'] = False
+        st.session_state['table_string_butt'] = True
     if 'gym_bool' not in st.session_state:
         st.session_state['gym_bool'] = False
 
