@@ -85,18 +85,27 @@ with cols[0]:
 
             show_custom_boxz = popover.checkbox('Great Remix Cup', on_change=upd_cust, key='sho_cust')
             show_custom_boxz2 = popover.checkbox('Halloween Cup', on_change=upd_cust1, key='sho_cust1')
-            show_gym_box = popover.checkbox('Gym Attackers/Defenders', on_change=upd_cust1, key='gym_bool_box')
             show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
-            
+
         else:
 
             show_custom_boxz = popover.checkbox('Great Remix Cup', on_change=upd_cust, key='sho_cust')
             show_custom_boxz2 = popover.checkbox('Halloween Cup', on_change=upd_cust1, key='sho_cust1')
+            show_gym_box = popover.checkbox('Gym Attackers/Defenders', on_change=upd_gym_bool, key='gym_bool_box')
             topstrin = str(st.session_state.top_num)
             fam_box = popover.checkbox('Include pre-evolutions', value=True)
             show_xl_boxz = popover.checkbox('Include XL Pokémon \n\n(XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
             iv_box = popover.checkbox('Include IV Filter \n\n(Works for Non XL Pokémon)', value=False)
-           
+
+            if show_custom_boxz:
+                show_custom_boxz2 = False
+                show_gym_box = False
+            elif show_custom_boxz2:
+                show_custom_boxz = False
+                show_gym_box = False
+            elif show_gym_box:
+                show_custom_boxz = False
+                show_custom_boxz2 = False
             # tables_pop = st.popover("League Tables")
             
         
@@ -183,7 +192,7 @@ with cols[1]:
             inv_box = st.checkbox('Invert strings', value=st.session_state.show_inverse, key='show_inv')
             #tables_pop = st.popover("League Tables")
             
-            if not (st.session_state['show_custom'] or st.session_state['show_custom1']):
+            if not (st.session_state['show_custom'] or st.session_state['show_custom1'] or st.session_state['gym_bool_box']):
                 try:
                     st.write(f'Little League Top {st.session_state.top_num} Search String:')
                     st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
@@ -257,6 +266,33 @@ with cols[1]:
                     st.code(make_search_string(df, "all", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz,True))
                 except:
                     pass
+            elif st.session_state['gym_bool_box']: 
+                attackers = pd.readcsv('attackers.csv')
+                defenders = pd.readcsv('defenders.csv')
+
+                lab_def = "Show Defenders Table"
+                if st.session_state['master_clicked']:
+                    lab_def = "Hide Defenders Table"
+                    st.button(lab_def,on_click = master_but)
+                    family_data_def = format_data_top(defenders, 'Master', st.session_state.top_num,show_xl_boxz)
+                    df_display_def = pd.DataFrame(family_data_def)
+                    df_display_def.set_index(['Pokemon'], inplace=True)
+                    st.table(df_display_def)
+                else:
+                    st.button(lab_def,on_click = master_but)
+
+                
+                lab_att = "Show Attackers Table"
+                if st.session_state['ultra_clicked']:
+                    lab_att = "Hide Attackers Table"
+                    st.button(lab_att,on_click = ultra_but)
+                    family_data_att = format_data_top(Attackers, 'Master', st.session_state.top_num,show_xl_boxz)
+                    df_display_att = pd.DataFrame(family_data_att)
+                    df_display_att.set_index(['Pokemon'], inplace=True)
+                    st.table(df_display_att)
+                else:
+                    st.button(lab_att,on_click = ultra_but)
+                
             else:
                 try:
                     #popover.button("Show Sunshine Cup Table", key='sun_table', on_click=great_but)
