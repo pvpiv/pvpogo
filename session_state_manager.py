@@ -58,7 +58,7 @@ def upd_string_sel(sel):
         upd_cust()
         st.session_state['gym_bool_box'] = False
         update_gym_bool()
-    elif sel == 2 and show_gym:
+    elif sel == 2 and st.session_state['show_gym']:
         st.session_state['gym_bool_box'] = True
         update_gym_bool()
         st.session_state['sho_cust'] = False
