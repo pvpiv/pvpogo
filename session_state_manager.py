@@ -41,22 +41,7 @@ def initialize_session_state():
         st.session_state['gym_bool'] = False
 
         
-def update_gym_bool():
-    st.session_state['gym_bool'] = st.session_state['sho_gym']
-def upd_string_sel():
-    
-    if st.session_state.sho_cust:
-        st.session_state['show_custom'] = True
-        st.session_state['show_custom1'] = False
-        st.session_state['gym_bool'] = False
-    elif st.session_state.sho_cust1:
-        st.session_state['show_custom'] = True
-        st.session_state['show_custom1'] = False
-        st.session_state['gym_bool'] = False
-    elif st.session_state['sho_gym']:
-        st.session_state['show_custom'] = False
-        st.session_state['show_custom1'] = False
-        st.session_state['gym_bool'] = True
+
 
 def update_top_num():
     st.session_state.top_num = st.session_state.top_no
@@ -75,6 +60,8 @@ def upd_cust():
     st.session_state.show_custom = st.session_state.sho_cust
 def upd_cust1():
     st.session_state.show_custom1 = st.session_state.sho_cust1
+def update_gym_bool():
+    st.session_state['gym_bool'] = st.session_state['sho_gym']
 def upd_inv():
     st.session_state.show_inverse = st.session_state.sho_inv
 
