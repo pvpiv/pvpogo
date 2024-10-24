@@ -99,14 +99,14 @@ with cols[0]:
             iv_box = popover.checkbox('Include IV Filter \n\n(Works for Non XL Pokémon)', value=False)
 
             if show_custom_boxz:
-                show_custom_boxz2 = False
-                show_gym_box = False
+                st.session_state['sho_cust1'] = False
+                st.session_state['gym_bool_box'] = False
             elif show_custom_boxz2:
-                show_custom_boxz = False
-                show_gym_box = False
+                st.session_state['sho_cust'] = False
+                st.session_state['gym_bool_box'] = False
             elif show_gym_box:
-                show_custom_boxz = False
-                show_custom_boxz2 = False
+                st.session_state['sho_cust'] = False
+                st.session_state['sho_cust1'] = False
             # tables_pop = st.popover("League Tables")
             
         
