@@ -35,7 +35,8 @@ from session_state_manager import (
     little_but,
     great_but,
     ultra_but,
-    master_but
+    master_but,
+    gym_bool
 )
 
 # Initialize session state
