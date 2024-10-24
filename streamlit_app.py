@@ -89,9 +89,14 @@ with cols[0]:
             show_custom_boxz2 = popover.checkbox('Halloween Cup',value=st.session_state['show_custom1'],key ='sho_cust1')
             show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
 
-            if st.session_state['show_custom']:
+            if st.session_state['sho_cust']:
+                st.session_state['show_custom'] = True
+                st.session_state['sho_cust1'] = False
                 st.session_state['show_custom1'] = False
+                
             elif st.session_state['show_custom1']:
+                st.session_state['sho_cust1'] = True
+                st.session_state['sho_cust'] = False
                 st.session_state['show_custom'] = False
         else:
 
@@ -107,23 +112,31 @@ with cols[0]:
                 st.session_state['gym_bool'] = True
               #  update_gym_bool()
                 st.session_state['sho_cust'] = False
+                st.session_state['show_custom'] = False
                # upd_cust()
-                st.session_state['show_custom1'] = False
+                st.session_state['sho_custom1'] = False
                # upd_cust1()
             elif st.session_state['sho_cust1']:
                 st.session_state['show_custom1'] = True
                # upd_cust1()
+                st.session_state['sho_cust'] = False
                 st.session_state['show_custom'] = False
                 #upd_cust()
                 st.session_state['gym_bool'] = False
+                st.session_state['sho_gym'] = False
               #  update_gym_bool()
             elif st.session_state['sho_cust']:
                 st.session_state['show_custom'] = True
                 #upd_cust()
+
                 st.session_state['show_custom1'] = False
+                st.session_state['sho_cust1'] = False
                # upd_cust1()
                 st.session_state['gym_bool'] = False
+                st.session_state['sho_gym'] = False
                # update_gym_bool()
+
+    
     if st.session_state['table_string_butt']:
         butt_label = "Switch to Pokémon Lookup"
     else: 
