@@ -293,7 +293,7 @@ with cols[1]:
                     if st.session_state['ultra_clicked']:
                         lab_att = "Hide Attackers Table"
                         st.button(lab_att,on_click = ultra_but)
-                        family_data_att = format_data_top(atackers, 'Master', st.session_state.top_num,show_xl_boxz)
+                        family_data_att = format_data_top(attackers, 'Master', st.session_state.top_num,show_xl_boxz)
                         df_display_att = pd.DataFrame(family_data_att)
                         df_display_att.set_index(['Pokemon'], inplace=True)
                         st.table(df_display_att)
