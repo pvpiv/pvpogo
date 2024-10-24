@@ -267,8 +267,8 @@ with cols[1]:
                 except:
                     pass
             elif st.session_state['gym_bool_box']: 
-                attackers = pd.readcsv('attackers.csv')
-                defenders = pd.readcsv('defenders.csv')
+                attackers = pd.read_csv('attackers.csv')
+                defenders = pd.read_csv('defenders.csv')
 
                 lab_def = "Show Defenders Table"
                 if st.session_state['master_clicked']:
