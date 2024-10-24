@@ -271,29 +271,36 @@ with cols[1]:
                 attackers = pd.read_csv('attackers.csv')
                 defenders = pd.read_csv('defenders.csv')
 
-                lab_def = "Show Defenders Table"
-                if st.session_state['master_clicked']:
-                    lab_def = "Hide Defenders Table"
-                    st.button(lab_def,on_click = master_but)
-                    family_data_def = format_data_top(defenders, 'Master', st.session_state.top_num,show_xl_boxz)
-                    df_display_def = pd.DataFrame(family_data_def)
-                    df_display_def.set_index(['Pokemon'], inplace=True)
-                    st.table(df_display_def)
-                else:
-                    st.button(lab_def,on_click = master_but)
-
-                
-                lab_att = "Show Attackers Table"
-                if st.session_state['ultra_clicked']:
-                    lab_att = "Hide Attackers Table"
-                    st.button(lab_att,on_click = ultra_but)
-                    family_data_att = format_data_top(Attackers, 'Master', st.session_state.top_num,show_xl_boxz)
-                    df_display_att = pd.DataFrame(family_data_att)
-                    df_display_att.set_index(['Pokemon'], inplace=True)
-                    st.table(df_display_att)
-                else:
-                    st.button(lab_att,on_click = ultra_but)
-                
+                try:
+                    st.write(f'Defenders Search String:')
+                    st.code(make_search_string(defenders, "master", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    lab_def = "Show Defenders Table"
+                    if st.session_state['master_clicked']:
+                        lab_def = "Hide Defenders Table"
+                        st.button(lab_def,on_click = master_but)
+                        family_data_def = format_data_top(defenders, 'Master', st.session_state.top_num,show_xl_boxz)
+                        df_display_def = pd.DataFrame(family_data_def)
+                        df_display_def.set_index(['Pokemon'], inplace=True)
+                        st.table(df_display_def)
+                    else:
+                        st.button(lab_def,on_click = master_but)
+                except:
+                    pass
+                try:
+                    st.write(f'Attackers Search String:')
+                    st.code(make_search_string(attackers, "master", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    lab_att = "Show Attackers Table"
+                    if st.session_state['ultra_clicked']:
+                        lab_att = "Hide Attackers Table"
+                        st.button(lab_att,on_click = ultra_but)
+                        family_data_att = format_data_top(Attackers, 'Master', st.session_state.top_num,show_xl_boxz)
+                        df_display_att = pd.DataFrame(family_data_att)
+                        df_display_att.set_index(['Pokemon'], inplace=True)
+                        st.table(df_display_att)
+                    else:
+                        st.button(lab_att,on_click = ultra_but)
+                except:
+                    pass
             else:
                 try:
                     #popover.button("Show Sunshine Cup Table", key='sun_table', on_click=great_but)
