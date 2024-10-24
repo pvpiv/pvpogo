@@ -85,16 +85,16 @@ with cols[0]:
         if not st.session_state['table_string_butt']:
 
 
-            show_custom_boxz = popover.checkbox('Great Remix Cup',on_change = upd_string_sel,value=st.session_state['show_custom'],key ='sho_cust')
-            show_custom_boxz2 = popover.checkbox('Halloween Cup',on_change = upd_string_sel,value=st.session_state['show_custom1'],key ='sho_cust1')
+            show_custom_boxz = popover.checkbox('Great Remix Cup', on_change=upd_cust, key='sho_cust')
+            show_custom_boxz2 = popover.checkbox('Halloween Cup', on_change=upd_cust1, key='sho_cust1')
             show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
 
 
         else:
 
-            show_custom_boxz = popover.checkbox('Great Remix Cup',on_change = upd_string_sel,value=st.session_state['show_custom'],key ='sho_cust')
-            show_custom_boxz2 = popover.checkbox('Halloween Cup',on_change = upd_string_sel,value=st.session_state['show_custom1'],key ='sho_cust1')
-            show_gym_box = popover.checkbox('Gym Attackers/Defenders',on_change = upd_string_sel,value=st.session_state['gym_bool'],key ='sho_gym')
+            show_custom_boxz = popover.checkbox('Great Remix Cup', on_change=upd_cust, key='sho_cust')
+            show_custom_boxz2 = popover.checkbox('Halloween Cup', on_change=upd_cust1, key='sho_cust1')
+            show_gym_box = popover.checkbox('Gym Attackers/Defenders', on_change=update_gym_bool, key='sho_gym')
             topstrin = str(st.session_state.top_num)
             fam_box = popover.checkbox('Include pre-evolutions', value=True)
             show_xl_boxz = popover.checkbox('Include XL Pokémon \n\n(XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
