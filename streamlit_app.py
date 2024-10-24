@@ -32,6 +32,7 @@ from session_state_manager import (
     upd_cust,
     upd_cust1,
     upd_inv,
+    update_gym_bool,
     little_but,
     great_but,
     ultra_but,
@@ -87,18 +88,19 @@ with cols[0]:
             show_custom_boxz2 = popover.checkbox('Halloween Cup', on_change=upd_cust1, key='sho_cust1')
             show_shadow_boxz = popover.checkbox('Include Shadow Pokémon', on_change=upd_shadow, key='sho_shad', value=st.session_state['get_shadow'])
 
+
         else:
 
             show_custom_boxz = popover.checkbox('Great Remix Cup', on_change=upd_cust, key='sho_cust')
             show_custom_boxz2 = popover.checkbox('Halloween Cup', on_change=upd_cust1, key='sho_cust1')
+            show_gym_box = popover.checkbox('Gym Attackers/Defenders', on_change=update_gym_bool, key='sho_gym')
             topstrin = str(st.session_state.top_num)
             fam_box = popover.checkbox('Include pre-evolutions', value=True)
             show_xl_boxz = popover.checkbox('Include XL Pokémon \n\n(XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
             iv_box = popover.checkbox('Include IV Filter \n\n(Works for Non XL Pokémon)', value=False)
-           
             # tables_pop = st.popover("League Tables")
-            
-        
+
+    
     if st.session_state['table_string_butt']:
         butt_label = "Switch to Pokémon Lookup"
     else: 
@@ -182,7 +184,7 @@ with cols[1]:
             inv_box = st.checkbox('Invert strings', value=st.session_state.show_inverse, key='show_inv')
             #tables_pop = st.popover("League Tables")
             
-            if not (st.session_state['show_custom'] or st.session_state['show_custom1']):
+            if not (st.session_state['show_custom'] or st.session_state['show_custom1'] or st.session_state['gym_bool']):
                 try:
                     st.write(f'Little League Top {st.session_state.top_num} Search String:')
                     st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
@@ -256,7 +258,41 @@ with cols[1]:
                     st.code(make_search_string(df, "all", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz,True))
                 except:
                     pass
-            else:
+            elif st.session_state['gym_bool']: 
+                attackers = pd.read_csv('attackers.csv')
+                defenders = pd.read_csv('defenders.csv')
+
+                try:
+                    st.write(f'Defenders Search String:')
+                    st.code(make_search_string(defenders, "master", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    lab_def = "Show Defenders Table"
+                    if st.session_state['master_clicked']:
+                        lab_def = "Hide Defenders Table"
+                        st.button(lab_def,on_click = master_but)
+                        family_data_def = format_data_top(defenders, 'Master', st.session_state.top_num,show_xl_boxz)
+                        df_display_def = pd.DataFrame(family_data_def)
+                        df_display_def.set_index(['Pokemon'], inplace=True)
+                        st.table(df_display_def)
+                    else:
+                        st.button(lab_def,on_click = master_but)
+                except:
+                    pass
+                try:
+                    st.write(f'Attackers Search String:')
+                    st.code(make_search_string(attackers, "master", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
+                    lab_att = "Show Attackers Table"
+                    if st.session_state['ultra_clicked']:
+                        lab_att = "Hide Attackers Table"
+                        st.button(lab_att,on_click = ultra_but)
+                        family_data_att = format_data_top(attackers, 'Master', st.session_state.top_num,show_xl_boxz)
+                        df_display_att = pd.DataFrame(family_data_att)
+                        df_display_att.set_index(['Pokemon'], inplace=True)
+                        st.table(df_display_att)
+                    else:
+                        st.button(lab_att,on_click = ultra_but)
+                except:
+                    pass
+            elif st.session_state['show_custom'] or st.session_state['show_custom1']: 
                 try:
                     #popover.button("Show Sunshine Cup Table", key='sun_table', on_click=great_but)
                     days_since_date = calculate_days_since(season_start)
