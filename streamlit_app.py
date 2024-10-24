@@ -97,13 +97,13 @@ with cols[0]:
 
             show_custom_boxz = popover.checkbox('Great Remix Cup',value=st.session_state['show_custom'],key ='sho_cust')
             show_custom_boxz2 = popover.checkbox('Halloween Cup',value=st.session_state['show_custom1'],key ='sho_cust1')
-            show_gym_box = popover.checkbox('Gym Attackers/Defenders',value=st.session_state['gym_bool'],key ='show_gym')
+            show_gym_box = popover.checkbox('Gym Attackers/Defenders',value=st.session_state['gym_bool'],key ='sho_gym')
             topstrin = str(st.session_state.top_num)
             fam_box = popover.checkbox('Include pre-evolutions', value=True)
             show_xl_boxz = popover.checkbox('Include XL Pokémon \n\n(XL Candy needed)', on_change=upd_xl, key='sho_xl', value=st.session_state['show_xl'])
             iv_box = popover.checkbox('Include IV Filter \n\n(Works for Non XL Pokémon)', value=False)
             # tables_pop = st.popover("League Tables")
-            if st.session_state['show_gym']:
+            if st.session_state['sho_gym']:
                 st.session_state['gym_bool'] = True
               #  update_gym_bool()
                 st.session_state['show_custom'] = False
@@ -207,7 +207,7 @@ with cols[1]:
             inv_box = st.checkbox('Invert strings', value=st.session_state.show_inverse, key='show_inv')
             #tables_pop = st.popover("League Tables")
             
-            if not (st.session_state['show_custom'] or st.session_state['show_custom1'] or st.session_state['gym_bool_box']):
+            if not (st.session_state['show_custom'] or st.session_state['show_custom1'] or st.session_state['gym_bool']):
                 try:
                     st.write(f'Little League Top {st.session_state.top_num} Search String:')
                     st.code(make_search_string(df, "little", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz))
