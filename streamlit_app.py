@@ -91,8 +91,8 @@ with cols[0]:
 
         else:
 
-            show_custom_boxz = popover.checkbox('Great Remix Cup', on_change=upd_string_sel(0),value=st.session_state['sho_cust'])
-            show_custom_boxz2 = popover.checkbox('Halloween Cup', on_change=upd_string_sel(1),value=st.session_state['sho_cust1'])
+            #show_custom_boxz = popover.checkbox('Great Remix Cup', on_change=upd_string_sel(0),value=st.session_state['sho_cust'])
+            #show_custom_boxz2 = popover.checkbox('Halloween Cup', on_change=upd_string_sel(1),value=st.session_state['sho_cust1'])
             show_gym_box = popover.checkbox('Gym Attackers/Defenders', on_change=upd_string_sel(2),value=st.session_state['gym_bool_box'])
             topstrin = str(st.session_state.top_num)
             fam_box = popover.checkbox('Include pre-evolutions', value=True)
