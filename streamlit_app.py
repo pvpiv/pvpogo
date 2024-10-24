@@ -281,7 +281,7 @@ with cols[1]:
                     st.code(make_search_string(df, "all", st.session_state.top_num, fam_box, iv_box, inv_box,show_xl_boxz,True))
                 except:
                     pass
-            elif st.session_state['gym_bool_box']: 
+            elif st.session_state['gym_bool']: 
                 attackers = pd.read_csv('attackers.csv')
                 defenders = pd.read_csv('defenders.csv')
 
